@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar color="orange" >
+    <ion-back-button slot="start" defaultHref="/home"></ion-back-button>
+    <ion-img class="icono" src="../../assets/pictures/logo_orange.svg"></ion-img>
+    <ion-img class="nombre" src="../assets/pictures/OrbilText.svg"></ion-img>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-title>Categorias</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+    <!-- Esta sección lista las categorias y envia el parametro de la categoria que se elija en la vista -->
+  <ion-card *ngFor="let cat of categorias" [routerLink] = "['/lista', cat.Pk_Categorias]">
+        <h1 style="text-align:center;">{{cat.Nombre_Categoria}}</h1> 
+  </ion-card>
+
+</ion-content>

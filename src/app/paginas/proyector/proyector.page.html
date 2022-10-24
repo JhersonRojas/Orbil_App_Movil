@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar class="arriba" >
+    <ion-back-button slot="start" color="light" defaultHref="/home"></ion-back-button>
+    <ion-title></ion-title>
+    <ion-img class="icono" src="../../assets/pictures/logo_orange.svg"></ion-img>
+    <ion-img class="nombre" src="../assets/pictures/OrbilText.svg"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="box">
+    <h2 class="centrar">Reserva del proyector</h2>
+    <ion-img class="proyector" src="../../../assets/pictures/proyector.svg"></ion-img>
+
+      <!-- "form" toma todos los datos que tiene insternamente y los envia a la función ReservaProyector -->
+    <form [formGroup]="form" (ngSubmit)="ReservaProyector()">
+
+      <ion-item>
+        <ion-select placeholder="Seleccione proyector" formControlName="serial">
+          <ion-select-option *ngFor="let pro of proyectores" value="{{pro.Pk_Elemento}}">
+            {{pro.Nombre_Elementos}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-select formControlName="jornada" placeholder="Seleccione jornada" name="jornada">
+          <ion-select-option  value="Mañana">
+          Jornada mañana
+          </ion-select-option>
+
+          <ion-select-option value="Tarde">
+            Jornada tarde
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-input type="date" class="sitio" formControlName="fecha"></ion-input>
+      <ion-input class="sitio" type="text" placeholder="¿Donde?" formControlName="sitio" ></ion-input>
+            
+      <ion-button shape="round" size="default" fill="solid" strong="strong"
+        color="orange" (click)="ReservaProyector()" [disabled]="!form.valid">Reservar
+      </ion-button>
+      
+    </form>
+  </div>
+
+</ion-content>

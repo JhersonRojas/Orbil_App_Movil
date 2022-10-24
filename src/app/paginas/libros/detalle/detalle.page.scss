@@ -1,0 +1,117 @@
+
+.container{
+    margin: 5%;
+    border-radius: 10px;
+    border: 3px solid #87837f !important;
+    box-shadow: -3px 3px 8px gray;
+
+    .foto{
+        margin-top: 5%;
+        margin-bottom: 5%;
+        margin-left: 10%;
+        margin-right: 10%;
+        width: auto;
+
+    }
+
+    .reserva{
+
+        .texto{
+            text-align: center;
+        }
+
+        .btn-reserva{
+            margin-left: 30%;
+        }
+
+    }
+
+    .texto{
+
+        .autor{
+            margin: 5%;
+        }
+
+        .descripcion{
+            margin: 5%;
+        }
+
+    }
+
+}
+
+@media (max-width: 300px) {
+
+    .arriba{
+        --background: linear-gradient(45deg, rgb(254, 147, 23) 0%, rgba(255,127,0,1) 100%) !important;
+        
+        .nombre{
+            margin-top: 5%;
+            margin-bottom: 5%;
+            width: 55px;
+            margin-left: 30%;
+            margin-right: 20%;
+        }
+    
+        .icono{
+            float: right;
+            width:10%;
+            margin-top:3%;
+            margin-right: 4%;
+            margin-bottom: 1%;
+        }
+    }
+
+    .titulo{
+        h4{
+            font-size: 15px;
+        }
+    }
+
+    .container{
+
+        .foto{
+            margin-top: 5%;
+            margin-bottom: 5%;
+            margin-left: 10%;
+            margin-right: 10%;
+            width: auto;
+            
+        }
+        
+    }
+
+    .calendar{
+
+        margin-top: 5%;
+        margin-left: 9%;
+        margin-right: 9%;
+        margin-bottom: 5%;
+        width: auto;
+
+        .text {
+            margin-left: 20%;
+            font-size: 14px;
+        } 
+
+    }
+
+    ion-button{
+        margin-top: 10%;
+        margin-left: 25%;
+        margin-right: 25%;
+        margin-bottom: 5%;
+        width: 50%;
+        font-size: 12px;
+    }
+
+    .texto{
+        .autor{
+            font-size: 13px;
+        }
+        .descripcion{
+            font-size: 12px;
+        }
+    }
+    
+}

@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar color="orange">
+    <ion-title>Libro</ion-title>
+     <ion-back-button slot="start" defaultHref="/categorias"></ion-back-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <!--Esta es una directiva de angular que lista los diferentes datos 
+        de la variable que asignemos, nos permite separarlos en secciones
+        para usarlos a lo largo del codigo -->
+  <div class="container" *ngFor="let lib of libros" >
+
+      <ion-item class="titulo" style="margin-top: 1%;">
+        <h4>{{lib.Nombre_Elementos}}</h4> 
+      </ion-item>
+      
+      <ion-img class="foto" src="{{lib.Imagen}}"></ion-img>
+      
+      <div class="reserva">
+        <form [formGroup]="form" (ngSubmit)="ReservarLibro()">
+          <div class="calendar">
+            <p class="text">Elige una fecha <ion-icon name="arrow-down-outline"></ion-icon></p>
+
+              <!-- Este recurso despliega el calendario para seleccionar la fecha -->
+            <ion-datetime-button datetime="datetime" ></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime id="datetime" formControlName="fecha" name="fecha" color="verde"
+                presentation="date" min="{{fechaHoy | date: 'YYYY-MM-dd'}}" max="2023-12-30T23:59:59"
+                display-format="YYYY-MM-dd" [isDateEnabled]="cancelarFinDeSemana"  mode="ios"
+                style="background-color: rgb(54, 54, 54) !important;" >
+                </ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </div> 
+          <!-- boton que envie los datos del formulario -->
+          <ion-button class="btn-reserva" (click)="ReservarLibro()"
+          color="orange" [disabled]="!form.valid">Solicitar</ion-button>
+        </form>
+      </div>
+
+      <div class="texto">  
+          <div class="autor"> 
+            <h5><ion-icon name="person-outline" class="icono"></ion-icon> 
+              Autor</h5> 
+            <span>{{lib.Autor}}</span> 
+          </div>
+     
+          <div class="descripcion"> 
+            <h5> <ion-icon name="text-outline" class="icono"></ion-icon> 
+              Descripcion</h5> 
+            <span>{{lib.Descripcion}}</span>
+          </div> 
+      </div>   
+
+  </div>
+
+</ion-content>

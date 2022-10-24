@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar class="arriba" >
+    <ion-back-button slot="start" color="light" defaultHref="/home"></ion-back-button>
+    <ion-title></ion-title>
+    <ion-img class="icono" src="../../assets/pictures/logo_orange.svg"></ion-img>
+    <ion-img class="nombre" src="../assets/pictures/OrbilText.svg"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="container">
+    <ion-card class="box">
+    <h2 class="centrar"> Reserva del ambiente</h2>
+    <ion-img class="ambiente" src="../assets/pictures/ambiente.svg"></ion-img> <br>
+      <form [formGroup]="form" (ngSubmit)="ReservarAmbiente()">
+
+        <div class="calendar">
+          <p class="text">Elige una fecha <ion-icon name="arrow-down-outline"></ion-icon></p>
+          <ion-datetime-button datetime="datetime" ></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime id="datetime" formControlName="fecha" name="fecha" color="verde"
+              presentation="date" min="{{fechaHoy | date: 'YYYY-MM-dd'}}" max="2023-12-30T23:59:59"
+              display-format="YYYY-MM-dd" [isDateEnabled]="cancelarFinDeSemana"  mode="ios"
+              style="background-color: rgb(54, 54, 54) !important;" >
+              </ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </div> 
+
+        <ion-item>
+          <ion-select formControlName="jornada" placeholder="Seleccione jornada" name="jornada">
+            <ion-select-option  value="Mañana">
+            Jornada mañana
+            </ion-select-option>
+    
+            <ion-select-option value="Tarde">
+              Jornada tarde
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+    
+          <h5 class="centrar">{{nombre}}</h5>
+    
+        <ion-item disabled *ngIf='secreto == true'>
+          <ion-input formControlName="usuario" type="text" ></ion-input>
+        </ion-item>
+
+        <ion-item>   
+          <ion-button (click)="ReservarAmbiente()" [disabled]="!form.valid"
+          shape="round" size="default" fill="solid" strong="strong" 
+          color="verde"> Reservar </ion-button>
+        </ion-item> 
+        
+      </form>
+    </ion-card>  
+  </div>
+
+</ion-content>

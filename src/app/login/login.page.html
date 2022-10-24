@@ -1,0 +1,53 @@
+<ion-header></ion-header> <!-- Este es el encabezado del login pero ahora no tiene contenido -->
+
+<ion-content>
+    <!--Contenedor principal -->
+<div class="container">
+    <!--Sub Contenedor -->
+    <div id="subcontainer">
+      <!--Logo -->
+      <ion-img src="../../assets/pictures/icono.svg"></ion-img>
+      <!--Formulario -->
+      <form [formGroup]="form" (ngSubmit)="ValidacionDeDatos()">
+        <ion-grid fixed>
+          <ion-row>
+            <ion-col>
+
+              <ion-item class="inputs" mode="md">
+                <ion-label position="floating">usuario</ion-label>
+                <ion-input type="number" clearInput formControlName="user"
+                name="user"></ion-input>
+              </ion-item>  
+
+              <ion-item class="inputs" mode="md">
+                <ion-label position="floating">contraseña</ion-label>
+                <ion-input type="password" clearInput formControlName="pass"
+                name="pass" ></ion-input>
+              </ion-item>
+
+            </ion-col>
+          </ion-row>
+          <ion-row>
+
+            <ion-col class="ion-text-center">
+              <ion-button type="submit" [disabled]="!form.valid" shape="round"
+                          size="default" fill="solid" strong="strong" color="light"
+                          fill="solid" > Ingresar <!--Texto del boton -->
+              </ion-button>  
+            </ion-col>
+            
+          </ion-row>
+        </ion-grid>
+      </form>
+    </div>
+
+    <!-- Estos elementos son las olas que se ven en el login -->
+    <div class="waves">
+      <div class="wave circulo a"></div>
+      <div class="wave circulo b"></div>
+      <div class="wave circulo c"></div>
+    </div> <!--waves -->
+
+  </div> <!--container -->
+
+</ion-content>
