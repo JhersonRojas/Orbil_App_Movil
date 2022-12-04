@@ -22,14 +22,10 @@ export class HomePage implements OnInit {
   constructor(
       // <--------- "route" es una función de angular que me permite redirigir al usuario a otra ruta por medio de una orden ----------->
     private route: Router,
-      // <---------- "menu" me permite controlar el comportamiento del menú desplegable ----------------------> 
-    private menuCtrl :MenuController) { }
+  ) { }
 
     // <----------------- Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista ------------------->
   ngOnInit() {
-    // <--------------------- Este segmento habilita el menú desplegalbe en la aplicación ----------------------------------->
-  this.menuCtrl.enable(true);
-    
     // <----------------- "return" llama a la función de "validarDatos" ------------------->
   return this.ValidarDatos(); 
   }

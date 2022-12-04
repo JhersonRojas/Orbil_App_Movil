@@ -47,8 +47,7 @@ const routes: Routes = [
   {
     path: 'manual-usuario',
     loadChildren: () => import('./manual-usuario/manual-usuario.module').then( m => m.ManualUsuarioPageModule)
-  }
-
+  },
 ];
 
 @NgModule({

@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { AmbientePageRoutingModule } from './ambiente-routing.module';
 
 import { AmbientePage } from './ambiente.page';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { AmbientePage } from './ambiente.page';
     FormsModule,
     IonicModule,
     AmbientePageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ComponentsModule
   ],
   declarations: [AmbientePage]
 })

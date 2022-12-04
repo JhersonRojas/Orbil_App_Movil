@@ -1,3 +1,12 @@
+ <!-- Llamando al menu lateral -->
+ <ion-menu contentId="main-content">
+  <ion-content>
+    <ion-menu-toggle>
+      <app-sidebar></app-sidebar>
+    </ion-menu-toggle>
+  </ion-content>
+</ion-menu>
+
 <ion-header>
   <ion-toolbar class="arriba" >
     <ion-back-button slot="start" color="light" defaultHref="/home"></ion-back-button>
@@ -7,8 +16,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content id="main-content">
   <div class="container">
     <ion-card class="box">
     <h2 class="centrar"> Reserva del ambiente</h2>
@@ -56,5 +64,4 @@
       </form>
     </ion-card>  
   </div>
-
 </ion-content>
