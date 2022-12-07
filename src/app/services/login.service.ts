@@ -19,7 +19,7 @@ export class LoginService {
 
     // <----------------- Función que envía los datos de acceso para ser validados en el Api Rest --------------------->
   Login_Service(data: string){
-    return this.http.post<Login_Interface>( this.url + '/login', data) // <- Aqui se añade la ruta especifica
+    return this.http.post<Login_Interface>( this.url + '/usuarios/auth/login', data) // <- Aqui se añade la ruta especifica
   }
   
 }
