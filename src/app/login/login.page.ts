@@ -25,7 +25,7 @@ export class LoginPage implements OnInit {
 
     // <-- Al enviarse los datos se recibe una respuesta, esta respuesta la almacenan estas variables -->
   public respuesta: any = [];
-    boolean: string;
+    boolean: boolean;
     token: string;
 
     // <-- El constructor obtiene los parametros importados de diferentes componentes -->
@@ -64,37 +64,31 @@ export class LoginPage implements OnInit {
   }
 
     // <-- Función que envia los datos del formulario al Api Rest, cuando recibe una respuesta, permite o no acceder -->
-  async ValidacionDeDatos( vis = "Visitante", apr = "Aprendiz", ins = "Instructor", adm = "Administrativo", fail= "false"){
+  async ValidacionDeDatos(){
+
     try{
       this.ingreso = this.service.Login_Service(this.form.value).subscribe(
         async resp => {
-          this.respuesta = (resp.user);
-          this.boolean = (resp.booleano);
+          this.respuesta = (resp);
+          this.boolean = (resp.confirm);
           this.token = (resp.token);
 
-            // <-- Esta condicional valida la respuesta, si es positiva deja acceder, si no, da un mensaje de acceso denegado -->
-          if ( fail === this.boolean){ 
-            this.respuesta = ""; 
-            return this.ToastDeError("Contraseña o usuario incorrecto"); 
-          } else {
-              // <-- Se guardan los datos en el almacenamiento local desde aqui-->
-            this.identificacion = this.respuesta[0].id_usuario,   
-                localStorage.setItem('token', this.token);
-            this.nombre = this.respuesta[0].Nombre,               
-                localStorage.setItem('usuario', this.nombre);
-            this.clave = this.respuesta[0].clave,                 
-                localStorage.setItem('identificacion', this.identificacion);
-            this.tipo_usuario = this.respuesta[0].tipo_usuario,   
-                localStorage.setItem('tipo_usuario', this.tipo_usuario);
+          if ( false === this.boolean ) return this.ToastDeError('Contraseña o usuario incorrecto')
 
-            // <-- De los datos recibidos toma el cargo y pasa a la siguiente vista -->
-            if (this.tipo_usuario === apr, vis, ins, adm ){
-              this.NgRouter.navigate(['/home'])
-              //await location.reload()
-            } else {
-              return this.ToastDeError("El cargo no corresponde a este programa");
-            }
-          }
+          this.Restric(resp.user.Tipo_Usuario)
+          
+          this.identificacion = this.respuesta.Pk_Usuario,   
+              localStorage.setItem('identificacion', this.identificacion);
+
+          this.nombre = this.respuesta.Nombre,               
+              localStorage.setItem('usuario', this.nombre);
+
+          this.clave = this.respuesta.Clave,   
+              localStorage.setItem('token', this.token);
+     
+          this.tipo_usuario = this.respuesta.Tipo_Usuario,   
+              localStorage.setItem('tipo_usuario', this.tipo_usuario);
+
         }
       )
         return this.ingreso;  
@@ -102,4 +96,23 @@ export class LoginPage implements OnInit {
     // <-- Si llega a ocurrir un error al tomarsew los datos, este lo mostrara por consola -->
     catch (error){ console.log(error) }
   } 
+
+  async Restric( user: string ) {
+    const users = {
+      "Aprendiz":           "Aprendiz",
+      "Instructor":         "Instructor",
+      "Administrativo 1":   "Administrativo",
+      "Administrativo 2":   "Administrativo", 
+      "Administrativo 3":   "Administrativo", 
+      "Auxiliar aseo":      "Administrativo", 
+      "Operarios":          "Administrativo", 
+      "Giras Especiales":   "Administrativo", 
+      "Visitas":            "Visitante",
+      "Aprendiz Visitante": "Visitante"
+    }
+    await users[user] ?? this.ToastDeError('No se reconoce el cargo');
+  
+    this.NgRouter.navigate(['/home'])
+  }
+
 }

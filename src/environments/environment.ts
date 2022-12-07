@@ -6,7 +6,7 @@
     // <----------------- Variable global de la ruta que se esta obteniendo del Api Rest ------------------->
 export const environment = {
   production: false,
-  url: "http://localhost:3100"
+  url: "http://localhost:3200"
 };
 
 /*
