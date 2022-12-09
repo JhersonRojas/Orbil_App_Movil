@@ -72,22 +72,11 @@ export class LoginPage implements OnInit {
           this.respuesta = (resp);
           this.boolean = (resp.confirm);
           this.token = (resp.token);
+          console.log(this.respuesta)
 
           if ( false === this.boolean ) return this.ToastDeError('Contraseña o usuario incorrecto')
 
           this.Restric(resp.user.Tipo_Usuario)
-          
-          this.identificacion = this.respuesta.Pk_Usuario,   
-              localStorage.setItem('identificacion', this.identificacion);
-
-          this.nombre = this.respuesta.Nombre,               
-              localStorage.setItem('usuario', this.nombre);
-
-          this.clave = this.respuesta.Clave,   
-              localStorage.setItem('token', this.token);
-     
-          this.tipo_usuario = this.respuesta.Tipo_Usuario,   
-              localStorage.setItem('tipo_usuario', this.tipo_usuario);
 
         }
       )
@@ -97,7 +86,7 @@ export class LoginPage implements OnInit {
     catch (error){ console.log(error) }
   } 
 
-  async Restric( user: string ) {
+  async Restric( cargo: string ) {
     const users = {
       "Aprendiz":           "Aprendiz",
       "Instructor":         "Instructor",
@@ -110,9 +99,20 @@ export class LoginPage implements OnInit {
       "Visitas":            "Visitante",
       "Aprendiz Visitante": "Visitante"
     }
-    await users[user] ?? this.ToastDeError('No se reconoce el cargo');
-  
-    this.NgRouter.navigate(['/home'])
+    await users[cargo] ?? this.ToastDeError('No se reconoce el cargo');
+
+    this.identificacion = this.respuesta.user.Pk_Identificacion,   
+      localStorage.setItem('identificacion', this.identificacion);
+
+    this.nombre = this.respuesta.user.Nombre,               
+      localStorage.setItem('usuario', this.nombre);
+
+    this.tipo_usuario = users[cargo],   
+      localStorage.setItem('tipo_usuario', this.tipo_usuario);
+
+      localStorage.setItem('token', this.token);
+
+    return this.NgRouter.navigate(['/home'])
   }
 
 }

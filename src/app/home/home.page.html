@@ -1,53 +1,45 @@
-
- <!-- Llamando al menu lateral -->
-<ion-menu contentId="main-content">
-  <ion-content>
-    <ion-menu-toggle>
-      <app-sidebar></app-sidebar>
-    </ion-menu-toggle>
-  </ion-content>
-</ion-menu>
-
 <ion-header>
   <ion-toolbar color="orange" >
-    <ion-menu-toggle>
-      <ion-img src="../../assets/icon/menu.png" class="boton-menu"></ion-img>
-    </ion-menu-toggle>
+    <div class="boton-menu"><ion-menu-button menu="main-menu" color="light"></ion-menu-button></div>
     <ion-img class="nombre"  src="../assets/pictures/OrbilText.svg"></ion-img>
     <ion-img class="logo" src="../assets/pictures/logo_orange.svg"></ion-img>
   </ion-toolbar>
 </ion-header>
 
-<ion-content id="main-content">
-  <div class="titulo"> <!-- Enunciado inicial-->
-    <p> Hola {{usuario}} espero estes teniendo buen día</p>
-  </div> 
+<ion-content>
+   <br>
+    <div class="titulo">
+      <p> Hola {{usuario}} espero estes teniendo buen día</p>
+    </div> 
   
-  <div class="bienvenida"> <!-- Texto de introducción --> 
-    <p>En este aplicativo contara con la capacidad de reservar algunos de los 
-       diferentes elementos que se encuentran en el ambiente de biblioteca por el momento.
-    </p>
-  </div>
+    <div class="bienvenida">
+      <p>En este aplicativo contara con la capacidad de reservar algunos de los 
+        diferentes elementos que se encuentran en el ambiente de biblioteca por el momento.
+      </p>
+    </div>
   
-  <div class="buttons"> <!-- Los diferentes botones de los elementos -->
-    <ion-button type="submit" fill="solid" strong="strong" color="orange"
-                fill="outline" [routerLink]="['/computador']"> Portatiles
-    <ion-img class="portatil" src="../assets/pictures/img_portatil.svg"></ion-img>
-    </ion-button>
-    <ion-button type="submit" fill="solid" strong="strong" color="orange"
-                fill="outline" [routerLink]="['/categorias']"> Libros
-    <ion-img class="libro" src="../assets/pictures/libro.svg"></ion-img>
-    </ion-button>
-      <!-- opción con restricción de rango -->
-    <ion-button *ngIf='permiso == true' type="submit" fill="solid" strong="strong"
-                color="orange" fill="outline" [routerLink]="['/proyector']"> Proyectores
-    <ion-img class="proyector" src="../assets/pictures/proyector.svg"></ion-img>
-    </ion-button>
-      <!--  opción con restricción de rango -->
-    <ion-button *ngIf='permiso == true' type="submit" fill="solid" strong="strong"
-                color="orange" fill="outline" [routerLink]="['/ambiente']"> Biblioteca
-    <ion-img class="ambiente" src="../assets/pictures/ambiente.svg"></ion-img>
-    </ion-button>
+    <div class="buttons">
+      <ion-button type="submit" fill="solid" strong="strong" color="orange"  fill="outline" [routerLink]="['/computador']">
+        Portatiles
+        <ion-img class="portatil" src="../assets/pictures/img_portatil.svg"></ion-img>
+      </ion-button>
 
-  </div> <!-- Botones -->
+      <ion-button type="submit" fill="solid" strong="strong" color="orange" fill="outline" [routerLink]="['/categorias']">
+        Libros
+        <div class="libro">
+          <ion-img  src="../assets/pictures/libro.svg"></ion-img>
+        </div>
+      </ion-button>
+
+        <!-- Esta directiva valida que tipo de usuario accedio, si fue instructir o administrativo deja ver su contenido, si no, lo esconde -->
+      <ion-button *ngIf='permiso == true' type="submit" fill="solid" strong="strong" color="orange" fill="outline" [routerLink]="['/proyector']">
+        Proyectores
+        <ion-img class="proyector" src="../assets/pictures/proyector.svg"></ion-img>
+      </ion-button>
+        <!-- Esta directiva valida que tipo de usuario accedio, si fue instructir o administrativo deja ver su contenido, si no, lo esconde -->
+      <ion-button *ngIf='permiso == true' type="submit" fill="solid" strong="strong" color="orange" fill="outline" [routerLink]="['/ambiente']">
+        Biblioteca
+        <ion-img class="ambiente" src="../assets/pictures/ambiente.svg"></ion-img>
+      </ion-button>
+    </div>
 </ion-content>
