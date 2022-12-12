@@ -6,12 +6,12 @@
         <img src="../assets/pictures/logo_app.svg" alt="">
         <ion-label>
           <h1>Orbil</h1>
-          <p> Buen dia </p>
+          <p> Buen dia {{rol}} </p>
         </ion-label>
       </div>
 
     <ion-menu-toggle>
-      <ion-list class="menu-items" lines="none">
+      <ion-list class="list" lines="none">
         <ion-list-header> Indice </ion-list-header>
         <ion-item class="active" [routerLink]="['/home']">
           <ion-icon name="home-outline"></ion-icon> Inicio
@@ -30,22 +30,22 @@
         </ion-item>
       </ion-list>
 
-      <ion-list class="menu-items" lines="none">
+      <ion-list class="list">
         <ion-list-header> Historial </ion-list-header>
-          <ion-item [routerLink]="['/home']">
+          <ion-item [routerLink]="['/home']" lines="none">
             <ion-icon name="notifications-outline"></ion-icon> Permisos
           </ion-item>
-          <ion-item [routerLink]="['/home']">
+          <ion-item [routerLink]="['/home']" lines="none">
             <ion-icon name="folder-outline"></ion-icon> Historial
           </ion-item>
       </ion-list>
 
-      <ion-footer class="ion-no-border" lines="none">
-        <ion-item [routerLink]="['/manual-usuario']">
+      <ion-footer class="ion-no-border">
+        <ion-item [routerLink]="['/manual-usuario']" lines="none">
           <ion-icon name="alert-circle-outline"></ion-icon> Manual de usuario
         </ion-item>
-        <ion-item (click)="logout()">
-          <ion-icon name="exit-outline"></ion-icon> Singn out
+        <ion-item (click)="logout()" lines="none">
+          <ion-icon name="exit-outline"></ion-icon> Cerrar sesión
         </ion-item>
       </ion-footer>
     </ion-menu-toggle>

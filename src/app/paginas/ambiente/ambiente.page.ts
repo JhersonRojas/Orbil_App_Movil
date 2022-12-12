@@ -31,10 +31,10 @@ export class AmbientePage implements OnInit {
 
     // <----------------- "respuesta" recibe los datos recibidos  ------------------->
   respuesta:  any;
+  secreto = false
 
     // <--------- Estas variables son las que tomara la función que mostrara un mensaje emergente en la vista al reservar --------------->
   alerta:       any; 
-    alertFin:   any;
 
     // <---------- Aqui se alamacena individualmente los datos que son insertados en el formulario, esto desde la variable "form" ------------>
   todo:             any;
@@ -70,11 +70,9 @@ export class AmbientePage implements OnInit {
   }
 
     // <------------- Esta función es la que me permite enviar un mensaje emergente al realizarse una reserva --------------->
-  async mostrarAlerta() {
-    const total = await this.alertFin
-    const alert = await this.alert.create({ message:total});
+  async mostrarAlerta( msj ) {
+    const alert = await this.alert.create({ message:msj});
     await alert.present();
-    console.log(total)
   }
 
       // <------------------- Estos son los datos que se envian a las variables antes mencionadas -------------->
@@ -86,15 +84,12 @@ export class AmbientePage implements OnInit {
     this.fecha_fin = this.fecha.split("T",1)
 
       // <--------------- Estos son los datos que se envian a las variables antes mencionadas --------------------->
-    this.todo = {usuario: this.form.value.usuario, jornada : this.form.value.jornada, fecha : this.fecha_fin[0]}
+    this.todo = { usuario: this.form.value.usuario, jornada : this.form.value.jornada, fecha : this.fecha_fin[0]}
       this.service.Reservar_Ambiente_Service(this.todo).subscribe(
         resp => {
           this.respuesta = (resp)
-          this.alerta = this.respuesta.boolean
+          console.log(resp)
 
-          if ( this.alerta == "false"){ this.alertFin = "Lo siento, alguien ya reservo aqui"} 
-          else { this.alertFin = "A reservado el ambiente en la fecha " + this.fecha_fin }
-          return this.mostrarAlerta()
     });
   }
 

@@ -19,7 +19,7 @@ export class AmbienteService {
 
     // <----------------- Función que envía los datos para la reserva del ambiente ------------------->
   Reservar_Ambiente_Service (data: string){
-    return this.http.post<Reserva_Ambiente_Interface>( this.url + '/ambiente/reservar', data)
+    return this.http.post<Reserva_Ambiente_Interface>( this.url + '/movimientos/reserva/ambiente', data)
   }
   
 }

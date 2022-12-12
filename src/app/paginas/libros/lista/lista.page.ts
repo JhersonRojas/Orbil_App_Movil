@@ -34,14 +34,23 @@ export class ListaPage implements OnInit {
 
     // <---------- Esta sección llama los datos del Api Rest tomando en cuenta la categoria elegida ----------->
     let idc = this.route.snapshot.paramMap.get('idc');
+    this.listar_libros(idc);
+  }
+
+  listar_libros(idc: any){
     this.service.Listar_Libros_Service(idc).subscribe( resp => {
       this.respuesta = resp
-      this.libros.push(...resp.datos)
+      this.libros = this.respuesta.datos;
       this.searchLibros = this.libros;
 
-          // <------- Esta condicional valida si se obtuvieron datos de la categoria elegida ------->
-         if (resp.msj == "false"){ this.aviso = "false" } 
-         else { this.titulo_cat = this.libros[0].Nombre_Categoria }
+        // <------- Esta condicional valida si se obtuvieron datos de la categoria elegida ------->
+          if (resp.confirm == false ){
+            this.aviso = "false"
+            this.titulo_cat = "😒" 
+          } else { 
+            this.titulo_cat = this.libros[0].Categoria.Nombre_Categoria  
+          }
+        console.log(resp.datos)
       });
   }
 
@@ -52,7 +61,7 @@ export class ListaPage implements OnInit {
 
     if ( text && text.trim() != ''){
       this.searchLibros = this.searchLibros.filter((libros)=> {
-        return (libros.Nombre_Elementos.toLowerCase().indexOf(text.toLowerCase()) > -1)
+        return (libros.Nombre_Elemento.toLowerCase().indexOf(text.toLowerCase()) > -1)
       })
     }
   }

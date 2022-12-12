@@ -95,7 +95,7 @@ export class DetallePage implements OnInit {
     this.service.Reservar_Libro(this.todo).subscribe(
       resp => {
         this.respuesta = (resp)
-        this.alerta = (resp.boolean)
+        this.alerta = (resp.confirm)
           if ( this.alerta == "false"){ this.alertFin = "Lo siento, alguien ya reservo este libro" } 
           else { this.alertFin = "A reservado el libro en la fecha " + this.fecha_fin }
           return this.mostrarAlerta()

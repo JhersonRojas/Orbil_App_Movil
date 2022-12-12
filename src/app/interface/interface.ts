@@ -30,20 +30,28 @@ export interface Listar_Categorias_Interface {
 }
 
     // <----------------- Mapear los libros que hay en la base de datos ------------------->
+
 export interface Listar_Libros_Interface {
-    msj:              string;
-    datos:            Dato[];
+    datos: Dato[];
+    confirm: boolean;
+    msj: string;
 }
 
-    // <----------------- Complemento del mapeo de los libros ------------------->
 export interface Dato {
-    Pk_Elemento:      string;
-    Nombre_Elementos: string;
+    Pk_Elemento:     string;
+    Estado_Elemento: string;
+    Imagen:          string;
+    Nombre_Elemento: string;
+    Autor:           string;
+    Descripcion:     null | string;
+    Stock:           number;
+    Archivo_Aporte:  null;
+    Fk_Categoria:    number;
+    Categoria:       Categoria;
+}
+
+export interface Categoria {
     Nombre_Categoria: string;
-    Imagen:           string;
-    Autor:            string;
-    Descripcion:      string;
-    Stock:            number;
 }
 
     // <----------------- Mapeo de los datos que recive el Api Rest para reservar un computador ------------------->
@@ -56,13 +64,20 @@ export interface Reservar_Computador_Interface {
 }
 
     // <----------------- Mapeo de los datos que recive el Api Rest para reservar un ambiente ------------------->
-export interface Reserva_Ambiente_Interface{
-    fecha:            string;
-    jornada:          string;
-    usuario:          number;
-    mensaje:          string; 
-    datos:            string;
-    boolean:          string; 
+export interface Reserva_Ambiente_Interface {
+    confirm: boolean;
+    datos:   Datos;
+}
+
+export interface Datos {
+    Pk_Movimiento:   number;
+    Estado_Mv:       string;
+    Jornada_Reserva: string;
+    Fecha_Inicio:    string;
+    Fecha_Fin:       string;
+    Cantidad:        number;
+    Fk_Usuario:      number;
+    Fk_Elemento:     string;
 }
 
     // <-----------------  Mapeo de los datos que recive el Api Rest para reservar un proyector ------------------->
