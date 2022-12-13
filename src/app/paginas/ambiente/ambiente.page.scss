@@ -1,45 +1,57 @@
-    
-    .container{
-        position: relative;
+
+$naranja: #ff7f00;
+
+ion-toolbar {
+    position: relative;
+
+    .boton-menu {
+      float: left;
+      position: absolute;
+      width: 18%;
+      top: 50%;
+      left: 7%;
+      transform: translate(-50%, -50%); 
     }
-    
-    .icono{
-        float: right;
-        width:10%;
-        margin-top:3%;
-        margin-right: 3%;
-        margin-bottom: 1%;
+  
+    .nombre {
+      position: absolute;
+      width: 18%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);     
     }
-    
+  
+    .logo {
+      float: right;
+      position: absolute;
+      width: auto;
+      top: 50%;
+      left: 93%;
+      transform: translate(-50%, -50%); 
+    }
+}
+
+.container{
+    position: relative;
+    text-align: center;
+
     .box{
-        margin: 5%;
-        border-radius: 20px;
-        border: 3px solid #87837f !important;
-        box-shadow: -3px 3px 8px gray;
+      margin: 5%;
+      border-radius: 20px;
+      border: 3px solid #87837f !important;
+      box-shadow: -3px 3px 8px gray;
 
-        ion-img{
-            margin-top: 1%;
-            margin-left: 19%;
-            margin-right: 19%;
-            margin-bottom: 5%;
-            width: 60%;
-        }
-    }
+      .centrar{
+        margin-bottom: 10%;
+      }
 
-    .centrar{
-        text-align: center;
-    }
-
-    .nombre{
-        margin-top: 5%;
+      ion-img{
+        margin-top: 1%;
+        margin-left: 19%;
+        margin-right: 19%;
         margin-bottom: 5%;
-        width: 70px;
-        margin-left: 30%;
-        margin-right: 20%;
-    }
-
-    .arriba{
-        --background: linear-gradient(45deg, rgb(254, 147, 23) 0%, rgba(255,127,0,1) 100%) !important;
+        width: 60%;
+      }
     }
 
     ion-button{
@@ -49,80 +61,4 @@
         margin-bottom: 5%;
         width: 40%;
     }
-
-    @media (max-width: 300px) {
-
-        .arriba{
-            --background: linear-gradient(45deg, rgb(254, 147, 23) 0%, rgba(255,127,0,1) 100%) !important;
-            
-            .nombre{
-                margin-top: 5%;
-                margin-bottom: 5%;
-                width: 55px;
-                margin-left: 30%;
-                margin-right: 20%;
-            }
-        
-            .icono{
-                float: right;
-                width:10%;
-                margin-top:3%;
-                margin-right: 4%;
-                margin-bottom: 1%;
-            }
-        }
-    
-        .calendar{
-    
-            margin-top: 5%;
-            margin-left: 9%;
-            margin-right: 9%;
-            margin-bottom: 5%;
-            width: auto;
-    
-            .text {
-                margin-left: 20%;
-                font-size: 14px;
-            } 
-    
-        }
-    
-        ion-button{
-            margin-top: 10%;
-            margin-left: 25%;
-            margin-right: 25%;
-            margin-bottom: 5%;
-            width: 50%;
-            font-size: 12px;
-        }
-        
-    }
-
-    @media (max-width: 350px) {
-
-        .centrar{
-            font-size: 18px;
-        }
-
-        .calendar{
-            max-width:300px;
-        }
-    }
-
-    @media (max-width: 600px) {
-
-        .calendar{
-            margin-left: 3%;
-            margin-right: 3%;
-            max-width:600px;
-        }
-    }
-
-    @media (max-width: 800px) {
-
-        .calendar{
-            margin-left: 10%;
-            margin-right: 10%;
-            max-width:800px;
-        }
-    }
+}

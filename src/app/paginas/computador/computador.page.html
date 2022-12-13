@@ -1,9 +1,8 @@
 <ion-header>
-  <ion-toolbar class="arriba" >
-    <ion-back-button slot="start" color="light" [routerLink]="['/home']" routerLinkActive="router-link-active" ></ion-back-button>
-    <ion-title></ion-title>
-    <ion-img class="icono" src="../../assets/pictures/logo_orange.svg"></ion-img>
+  <ion-toolbar color="orange">
+    <ion-back-button class="boton-menu" mode="md" defaultHref="/home"></ion-back-button>
     <ion-img class="nombre" src="../assets/pictures/OrbilText.svg"></ion-img>
+    <ion-img class="logo" src="../../assets/pictures/logo_orange.svg"></ion-img>
   </ion-toolbar>
 </ion-header>
 
@@ -33,7 +32,7 @@
       </div> 
 
       <div class="cantidad">
-        <ion-input type="number" placeholder="Cantidad" formControlName="cantidad" ></ion-input>
+        <ion-input type="number" placeholder="Cantidad" formControlName="cantidad" min="1" max="21"></ion-input>
       </div>
               
       <ion-button shape="round" size="default" fill="solid" strong="strong"

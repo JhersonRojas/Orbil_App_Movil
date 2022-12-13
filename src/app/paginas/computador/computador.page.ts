@@ -69,6 +69,22 @@ export class ComputadorPage implements OnInit {
     return this.ValidarDatos();
   }
 
+    // <----------- Esta función confirma si los datos del usuario son validos, de no, lo regresara al login ------------->
+  async ValidarDatos(){
+    try { 
+      let token = localStorage.getItem('token')
+      if (token){
+        this.rol = localStorage.getItem('tipo_usuario')
+        this.usuario = localStorage.getItem('usuario')
+        this.identificacion = localStorage.getItem('identificacion')
+
+        if(this.rol == "Instructor" || this.rol == "Administrativo") 
+          {this.permiso = true } else { this.permiso = false}
+
+      } else {this.route.navigate(['/login'])}
+    } catch (error){}
+  }
+
     // <---------- Esta función cancela la posibilidad de elegir fines de semana en el calendario desplegable ---------->
   cancelarFinDeSemana = (dateString: string) => {
     const date = new Date(dateString);
@@ -104,22 +120,6 @@ export class ComputadorPage implements OnInit {
         // <------- Este "return" me regresa la función de mostrarAlert, lo que muestra el mensaje emergente en la vista al reservar --------->
         return this.mostrarAlerta()
     });
-  }
-
-    // <----------- Esta función confirma si los datos del usuario son validos, de no, lo regresara al login ------------->
-  async ValidarDatos(){
-    try { 
-      let token = localStorage.getItem('token')
-      if (token){
-        this.rol = localStorage.getItem('tipo_usuario')
-        this.usuario = localStorage.getItem('usuario')
-        this.identificacion = localStorage.getItem('identificacion')
-
-          if(this.rol == "Instructor" || this.rol == "Administrativo") 
-            {this.permiso = true } else { this.permiso = false}
-
-      } else {this.route.navigate(['/login'])}
-    } catch (error){}
   }
 
 }

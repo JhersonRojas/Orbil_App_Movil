@@ -23,7 +23,7 @@ export class AmbientePage implements OnInit {
 
     // <----------------- "nombre" e "id" son las variable que tomaran los datos del LocalStorage -------------------------->
         // <--- El localStorage es un almacenamiento interno, este tiene guardados los datos del usuario que accedio --->
-  nombre= localStorage.getItem('usuario');
+  nombre= localStorage.getItem('usuario').split(' ', 1)[0];
   id = localStorage.getItem('identificacion');
 
     // <----------------- Esta variable recibe la fecha actual, esto es un componente propio de angular ------------------->
@@ -31,7 +31,6 @@ export class AmbientePage implements OnInit {
 
     // <----------------- "respuesta" recibe los datos recibidos  ------------------->
   respuesta:  any;
-  secreto = false
 
     // <--------- Estas variables son las que tomara la función que mostrara un mensaje emergente en la vista al reservar --------------->
   alerta:       any; 
@@ -76,7 +75,7 @@ export class AmbientePage implements OnInit {
   }
 
       // <------------------- Estos son los datos que se envian a las variables antes mencionadas -------------->
-  ReservarAmbiente() {
+  async ReservarAmbiente() {
       // <-------------------- Estos son los datos que se envian a las variables antes mencionadas --------------->
     this.fecha = this.form.value.fecha
     this.jornada = this.form.value.jornada
@@ -85,8 +84,8 @@ export class AmbientePage implements OnInit {
 
       // <--------------- Estos son los datos que se envian a las variables antes mencionadas --------------------->
     this.todo = { usuario: this.form.value.usuario, jornada : this.form.value.jornada, fecha : this.fecha_fin[0]}
-      this.service.Reservar_Ambiente_Service(this.todo).subscribe(
-        resp => {
+      await this.service.Reservar_Ambiente_Service(this.todo).subscribe(
+         resp => {
           this.respuesta = (resp)
           console.log(resp)
 

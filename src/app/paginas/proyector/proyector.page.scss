@@ -1,28 +1,36 @@
 
-    // <--- Los estilos del la barra superior del App --->
-ion-toolbar{
+$naranja: #ff7f00;
 
-    .icono{
-        float: right;
-        width:10%;
-        margin-top:3%;
-        margin-right: 3%;
-        margin-bottom: 1%;
+ion-toolbar {
+    position: relative;
+
+    .boton-menu {
+      float: left;
+      position: absolute;
+      width: 18%;
+      top: 50%;
+      left: 7%;
+      transform: translate(-50%, -50%); 
     }
-
-    .nombre{
-        margin-top: 5%;
-        margin-bottom: 5%;
-        width: 70px;
-        margin-left: 30%;
-        margin-right: 20%;
+  
+    .nombre {
+      position: absolute;
+      width: 18%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);     
+    }
+  
+    .logo {
+      float: right;
+      position: absolute;
+      width: auto;
+      top: 50%;
+      left: 93%;
+      transform: translate(-50%, -50%); 
     }
 }
-    // <--- Color de la barra superior --->
-    .arriba{
-        --background: linear-gradient(45deg, rgb(254, 147, 23) 0%, rgba(255,127,0,1) 100%) !important;
-    
-    }
+
 
     // <--- Los estilos del la barra superior del App --->
     .container{

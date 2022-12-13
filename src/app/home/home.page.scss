@@ -4,33 +4,35 @@
 }
 
 ion-toolbar {
+  position: relative;
 
   .boton-menu {
     float: left;
+    position: absolute;
     width: 18%;
-    margin-top: 2%;
-    margin-bottom: 1%;
-    margin-right: 1%;
+    top: 50%;
+    left: 7%;
+    transform: translate(-50%, -50%); 
   }
 
   .nombre {
-    float: left;
+    position: absolute;
     width: 18%;
-    margin-top: 3%;
-    margin-bottom: 3%;
-    margin-left: 24%;
-    margin-right: 15%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);     
   }
 
   .logo {
     float: right;
-    width: 8%;
-    margin-top: 2%;
-    margin-bottom: 1%;
-    margin-left: 5%;
-    margin-right: 5%;
+    position: absolute;
+    width: auto;
+    top: 50%;
+    left: 93%;
+    transform: translate(-50%, -50%); 
   }
 }
+
 
 ion-content {
   .titulo {

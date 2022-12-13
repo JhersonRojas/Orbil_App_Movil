@@ -74,6 +74,7 @@ export interface Datos {
     Estado_Mv:       string;
     Jornada_Reserva: string;
     Fecha_Inicio:    string;
+    Otra_Fecha:      string;
     Fecha_Fin:       string;
     Cantidad:        number;
     Fk_Usuario:      number;

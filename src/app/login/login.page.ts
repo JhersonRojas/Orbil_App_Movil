@@ -49,46 +49,42 @@ export class LoginPage implements OnInit {
 
     // <-- Verificar el token, si existe uno en la App, enviara al usuario a la pagina siguiente -->
   checkToken(){
-    if (localStorage.getItem('token'))
-    { this.NgRouter.navigate(['/home']);}
+    if (localStorage.getItem('token')) this.NgRouter.navigate(['/home'])
+    if (!localStorage.getItem('token')) this.NgRouter.navigate(['/login'])
   }
 
     // <-- El mensaje en caso de información no valida al acceder -->
-  async ToastDeError(msj: string) {
+  async msjToast(msj: string) {
     const toast = await this.NgToast.create({
       message: msj,
-      duration: 2000,
+      duration: 2500,
       position: 'bottom'
     });
     toast.present();
   }
 
-    // <-- Función que envia los datos del formulario al Api Rest, cuando recibe una respuesta, permite o no acceder -->
+    // <-- Función que envia los datos del formulario al Api Rest y los envia para su confirmacion -->
   async ValidacionDeDatos(){
-
     try{
       this.ingreso = this.service.Login_Service(this.form.value).subscribe(
         async resp => {
           this.respuesta = (resp);
           this.boolean = (resp.confirm);
           this.token = (resp.token);
-          console.log(this.respuesta)
 
-          if ( false === this.boolean ) return this.ToastDeError('Contraseña o usuario incorrecto')
+          if ( false === this.boolean ) return this.msjToast('Contraseña o usuario incorrecto')
 
-          this.Restric(resp.user.Tipo_Usuario)
+          return this.Restric(resp.user.Tipo_Usuario)
+      })
+      return this.ingreso;  
 
-        }
-      )
-        return this.ingreso;  
-    } 
-    // <-- Si llega a ocurrir un error al tomarsew los datos, este lo mostrara por consola -->
-    catch (error){ console.log(error) }
-  } 
+    } catch (error) { console.error(error) }
+  }
 
   async Restric( cargo: string ) {
     const users = {
       "Aprendiz":           "Aprendiz",
+      "Donado":             "Aprendiz",
       "Instructor":         "Instructor",
       "Administrativo 1":   "Administrativo",
       "Administrativo 2":   "Administrativo", 
@@ -97,9 +93,9 @@ export class LoginPage implements OnInit {
       "Operarios":          "Administrativo", 
       "Giras Especiales":   "Administrativo", 
       "Visitas":            "Visitante",
-      "Aprendiz Visitante": "Visitante"
+      "Aprendiz Visitante": "Visitante", 
     }
-    await users[cargo] ?? this.ToastDeError('No se reconoce el cargo');
+    await users[cargo] ?? this.msjToast('No se reconoce el cargo');
 
     this.identificacion = this.respuesta.user.Pk_Identificacion,   
       localStorage.setItem('identificacion', this.identificacion);
@@ -112,7 +108,11 @@ export class LoginPage implements OnInit {
 
       localStorage.setItem('token', this.token);
 
-    return this.NgRouter.navigate(['/home'])
-  }
+      this.NgRouter.navigate(['/home'])
+      return setTimeout( async ( ) => {
+        await location.reload()
+      }, 40) 
+
+    }
 
 }
