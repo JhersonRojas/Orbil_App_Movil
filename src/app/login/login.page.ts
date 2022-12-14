@@ -58,7 +58,9 @@ export class LoginPage implements OnInit {
     const toast = await this.NgToast.create({
       message: msj,
       duration: 2500,
-      position: 'bottom'
+      position: 'bottom',
+      mode: 'ios',
+
     });
     toast.present();
   }

@@ -7,7 +7,7 @@ $naranja: #ff7f00;
   height: $tall;
   font-size: $letter;
   margin-top: 1%;
-  margin-bottom: 2%;
+  margin-bottom: 1%;
   border-radius: 30px;
 }
 
@@ -86,8 +86,8 @@ $naranja: #ff7f00;
             margin-right: 30%;
           }
     .inputs {
-      .input1 { @include input($tall:35px, $letter: x-small);}
-      .input2 { @include input($tall:35px, $letter: x-small);}
+      .input1 { @include input($tall:32px, $letter: x-small);}
+      .input2 { @include input($tall:32px, $letter: x-small);}
     }
     .ocean { .wave { height: 200px; left: -180%; } }
   }
@@ -101,8 +101,8 @@ $naranja: #ff7f00;
             margin-right: 30%;
           }
     .inputs {
-      .input1 { @include input($tall:45px, $letter: small);}
-      .input2 { @include input($tall:45px, $letter: small);}
+      .input1 { @include input($tall:42px, $letter: small);}
+      .input2 { @include input($tall:42px, $letter: small);}
     }
     .ocean { .wave { height: 220px; left: -90%; } }
   }
@@ -116,8 +116,8 @@ $naranja: #ff7f00;
             margin-right: 30%;
           }
     .inputs {
-      .input1 { @include input($tall:45px, $letter: small);}
-      .input2 { @include input($tall:45px, $letter: small);}
+      .input1 { @include input($tall:42px, $letter: small);}
+      .input2 { @include input($tall:42px, $letter: small);}
     }
     .ocean { .wave { height: 280px; left: -90%; } }
   }

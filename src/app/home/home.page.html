@@ -1,16 +1,10 @@
-<ion-header>
-  <ion-toolbar color="orange" >
-    <div class="boton-menu"><ion-menu-button menu="main-menu" color="light"></ion-menu-button></div>
-    <ion-img class="nombre"  src="../assets/pictures/OrbilText.svg"></ion-img>
-    <ion-img class="logo" src="../assets/pictures/logo_orange.svg"></ion-img>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
 
-    <div class="titulo">
-      <p> Hola {{usuario}} espero estes teniendo buen día</p>
-    </div> 
+    <div class="spam">
+      <ion-img src="../../assets/other/DSC_4633.JPG"></ion-img>
+    </div>
+
+    <div class="titulo"> <p> Hola {{usuario}} bienvenido a Orbil</p> </div> 
   
     <div class="bienvenida">
       <p>En este aplicativo contara con la capacidad de reservar algunos de los 
@@ -19,27 +13,41 @@
     </div>
   
     <div class="buttons">
-      <ion-button type="submit" fill="solid" strong="strong" color="orange"  fill="outline" [routerLink]="['/computador']">
-        Portatiles
-        <ion-img class="portatil" src="../assets/pictures/img_portatil.svg"></ion-img>
-      </ion-button>
+      <ion-card mode="ios" [routerLink]="['/computador']">
+        <ion-card-header>
+          <ion-img class="portatil" src="../assets/pictures/img_portatil.svg"></ion-img> 
+        </ion-card-header>
+        <ion-card-content> Portatiles </ion-card-content>
+      </ion-card>
+      
+      <ion-card mode="ios" [routerLink]="['/categorias']">
+        <ion-card-header>
+          <ion-img class="libro" src="../assets/pictures/libro.svg"></ion-img> 
+        </ion-card-header>
+        <ion-card-content> Libros </ion-card-content>
+      </ion-card>
 
-      <ion-button type="submit" fill="solid" strong="strong" color="orange" fill="outline" [routerLink]="['/categorias']">
-        Libros
-        <div class="libro">
-          <ion-img  src="../assets/pictures/libro.svg"></ion-img>
-        </div>
-      </ion-button>
+      <!-- Esta directiva valida que tipo de usuario accedio, si fue instructir o administrativo deja ver su contenido, si no, lo esconde -->
+      <ion-card mode="ios" [routerLink]="['/proyector']" *ngIf='permiso == true'>
+        <ion-card-header>
+          <ion-img class="proyector" src="../assets/pictures/proyector.svg"></ion-img> 
+        </ion-card-header>
+        <ion-card-content> Proyector </ion-card-content>
+      </ion-card>
 
-        <!-- Esta directiva valida que tipo de usuario accedio, si fue instructir o administrativo deja ver su contenido, si no, lo esconde -->
-      <ion-button *ngIf='permiso == true' type="submit" fill="solid" strong="strong" color="orange" fill="outline" [routerLink]="['/proyector']">
-        Proyectores
-        <ion-img class="proyector" src="../assets/pictures/proyector.svg"></ion-img>
-      </ion-button>
-        <!-- Esta directiva valida que tipo de usuario accedio, si fue instructir o administrativo deja ver su contenido, si no, lo esconde -->
-      <ion-button *ngIf='permiso == true' type="submit" fill="solid" strong="strong" color="orange" fill="outline" [routerLink]="['/ambiente']">
-        Biblioteca
-        <ion-img class="ambiente" src="../assets/pictures/ambiente.svg"></ion-img>
-      </ion-button>
+      <!-- Esta directiva valida que tipo de usuario accedio, si fue instructir o administrativo deja ver su contenido, si no, lo esconde -->
+      <ion-card mode="ios" [routerLink]="['/ambiente']" *ngIf='permiso == true'>
+        <ion-card-header>
+          <ion-img class="ambiente" src="../assets/pictures/ambiente.svg"></ion-img> 
+        </ion-card-header>
+        <ion-card-content> Ambiente </ion-card-content>
+      </ion-card>
     </div>
+
+    <div class="footer">
+      <div class="call-menu"><ion-menu-button menu="main-menu" color="light"></ion-menu-button></div>
+      <ion-img class="nombre" src="../assets/pictures/OrbilText.svg"></ion-img>
+      <div class="exit"><ion-icon name="exit-outline"></ion-icon></div>
+    </div>
+
 </ion-content>

@@ -3,6 +3,8 @@
   src: url("../../assets/fonts/BerlinSansFBDemiBold.ttf");
 }
 
+$naranja: #ff7f00;
+
 ion-toolbar {
   position: relative;
 
@@ -14,30 +16,21 @@ ion-toolbar {
     left: 7%;
     transform: translate(-50%, -50%); 
   }
-
-  .nombre {
-    position: absolute;
-    width: 18%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);     
-  }
-
-  .logo {
-    float: right;
-    position: absolute;
-    width: auto;
-    top: 50%;
-    left: 93%;
-    transform: translate(-50%, -50%); 
-  }
 }
 
 
 ion-content {
+
+  .spam {
+    overflow: hidden;
+    width: 100%;
+    height: 35%;
+  }
+
   .titulo {
     text-align: center;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: orbil_Berlin;
+    //font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     margin-top: 7%;
     margin-left: 5%; 
     margin-right: 5%;
@@ -52,108 +45,92 @@ ion-content {
   }
   
   .buttons {
-    float: left;
-    margin-left: 7%;
-    margin-bottom: 5%;
-    width: 90%;
+    width: auto;
+    height: 50%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 35%;
 
-    ion-button {
+    ion-card {
+      float: left;
+      position: relative;
+      text-align: center;
+      border: 1.5px solid #87837f !important;
       font-family: orbil_Berlin;
-      font-size: 110%;
-      width:90%;
-      height: 100%;
-      margin-left: 3%;
-  
-      .portatil {
-        width: 40%;
-        margin-top: 5%;
-        margin-bottom: 5%;
-        margin-left: 10%;
-        margin-right: 10%;
-      } 
-      .libro {
-        width: 26%;
-        margin-top: 5%;
-        margin-bottom: 5%;
-        margin-left: 20%;
+      font-size: 100%;
+      width: 40%;
+      padding: 1%;
+
+      ion-card-header {
+        height: 100px ;
+        
+        ion-img{
+          width: 60%;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+
+        .libro {
+          width: 42%;
+        }
       }
-      .ambiente {
-        width: 24%;
-        margin-top: 5%;
-        margin-bottom: 5%;
-        margin-left: 15%;
-        margin-right: 10%;
+
+      ion-card-content{
+        margin: 2%;
+        background-color: #428cff !important;
+        color: aliceblue !important;
+        text-align: center;
+        padding-top: 5%;
+        padding-bottom: 6%;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+
       }
-      .proyector {
-        width: 35%;
-        margin-top: 5%;
-        margin-bottom: 5%;
-        margin-left: 15%;
-        margin-right: 10%;
-      }
+
     }
-  } 
-}
-
-@media (min-width:200px) {
-  ion-content {
-    .titulo { font-size: 12px; }
-    .bienvenida { font-size: 10px; }
-    ion-button {
-      margin-left: 3%;
-      margin-right: 3%;
-      width: 90%;
-      font-size: 70%;
-      .proyector {
-        margin-top: 10%;
-        margin-bottom: 10%;
-        margin-left: 15%;
-        margin-right: 10%;
-        width: 35%
-      }
-    } 
   }
-}
 
-@media (min-width:300px) {
-  .titulo { font-size: 14px; }
-  .bienvenida { font-size: 13px;}
-  ion-button {
-    margin-left: 4%;
-    margin-right: 4%;
+  .footer {
+    position: absolute;
+    position: fixed;
+    background-color: $naranja;
     width: 90%;
-    font-size: 90%;
-  } 
-}
+    height: 40px;
+    top: 95%;
+    left: 50%;
+    transform: translate( -50%, -50%);
+    margin-bottom: 3%;
+    border-radius: 20px;
+    box-shadow: 5px 5px 2px #87837f ;
 
-@media (min-width:400px) {
-  .titulo { font-size: 20px; }
-  .bienvenida { font-size: 16px; }
-  ion-button {
-    margin-left: 2%;
-    margin-right: 2%;
-    width: 92%;
-    font-size: 20px;
-  } 
-}
+    .call-menu {
+      position: absolute;
+      background-color: $naranja;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      top: 25%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
 
-@media (min-width:600px ) {
-  .titulo { font-size: 27px; }
-  .bienvenida { font-size: 23px; }
-  ion-button {
-    font-size: 30px;
-  } 
-}
+    .nombre {
+      position: absolute;
+      width: 18%;
+      top: 50%;
+      left: 20%;
+      transform: translate(-50%, -50%);     
+    }
   
-@media (min-width:700px ) {
-  .titulo { font-size: 27px; }
-
-  .bienvenida { font-size: 23px; }
-
-  ion-button {
-    margin-left: 15%;
-    margin-right: 15%;
-    width: 65%;
-    font-size: 30px;
-  } 
+    .exit {
+      position: absolute;
+      width: 8%;
+      top: 50%;
+      left: 90%;
+      transform: translate(-50%, -50%); 
+    }
+  }
+  
 }

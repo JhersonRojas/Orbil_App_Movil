@@ -37,7 +37,7 @@ export class HomePage implements OnInit {
       let token = localStorage.getItem('token')
       if (token){
         this.rol = localStorage.getItem('tipo_usuario')
-        this.usuario = localStorage.getItem('usuario')
+        this.usuario = localStorage.getItem('usuario').split(' ', 1)[0]
         this.identificacion = localStorage.getItem('identificacion')
 
           if(this.rol == "Instructor" || this.rol == "Administrativo") 

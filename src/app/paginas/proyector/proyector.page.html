@@ -17,8 +17,8 @@
 
       <ion-item>
         <ion-select placeholder="Seleccione proyector" formControlName="serial">
-          <ion-select-option *ngFor="let pro of proyectores" value="{{pro.Pk_Elemento}}">
-            {{pro.Nombre_Elementos}}
+          <ion-select-option *ngFor="let pro of proyector" value="{{pro.Pk_Elemento}}">
+            {{pro.Nombre_Elemento}}
           </ion-select-option>
         </ion-select>
       </ion-item>
@@ -35,7 +35,20 @@
         </ion-select>
       </ion-item>
 
-      <ion-input type="date" class="sitio" formControlName="fecha"></ion-input>
+      <div class="calendar">
+        <h5 style="margin-bottom: 2.5%;"> Elige una fecha <ion-icon name="arrow-down-outline"></ion-icon> </h5>
+        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime id="datetime" formControlName="fecha" name="fecha" color="verde"
+            presentation="date" min="{{fechaHoy | date: 'YYYY-MM-dd'}}" max="2024-12-30T23:59:59"
+            display-format="YYYY-MM-dd" [isDateEnabled]="cancelarFinDeSemana" mode="md" 
+            style="color: rgb(136, 107, 107) !important;" [showDefaultButtons]="true">
+            <span slot="title"> Elige la fecha a reservar </span></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </div>
+      
       <ion-input class="sitio" type="text" placeholder="¿Donde?" formControlName="sitio" ></ion-input>
             
       <ion-button shape="round" size="default" fill="solid" strong="strong"

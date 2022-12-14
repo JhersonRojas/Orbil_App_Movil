@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProyectorService } from '../../services/proyector.service';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { Dato } from 'src/app/interface/interface';
 
 @Component({
   selector: 'app-proyector',
@@ -10,7 +11,7 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./proyector.page.scss'],
 })
 
-    // <----------------- Esta clase contiene las funciones y variables del modulo de proyector ------------------->
+    // <-- cClase para el modulos de proyectores -->
 export class ProyectorPage implements OnInit {
 
   permiso: boolean = false 
@@ -30,7 +31,8 @@ export class ProyectorPage implements OnInit {
   fechaHoy:Date = new Date();
   
     // <------------- "proyectores" es la variable que guarda los datos recibidos del servicio al Api Rest --------------->
-  proyectores:any;
+  proyectores: any; 
+  proyector: Dato[] = [];
 
     // <----------------- "respuesta" recibe los datos recibidos  ------------------->
   respuesta:  any;
@@ -52,27 +54,27 @@ export class ProyectorPage implements OnInit {
       // <----------------- "service" obtiene los servicios proporcionados desde proyectores service ------------------->
     private service: ProyectorService,
 
-      // <---- "FB" me proporciona una función propia de angular para agrupar información traida desde algun formulario del HTML ------>
-    private FB: FormBuilder,
+      // <---- "NgFb" me proporciona una función propia de angular para agrupar información traida desde algun formulario del HTML ------>
+    private NgFb: FormBuilder,
     
-      // <--------- "route" es una función de angular que me permite redirigir al usuario a otra ruta por medio de una orden ----------->
-    private route: Router,
+      // <---------  NgRouter" es una función de angular que me permite redirigir al usuario a otra ruta por medio de una orden ----------->
+    private NgRouter: Router,
 
-      // <--------- "alert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas ----------->
-    private alert: AlertController) {}
+      // <--------- "NgAlert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas ----------->
+    private NgAlert: AlertController) {}
   
     // <----------------- Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista ------------------->
   ngOnInit() {
 
       // <----------------- Esta función es la que realiza el llamado al servicio, este ejecuta la consulta al Api Rest ------------------->
     this.service.Listar_Proyectores_Service().subscribe(
-    resp => {
-          // <------- "resp" es lo obtenido de la consulta, los datos que contiene se añaden a la variable llamada "proyectores" --------->
-        this.proyectores = resp
-      });
+    resp => { 
+      this.proyectores = ( resp ) 
+      this.proyector = ( resp.datos )
+    });
 
       // <----------------- "for" añade los datos en el momento que alguien diligencie el formulario en la vista ------------------->
-    this.form = this.FB.group({
+    this.form = this.NgFb.group({
         fecha   : ['', Validators.required],
         jornada : ['', Validators.required],
         serial  : ['', Validators.required],
@@ -86,7 +88,7 @@ export class ProyectorPage implements OnInit {
     // <------------- Esta función es la que me permite enviar un mensaje emergente al realizarse una reserva --------------->
   async mostrarAlerta() {
     const total = await this.alertFin
-    const alert = await this.alert.create({ message:total});
+    const alert = await this.NgAlert.create({ message:total});
     await alert.present();
     console.log(total)
   }
@@ -130,8 +132,15 @@ export class ProyectorPage implements OnInit {
           if(this.rol == "Instructor" || this.rol == "Administrativo") 
             {this.permiso = true } else { this.permiso = false}
 
-      } else {this.route.navigate(['/login'])}
+      } else {this.NgRouter.navigate(['/login'])}
     } catch (error){}
   }
+
+  // <---------- Esta función cancela la posibilidad de elegir fines de semana en el calendario desplegable ---------->
+  cancelarFinDeSemana = (dateString: string) => {
+    const date = new Date(dateString);
+    const utcDay = date.getUTCDay();
+    return utcDay !== 0 && utcDay !== 6;
+  };
 
 } // Este es el cierre de la clase de proyector 
