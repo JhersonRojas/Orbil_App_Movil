@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="orange">
+  <ion-toolbar>
     <ion-back-button class="boton-menu" mode="md" color="light" defaultHref="/home"></ion-back-button>
     <ion-img class="nombre" src="../assets/pictures/OrbilText.svg"></ion-img>
     <ion-img class="logo" src="../../assets/pictures/logo_orange.svg"></ion-img>
@@ -8,41 +8,49 @@
 
 <ion-content>
   <div class="container">
-    <ion-card class="box">
-    <h2 class="centrar"> Reserva del ambiente </h2>
-    <ion-img class="ambiente" src="../assets/pictures/ambiente.svg"></ion-img> <br>
-      <form [formGroup]="form" (ngSubmit)="ReservarAmbiente()">
+    <ion-card>
+      <ion-card-header>
+        <h1>Reserva del ambiente</h1>
+      </ion-card-header>
 
-        <div class="calendar">
-          <h5 style="margin-bottom: 2.5%;"> Elige una fecha <ion-icon name="arrow-down-outline"></ion-icon> </h5>
-          <ion-datetime-button datetime="datetime"></ion-datetime-button>
-          <ion-modal [keepContentsMounted]="true">
-            <ng-template>
-              <ion-datetime id="datetime" formControlName="fecha" name="fecha" color="verde"
-              presentation="date" min="{{fechaHoy | date: 'YYYY-MM-dd'}}" max="2024-12-30T23:59:59"
-              display-format="YYYY-MM-dd" [isDateEnabled]="cancelarFinDeSemana" mode="md" 
-              style="color: rgb(136, 107, 107) !important;" [showDefaultButtons]="true">
-              <span slot="title"> Elige la fecha a reservar </span></ion-datetime>
-            </ng-template>
-          </ion-modal>
-        </div>
-
-        <ion-item lines="none">
-          <ion-select formControlName="jornada" placeholder="Seleccione jornada" name="jornada" mode="ios">
-            <ion-select-option value="Mañana"> Jornada mañana </ion-select-option>
-            <ion-select-option value="Tarde"> Jornada tarde </ion-select-option>
-          </ion-select>
-        </ion-item>
-    
-        <h5 class="centrar"> A nombre de {{nombre}}</h5>
-
-        <ion-item>   
-          <ion-button (click)="ReservarAmbiente()" [disabled]="!form.valid"
-          shape="round" size="default" fill="solid" strong="strong" 
-          color="orange" style="font-size: 0.7rem;"> Reservar </ion-button>
-        </ion-item> 
+      <ion-card-content>
         
-      </form>
-    </ion-card>  
+        <ion-img class="ambiente" src="../assets/pictures/ambiente.svg"></ion-img>
+
+        <form [formGroup]="form" (ngSubmit)="Reserve()">
+          <div class="calendar">
+            <h2 style="margin-right: 1%;"> Elige una fecha: </h2>
+            <ion-datetime-button datetime="datetime"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime id="datetime" formControlName="fecha" name="fecha" color="primary"
+                presentation="date" min="{{fechaHoy | date: 'YYYY-MM-dd'}}" max="2024-12-30T23:59:59"
+                display-format="YYYY-MM-dd" [isDateEnabled]="cancelarFinDeSemana" mode="md" [showDefaultButtons]="true" 
+                style=" width: auto; margin: 1%; color: rgb(136, 107, 107) !important;">
+                <span slot="title"> Elige la fecha a reservar </span></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </div>
+
+          <ion-item class="select" lines="none">
+            <ion-select formControlName="jornada" placeholder="Seleccione jornada" 
+                        mode="ios" name="jornada" interface="action-sheet"  [interfaceOptions]="select_header">
+              <ion-select-option value="Mañana"> Jornada mañana </ion-select-option>
+              <ion-select-option value="Tarde"> Jornada tarde </ion-select-option>
+            </ion-select>
+          </ion-item>
+          
+          <h5 class="centrar"> A nombre de {{nombre}}</h5>
+
+          <ion-button shape="round" size="default" fill="solid" strong="strong"
+          color="primary" (click)="confirmReserve()" [disabled]="!form.valid"> Reservar
+          </ion-button>
+        </form>
+  
+      </ion-card-content>
+    </ion-card>
   </div>
+
+  <div class="call-menu"><ion-menu-button menu="main-menu" color="light"></ion-menu-button></div>
+
 </ion-content>

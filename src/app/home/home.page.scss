@@ -18,20 +18,52 @@ ion-toolbar {
   }
 }
 
-
 ion-content {
 
-  .spam {
+  .slider-container {
     overflow: hidden;
     width: 100%;
-    height: 35%;
+    height: 40%;
+    padding: 0;
+    margin: 0;
+
+    .slides {
+      padding: 0;
+      margin: 0;
+      display: flex;
+      width: 400%;
+      animation: 12s slide_animation infinite alternate;
+
+      ion-img {
+        float: left;
+        list-style: none;
+        margin: 0;
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    @keyframes slide_animation {
+      0%{margin-left: 0%;}
+      25%{margin-left: 0%;}
+
+      25%{margin-left: -100%;}
+      50%{margin-left: -100%;}
+
+      50%{margin-left: -200%;}
+      75%{margin-left: -200%;}
+
+      75%{margin-left: -300%;}
+      100%{margin-left: -300%;}
+
+  }
   }
 
   .titulo {
     text-align: center;
     font-family: orbil_Berlin;
     //font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    margin-top: 7%;
+    margin-top: 1%;
     margin-left: 5%; 
     margin-right: 5%;
   }
@@ -49,13 +81,14 @@ ion-content {
     height: 50%;
     margin-left: 5%;
     margin-right: 5%;
-    margin-bottom: 35%;
+    margin-bottom: 15%;
 
     ion-card {
       float: left;
       position: relative;
       text-align: center;
       border: 1.5px solid #87837f !important;
+      box-shadow: 4px 4px 20px #87837f ;
       font-family: orbil_Berlin;
       font-size: 100%;
       width: 40%;
@@ -92,45 +125,15 @@ ion-content {
     }
   }
 
-  .footer {
+  .call-menu {
     position: absolute;
     position: fixed;
     background-color: $naranja;
-    width: 90%;
-    height: 40px;
-    top: 95%;
-    left: 50%;
-    transform: translate( -50%, -50%);
-    margin-bottom: 3%;
-    border-radius: 20px;
-    box-shadow: 5px 5px 2px #87837f ;
-
-    .call-menu {
-      position: absolute;
-      background-color: $naranja;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      top: 25%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    .nombre {
-      position: absolute;
-      width: 18%;
-      top: 50%;
-      left: 20%;
-      transform: translate(-50%, -50%);     
-    }
-  
-    .exit {
-      position: absolute;
-      width: 8%;
-      top: 50%;
-      left: 90%;
-      transform: translate(-50%, -50%); 
-    }
+    box-shadow: 4px 4px 20px #87837f ;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    top: 85%;
+    left: 75%;
   }
-  
 }

@@ -1,7 +1,14 @@
+  @font-face {
+  font-family:orbil_Berlin;
+  src: url("../../../assets/fonts/BerlinSansFBDemiBold.ttf");
+}
 
 $naranja: #ff7f00;
+$verde: #38A900;
+$azul: #3880ff;
 
 ion-toolbar {
+    --background: #39A900;
     position: relative;
 
     .boton-menu {
@@ -32,33 +39,75 @@ ion-toolbar {
 }
 
 .container{
-    position: relative;
-    text-align: center;
+  text-align: center;
 
-    .box{
-      margin: 5%;
-      border-radius: 20px;
-      border: 3px solid #87837f !important;
-      box-shadow: -3px 3px 8px gray;
+  ion-card {
+    padding: 2%;
+    box-shadow: 2px 2px 20px #87837f ;
 
-      .centrar{
+    ion-card-header {
+      font-family: orbil_Berlin;
+      display: grid;
+      place-items: center;
+      background-color: $azul;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      color: aliceblue !important;
+      
+      h1 {
+        margin: 0;
+      }
+    }
+
+    ion-card-content {
+      display: grid;
+      place-items: center;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+
+      .ambiente {
+        width: 55%;
+        margin-top: 15%;
+        margin-bottom: 15%;
+      }
+
+      .calendar {
+        display: flex;
+        align-items: center;
+
+        h2 {
+          float: left;
+          margin: 0;
+          padding: 0;
+        }
+      }
+
+      .select {
+        margin-top: 10%;
+        margin-bottom: 10%;
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      ion-button {
+        margin-top: 10%;
         margin-bottom: 10%;
       }
-
-      ion-img{
-        margin-top: 1%;
-        margin-left: 19%;
-        margin-right: 19%;
-        margin-bottom: 5%;
-        width: 60%;
-      }
     }
 
-    ion-button{
-        margin-top: 5%;
-        margin-left: 30%;
-        margin-right: 30%;
-        margin-bottom: 5%;
-        width: 40%;
-    }
+  }
+}
+
+.call-menu {
+  position: absolute;
+  position: fixed;
+  background-color: $naranja;
+  box-shadow: 4px 4px 20px #87837f ;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  top: 85%;
+  left: 75%;
+ 
 }

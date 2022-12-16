@@ -18,6 +18,11 @@ export class AmbientePage implements OnInit {
     usuario:        string; 
     identificacion: string; 
 
+  select_header = {
+    header: 'Jornada a elegir',
+    subHeader: 'Elige una jornada a reservar',
+  };
+
     // <--- Los estilos del la barra superior del App --->
   form: FormGroup;
 
@@ -43,39 +48,53 @@ export class AmbientePage implements OnInit {
 
     // <----------------- El constructor obtiene los parametros importados de diferentes componentes ------------------->
   constructor(
-      // <----------------- "service" obtiene los servicios proporcionados desde ambiente service ------------------->
-    private service: AmbienteService,
+    private service: AmbienteService, // <-- "service" obtiene los servicios proporcionados desde ambiente service -->
+    private NgFb: FormBuilder, // <-- "NgFb" me proporciona una función propia de angular para agrupar información traida desde algun formulario del HTML -->
+    private NgRouter: Router, // <-- "NgRouter" es una función de angular que me permite redirigir al usuario a otra ruta por medio de una orden -->
+    private NgAlert: AlertController // <-- "NgAlert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas -->
 
-      // <---- "FB" me proporciona una función propia de angular para agrupar información traida desde algun formulario del HTML ------>
-    private FB: FormBuilder,
-    
-      // <--------- "route" es una función de angular que me permite redirigir al usuario a otra ruta por medio de una orden ----------->
-    private route: Router,
-
-      // <--------- "alert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas ----------->
-    private alert: AlertController) {}
+  ) {}
 
     // <----------------- Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista ------------------->
   ngOnInit() {
       // <----------------- "for" añade los datos en el momento que alguien diligencie el formulario en la vista ------------------->
-    this.form = this.FB.group({
+    this.form = this.NgFb.group({
       fecha   : ['', Validators.required],
       jornada : ['', Validators.required],
       usuario : [this.id, Validators.required]
     }); 
 
-      // <----------------- "return" llama a la función de "validarDatos" ------------------->
     return this.ValidarDatos();
   }
 
     // <------------- Esta función es la que me permite enviar un mensaje emergente al realizarse una reserva --------------->
-  async mostrarAlerta( msj ) {
-    const alert = await this.alert.create({ message:msj});
+  async mostrarAlerta( msj: string ) {
+    const alert = await this.NgAlert.create({ message:msj});
     await alert.present();
   }
 
+  async confirmReserve() {
+    const alert = await this.NgAlert.create({
+      header: `Confirmar la reserva?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Confirmar',
+          role: 'confirm',
+        },
+      ],
+    });
+    await alert.present();
+    const confirm = await alert.onDidDismiss();
+
+    if ( confirm.role == 'confirm') return this.Reserve();
+  }
+
       // <------------------- Estos son los datos que se envian a las variables antes mencionadas -------------->
-  async ReservarAmbiente() {
+  async Reserve() {
       // <-------------------- Estos son los datos que se envian a las variables antes mencionadas --------------->
     this.fecha = this.form.value.fecha
     this.jornada = this.form.value.jornada
@@ -85,10 +104,13 @@ export class AmbientePage implements OnInit {
       // <--------------- Estos son los datos que se envian a las variables antes mencionadas --------------------->
     this.todo = { usuario: this.form.value.usuario, jornada : this.form.value.jornada, fecha : this.fecha_fin[0]}
       await this.service.Reservar_Ambiente_Service(this.todo).subscribe(
-         resp => {
+        resp => {
           this.respuesta = (resp)
-          console.log(resp)
+          
+          if ( this.respuesta.confirm === true ) return this.mostrarAlerta(`Ha reservado el ambiente en ${this.fecha_fin[0]} 🤩` )
+          if ( this.respuesta.confirm === false) return this.mostrarAlerta('Ya existe una reserva aqui, lo sentimos 😥')
 
+          return this.mostrarAlerta('Ocurrio un error en el pedido, lo sentimos 😒')
     });
   }
 
@@ -102,16 +124,16 @@ export class AmbientePage implements OnInit {
     // <----------- Esta función confirma si los datos del usuario son validos, de no, lo regresara al login ------------->
   async ValidarDatos(){
     try { 
-      let token = localStorage.getItem('token')
-      if (token){
-        this.rol = localStorage.getItem('tipo_usuario')
-        this.usuario = localStorage.getItem('usuario')
-        this.identificacion = localStorage.getItem('identificacion')
+      const token = localStorage.getItem('token')
+      if (!token) return this.NgRouter.navigate(['/login'])
+      
+      this.rol = localStorage.getItem('tipo_usuario')
+      this.usuario = localStorage.getItem('usuario')
+      this.identificacion = localStorage.getItem('identificacion')
 
-          if(this.rol == "Instructor" || this.rol == "Administrativo") 
-            {this.permiso = true } else { this.permiso = false}
-
-      } else {this.route.navigate(['/login'])}
+      if (this.rol == "Instructor" || this.rol == "Administrativo") this.permiso = true 
+      else  this.permiso = false
+      
     } catch (error){}
   }
 

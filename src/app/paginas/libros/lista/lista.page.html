@@ -1,36 +1,34 @@
 <ion-header>
-  <ion-toolbar color="orange" >
-      <ion-back-button class="boton-menu" defaultHref="/categorias"></ion-back-button>
+  <ion-toolbar>
+      <ion-back-button mode="md" class="boton-menu" defaultHref="/categorias"></ion-back-button>
       <ion-title mode="ios" class="titulo">{{titulo_cat}}</ion-title>
       <ion-img class="logo" src="../../assets/pictures/logo_orange.svg"></ion-img>
   </ion-toolbar>
-
-  <ion-toolbar > 
-    <!-- Esta es una barra de busqueda que por medio de una función filtra los datos pára obtener la información solicitada -->
+  <ion-toolbar >        <!-- Esta es la barra de busqueda para los libros -->
     <ion-searchbar color="light" placeholder="Buscar" animated (ionChange)="searchCustomer($event)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
-    <!---- Este es un mensaje oculto que solo se mostrara en caso de que no hayan libros de esta categoria ----->
-  <ion-item *ngIf='aviso == "false"'>
+  <ion-item *ngIf='aviso == "false"'> <!-- De no haber libros de esta categoria, se mostrara este texto -->
     <h3>No hay libros disponibles ahora de esta categoria</h3>
   </ion-item>
   
     <!-- Este modulo lisata los diferentes libros de la categoria elegida en el modulo de categorias -->
-  <ion-list *ngFor="let libro of searchLibros" >
+  <ion-list *ngFor="let libro of searchLibros">
     <ion-item class="info" [routerLink] = "['/detalle', libro.Pk_Elemento]">
 
-      <ion-img  style="width: 40%;" src="{{libro.Imagen}}"></ion-img>
+      <div class="miniatura">
+        <ion-img src="{{libro.Imagen}}"></ion-img>
+      </div>
 
-    <ion-item class="subinfo">
-      <ion-text style="overflow: initial;">
-        <strong>{{libro.Nombre_Elementos}}</strong> <br>
-        <sub>{{libro.Autor}}</sub>
-        <p class="desc">{{libro.Descripcion}}</p>
-      </ion-text>
-    </ion-item>
+      <div class="contexto">
+        <ion-text>
+          <strong>{{libro.Nombre_Elemento}}</strong>
+          <sub>{{libro.Autor}}</sub>
+          <p class="desc">{{libro.Descripcion}}</p>
+        </ion-text>
+      </div>
 
     </ion-item>
   </ion-list>

@@ -24,7 +24,7 @@ export class ComputadorPage implements OnInit {
 
     // <----------------- "nombre" e "id" son las variable que tomaran los datos del LocalStorage -------------------------->
         // <--- El localStorage es un almacenamiento interno, este tiene guardados los datos del usuario que accedio --->
-  nombre= localStorage.getItem('usuario');
+  nombre= localStorage.getItem('usuario').split(' ', 1)[0];
   id = localStorage.getItem('identificacion');
 
     // <----------------- Esta variable recibe la fecha actual, esto es un componente propio de angular ------------------->

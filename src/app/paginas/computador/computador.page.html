@@ -1,45 +1,56 @@
 <ion-header>
-  <ion-toolbar color="orange">
-    <ion-back-button class="boton-menu" mode="md" defaultHref="/home"></ion-back-button>
+  <ion-toolbar>
+    <ion-back-button class="boton-menu" mode="md" color="light" defaultHref="/home"></ion-back-button>
     <ion-img class="nombre" src="../assets/pictures/OrbilText.svg"></ion-img>
     <ion-img class="logo" src="../../assets/pictures/logo_orange.svg"></ion-img>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
- 
   <div class="container">
-    <h2 class="centrar">Portatiles</h2>
-    <ion-img class="computador" src="../../../assets/pictures/img_portatil.svg"></ion-img>
-    <div class="centrar"><p>Cantidad disponible: </p></div>
+    <ion-card>
+      <ion-card-header>
+        <h1>Reserva de computador</h1>
+      </ion-card-header>
 
-    <form [formGroup]="form" (ngSubmit)="ReservarComputador()">
+      <ion-card-content>
 
-      <div class="calendar">
-      <p class="text">Elige una fecha <ion-icon name="arrow-down-outline"></ion-icon></p>
-  
-      <!-- Esta etiqueta con lo demás se encarga de desplegar el calendario-->
-      <ion-datetime-button datetime="datetime" ></ion-datetime-button>
-        <ion-modal [keepContentsMounted]="true">
-          <ng-template>
-            <ion-datetime id="datetime" formControlName="fecha" name="fecha" color="verde"
-            presentation="date" min="{{fechaHoy | date: 'YYYY-MM-dd'}}" max="2023-12-30T23:59:59"
-            display-format="YYYY-MM-dd" [isDateEnabled]="cancelarFinDeSemana"  mode="ios"
-            style="background-color: rgb(54, 54, 54) !important;" >
-            </ion-datetime>
-          </ng-template>
-        </ion-modal>
-      </div> 
+        <ion-img class="computador" src="../../../assets/pictures/img_portatil.svg"></ion-img>
+        <p>Cantidad disponible: </p>
+    
+        <form [formGroup]="form" (ngSubmit)="ReservarComputador()">
+    
+          <div class="calendar">
+            <h2 style="margin-right: 1%;"> Elige una fecha: </h2>
+            <ion-datetime-button datetime="datetime"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime id="datetime" formControlName="fecha" name="fecha" color="primary"
+                presentation="date" min="{{fechaHoy | date: 'YYYY-MM-dd'}}" max="2024-12-30T23:59:59"
+                display-format="YYYY-MM-dd" [isDateEnabled]="cancelarFinDeSemana" mode="md" [showDefaultButtons]="true" 
+                style=" width: auto; margin: 1%; color: rgb(136, 107, 107) !important;">
+                <span slot="title"> Elige la fecha a reservar </span></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </div> 
+    
+          <div class="cantidad">
+            <ion-input type="number" placeholder="Cantidad a pedir: " formControlName="cantidad"></ion-input>
+          </div>
 
-      <div class="cantidad">
-        <ion-input type="number" placeholder="Cantidad" formControlName="cantidad" min="1" max="21"></ion-input>
-      </div>
-              
-      <ion-button shape="round" size="default" fill="solid" strong="strong"
-        color="orange" (click)="ReservarComputador()" [disabled]="!form.valid"> Reservar
-      </ion-button>
-            
-    </form>
+          <h5> A nombre de {{nombre}}</h5>
+
+                  
+          <ion-button shape="round" size="default" fill="solid" strong="strong"
+            color="primary" (click)="ReservarComputador()" [disabled]="!form.valid"> Reservar
+          </ion-button>
+                
+        </form>
+      </ion-card-content>
+    </ion-card>
+
   </div>
+
+  <div class="call-menu"><ion-menu-button menu="main-menu" color="light"></ion-menu-button></div>
 
 </ion-content>
