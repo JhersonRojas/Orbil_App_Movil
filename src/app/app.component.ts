@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuController } from '@ionic/angular'
+import { AlertController, MenuController } from '@ionic/angular'
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,11 @@ export class AppComponent implements OnInit {
   identificacion: any 
     permiso: boolean
 
-  constructor( private route: Router, private menu: MenuController) {}
+  constructor( 
+    private route: Router,
+    private menu: MenuController,
+    private NgAlert: AlertController
+  ) {}
 
 
   ngOnInit(){
@@ -40,10 +44,32 @@ export class AppComponent implements OnInit {
 
   }
 
-  async logout(){
-    localStorage.clear()
-    this.route.navigate(['/login'])
-    await location.reload()
+  async logout() {
+    const alert = await this.NgAlert.create({
+      header: `Desea cerrar sesión?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Confirmar',
+          role: 'confirm',
+        },
+      ],
+    });
+    await alert.present();
+    const confirm = await alert.onDidDismiss();
+
+    if ( confirm.role == 'confirm') {
+      const close = async () => {
+        localStorage.clear()
+        this.route.navigate(['/login'])
+        await location.reload()
+      }
+      return close();
+    }
+
   }
 
 }

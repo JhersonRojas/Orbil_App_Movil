@@ -1,6 +1,6 @@
 import { Component, OnInit  } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { AlertController, MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -20,8 +20,9 @@ export class HomePage implements OnInit {
 
     // <----------------- El constructor obtiene los parametros importados de diferentes componentes ------------------->
   constructor(
-      // <--------- "route" es una función de angular que me permite redirigir al usuario a otra ruta por medio de una orden ----------->
-    private route: Router,
+      // <--------- "NgRouter" es una función de angular que me permite redirigir al usuario a otra ruta por medio de una orden ----------->
+    private NgRouter: Router,
+    private NgAlert: AlertController
   ) { }
 
     // <----------------- Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista ------------------->
@@ -43,8 +44,37 @@ export class HomePage implements OnInit {
           if(this.rol == "Instructor" || this.rol == "Administrativo") 
             {this.permiso = true } else { this.permiso = false}
 
-      } else {this.route.navigate(['/login'])}
+      } else {this.NgRouter.navigate(['/login'])}
     } catch (error){}
   }
+
+  async logout() {
+    const alert = await this.NgAlert.create({
+      header: `Desea cerrar sesión?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Confirmar',
+          role: 'confirm',
+        },
+      ],
+    });
+    await alert.present();
+    const confirm = await alert.onDidDismiss();
+
+    if ( confirm.role == 'confirm') {
+      const close = async () => {
+        localStorage.clear()
+        this.NgRouter.navigate(['/login'])
+        await location.reload()
+      }
+      return close();
+    }
+
+  }
+
 
 }

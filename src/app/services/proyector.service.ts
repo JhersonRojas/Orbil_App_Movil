@@ -19,7 +19,7 @@ export class ProyectorService {
 
     // <----------------- Función que envía los datos recibidos desde el modulo de proyector y los envía al Api Rest ------------------->
   Reservar_Proyector_Service(data: string){
-    return this.http.post<Reserva_Ambiente_Interface>( this.url + '/proyector/reservar', data) // <- Aqui se añade la ruta especifica
+    return this.http.post<Reserva_Ambiente_Interface>( this.url + '/movimientos/reserva/proyector', data) // <- Aqui se añade la ruta especifica
   }
 
     // <----------------- Función que obtiene los proyectores desde el Api Rest ------------------->

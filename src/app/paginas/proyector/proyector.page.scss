@@ -1,7 +1,14 @@
+@font-face {
+  font-family:orbil_Berlin;
+  src: url("../../../assets/fonts/BerlinSansFBDemiBold.ttf");
+}
 
 $naranja: #ff7f00;
+$verde: #38A900;
+$azul: #3880ff;
 
 ion-toolbar {
+    --background: #39A900;
     position: relative;
 
     .boton-menu {
@@ -31,97 +38,72 @@ ion-toolbar {
     }
 }
 
-
-    // <--- Los estilos del la barra superior del App --->
-    .container{
-        position: relative;
+.container{
+  text-align: center;
+  
+  ion-card {
+    padding: 2%;
+    box-shadow: 2px 2px 20px #87837f ;
+  
+    ion-card-header {
+      font-family: orbil_Berlin;
+      display: grid;
+      place-items: center;
+      background-color: $azul;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      color: aliceblue !important;
+        
+      h1 {
+        margin: 0;
+      }
     }
-    
-    .box{
-        position: relative;
-        margin: 5%;
-        border-radius: 10px;
-        border: 3px solid #87837f !important;
-        box-shadow: -3px 3px 8px gray;
-        padding-bottom: 20%;
-        overflow: hidden;
-    }
-
-    .centrar{
-        text-align: center;
-    }
-
-    .proyector{
+  
+    ion-card-content {
+      display: grid;
+      place-items: center;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+  
+      .proyector {
+        width: 55%;
         margin-top: 15%;
-        margin-bottom: 10%;
-        margin-left: 19%;
-        margin-right: 19%;
-        width: 60%;
-    }
-
-    .sitio{
-        margin-top: 5%;
-        margin-left: 5%;
-        margin-right: 5%;
-        width: auto;
-        border-radius: 20px !important;
-        font-size: 1em;
-        border: 2px solid #000000 !important;
-        text-align:center;
-        --background: rgb(188, 188, 188) !important;
-    }
-
-    ion-button{
+        margin-bottom: 15%;
+      }
+  
+      .calendar {
+        display: flex;
+        align-items: center;
+  
+        h2 {
+          float: left;
+          margin: 0;
+          padding: 0;
+        }
+      }
+  
+      .select {
         margin-top: 10%;
-        margin-left: 30%;
-        margin-right: 30%;
-        margin-bottom: 5%;
-        width: 40%;
+        margin-bottom: 10%;
+        margin-left: 0;
+        margin-right: 0;
+      }
+  
+      ion-button {
+        margin-top: 10%;
+        margin-bottom: 10%;
+      }
     }
-
-    @media (max-width: 300px) {
-        ion-toolbar{
-
-            .icono{
-                float: right;
-                width:12%;
-                margin-top:3%;
-                margin-right: 3%;
-                margin-bottom: 1%;
-            }
-    
-            .nombre{
-                margin-top: 5%;
-                margin-bottom: 5%;
-                width: 55px;
-                margin-left: 30%;
-                margin-right: 20%;
-            }
-        }
-
-        .centrar{
-            font-size: 20px;
-        }
-
-        .proyector{
-            margin-top: 5%;
-            margin-left: 25%;
-            margin-right: 25%;
-            margin-bottom: 5%;
-            width: 50%;
-        }
-
-        ion-button{
-            font-size: 12px;
-        }
-    }
-
-    @media (min-width: 400px) {
-        .proyector{
-            margin-top: 5%;
-            margin-left: 25%;
-            margin-right: 25%;
-            margin-bottom: 5%;
-            width: 50%;
-        }
-    }
+  
+  }
+}
+  
+.fab-button {
+  position: absolute;
+  position: fixed;
+  box-shadow: 4px 4px 20px #87837f ;
+  border-radius: 50%;
+  top: 85%;
+  left: 75%; 
+}

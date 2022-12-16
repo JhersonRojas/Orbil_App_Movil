@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="orange">
+  <ion-toolbar>
     <ion-back-button class="boton-menu" mode="md" color="light" defaultHref="/home"></ion-back-button>
     <ion-img class="nombre" src="../assets/pictures/OrbilText.svg"></ion-img>
     <ion-img class="logo" src="../../assets/pictures/logo_orange.svg"></ion-img>
@@ -8,54 +8,72 @@
 
 <ion-content>
 
-  <div class="box">
-    <h2 class="centrar">Reserva del proyector</h2>
-    <ion-img class="proyector" src="../../../assets/pictures/proyector.svg"></ion-img>
+  <div class="container">
+    <ion-card>
+      <ion-card-header>
+        <h2>Reserva del proyector</h2>
+      </ion-card-header>
 
-      <!-- "form" toma todos los datos que tiene insternamente y los envia a la función ReservaProyector -->
-    <form [formGroup]="form" (ngSubmit)="ReservaProyector()">
+      <ion-card-content>
+        <ion-img class="proyector" src="../../../assets/pictures/proyector.svg"></ion-img>
 
-      <ion-item>
-        <ion-select placeholder="Seleccione proyector" formControlName="serial">
-          <ion-select-option *ngFor="let pro of proyector" value="{{pro.Pk_Elemento}}">
-            {{pro.Nombre_Elemento}}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
+        <form [formGroup]="form" (ngSubmit)="Reserve()">
+          <div class="calendar">
+            <h2 style="margin-right: 4%;"> Elige una fecha: </h2>
+            <ion-datetime-button datetime="datetime"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime id="datetime" formControlName="fecha" name="fecha" color="primary"
+                presentation="date" min="{{fechaHoy | date: 'YYYY-MM-dd'}}" max="2024-12-30T23:59:59"
+                display-format="YYYY-MM-dd" [isDateEnabled]="cancelarFinDeSemana" mode="md" [showDefaultButtons]="true" 
+                style=" width: auto; margin: 1%; color: rgb(136, 107, 107) !important;">
+                <span slot="title"> Elige la fecha a reservar </span></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </div>
 
-      <ion-item>
-        <ion-select formControlName="jornada" placeholder="Seleccione jornada" name="jornada">
-          <ion-select-option  value="Mañana">
-          Jornada mañana
-          </ion-select-option>
+          <ion-item>
+            <ion-select placeholder="Seleccione proyector" formControlName="serial">
+              <ion-select-option *ngFor="let pro of proyector" value="{{pro.Pk_Elemento}}">
+                {{pro.Nombre_Elemento}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
 
-          <ion-select-option value="Tarde">
-            Jornada tarde
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
+          <ion-item>
+            <ion-select formControlName="jornada" placeholder="Seleccione jornada" name="jornada">
+              <ion-select-option value="Mañana"> Jornada tarde </ion-select-option>
+              <ion-select-option value="Tarde"> Jornada tarde </ion-select-option>
+              <ion-select-option value="Completa"> Jornada Completa </ion-select-option>
+            </ion-select>
+          </ion-item>
 
-      <div class="calendar">
-        <h5 style="margin-bottom: 2.5%;"> Elige una fecha <ion-icon name="arrow-down-outline"></ion-icon> </h5>
-        <ion-datetime-button datetime="datetime"></ion-datetime-button>
-        <ion-modal [keepContentsMounted]="true">
-          <ng-template>
-            <ion-datetime id="datetime" formControlName="fecha" name="fecha" color="verde"
-            presentation="date" min="{{fechaHoy | date: 'YYYY-MM-dd'}}" max="2024-12-30T23:59:59"
-            display-format="YYYY-MM-dd" [isDateEnabled]="cancelarFinDeSemana" mode="md" 
-            style="color: rgb(136, 107, 107) !important;" [showDefaultButtons]="true">
-            <span slot="title"> Elige la fecha a reservar </span></ion-datetime>
-          </ng-template>
-        </ion-modal>
-      </div>
-      
-      <ion-input class="sitio" type="text" placeholder="¿Donde?" formControlName="sitio" ></ion-input>
-            
-      <ion-button shape="round" size="default" fill="solid" strong="strong"
-        color="orange" (click)="ReservaProyector()" [disabled]="!form.valid">Reservar
-      </ion-button>
-      
-    </form>
+          <ion-item>
+            <ion-label position="floating">Lugar donde lo usara</ion-label>
+            <ion-input class="sitio" type="text" formControlName="sitio" ></ion-input>
+          </ion-item>
+        </form>
+
+        <ion-button shape="round" size="default" fill="solid" strong="strong"
+        color="primary" (click)="confirmReserve()" [disabled]="!form.valid">Reservar
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
   </div>
+
+  <ion-fab class="fab-button">
+    <ion-fab-button color="verde">
+      <ion-icon name="chevron-up-circle"></ion-icon>
+    </ion-fab-button>
+
+    <ion-fab-list side="top">
+      <ion-fab-button color="verde">
+        <ion-menu-button menu="main-menu" color="light"></ion-menu-button>
+      </ion-fab-button>
+      <ion-fab-button color="verde" (click)="logout()">
+        <ion-icon name="exit-outline"></ion-icon> 
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
 
 </ion-content>
