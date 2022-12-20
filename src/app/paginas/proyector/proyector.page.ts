@@ -11,7 +11,7 @@ import { Dato } from 'src/app/interface/interface';
   styleUrls: ['./proyector.page.scss'],
 })
 
-    // <-- cClase para el modulos de proyectores -->
+    // <-- Clase para el modulos de proyectores -->
 export class ProyectorPage implements OnInit {
 
   permiso: boolean = false 
@@ -19,9 +19,9 @@ export class ProyectorPage implements OnInit {
     usuario:string 
     identificacion: string 
 
-  form: FormGroup; // <-- "form" es la variable que guarda los datos recibidos de "Fb" desde el HTML -->
+  form: FormGroup; // <-- "form", variable que guarda los datos recibidos del formulario desde el HTML -->
 
-    // <----------------- "nombre" e "id" son las variable que tomaran los datos del LocalStorage -------------------------->
+    // <-- "nombre" e "id", guardan los datos del LocalStorage en esta modulo -->
         // <--- El localStorage es un almacenamiento interno, este tiene guardados los datos del usuario que accedio --->
   nombre= localStorage.getItem('usuario');
   id = localStorage.getItem('identificacion');
@@ -31,7 +31,7 @@ export class ProyectorPage implements OnInit {
   proyectores: any; // <-- "proyectores" es la variable que guarda los datos recibidos del servicio al Api Rest --->
   proyector: Dato[] = [];
 
-    // <----------------- "respuesta" recibe los datos recibidos  ------------------->
+    // <-- "respuesta", regresa la respuesta del servidor -->
   respuesta:  any;
     secreto: any 
 
@@ -42,10 +42,6 @@ export class ProyectorPage implements OnInit {
     jornada:  any; // <--- Esta variable toma la jornada elegida desde el formulario del HTML --->
     sitio:    any; // <--- Esta variable toma el sitio diligenciado en el formulario del HTML --->
   
-    // <--------- Estas variables son las que tomara la función que mostrara un mensaje emergente en la vista al reservar --------------->
-  alerta:     any; 
-    alertFin: any;
-
     // <----------------- El constructor obtiene los parametros importados de diferentes componentes ------------------->
   constructor(
     private service: ProyectorService, // <-- "service" obtiene los servicios proporcionados desde proyectores service -->
@@ -54,16 +50,16 @@ export class ProyectorPage implements OnInit {
     private NgAlert: AlertController // <--"NgAlert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas -->
   ) {}
   
-    // <----------------- Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista ------------------->
+    // <-- Función de angular, su contenido es lo primero que se ejecuta al entrar a esta vista -->
   ngOnInit() {
-      // <----------------- Esta función es la que realiza el llamado al servicio, este ejecuta la consulta al Api Rest ------------------->
+      // <-- Esta función es la que realiza el llamado al servicio, este ejecuta la consulta al servidor -->
     this.service.Listar_Proyectores_Service().subscribe(
     resp => { 
       this.proyectores = ( resp ) 
       this.proyector = ( resp.datos )
     });
 
-      // <----------------- "for" añade los datos en el momento que alguien diligencie el formulario en la vista ------------------->
+      // <-- "form" añade los datos en el momento que alguien diligencie el formulario en la vista -->
     this.form = this.NgFb.group({
         fecha   : ['', Validators.required],
         jornada : ['', Validators.required],
@@ -71,18 +67,17 @@ export class ProyectorPage implements OnInit {
         sitio   : [''],
       });   
     
-      // <----------------- "return" llama a la función de "validarDatos" ------------------->
+      // <--  Ejecuta la validación de lo datos del usuario -->
     return this.ValidarDatos()
   }
 
-    // <------------- Esta función es la que me permite enviar un mensaje emergente al realizarse una reserva --------------->
-  async mostrarAlerta() {
-    const total = await this.alertFin
-    const alert = await this.NgAlert.create({ message:total});
+    // <-- Función que permite enviar un mensaje emergente al realizarse una reserva -->
+  async mostrarAlerta(msj: string ) {
+    const alert = await this.NgAlert.create({ message: msj});
     await alert.present();
-    console.log(total)
   }
 
+    // <-- Muestra una ventana para confirmar la reserva y regresa una respuesta -->
   async confirmReserve() {
     const alert = await this.NgAlert.create({
       header: `Confirmar la reserva?`,
@@ -101,11 +96,12 @@ export class ProyectorPage implements OnInit {
     const confirm = await alert.onDidDismiss();
 
     if ( confirm.role == 'confirm') return this.Reserve();
+
   }
 
-    // <--- Esta función envia los datos previamente recibidos del formulario del HTML y los envia al Api Rest --->
-  Reserve(){
-      // <--- Estos son los datos que se envian a las variables antes mencionadas --->
+    // <-- Esta función envia los datos previamente recibidos del formulario del HTML y los envia al servidor -->
+  async Reserve(){
+      // <-- Estos son los datos que se envian a las variables antes mencionadas -->
     this.fecha = this.form.value.fecha
     this.jornada = this.form.value.jornada
     this.serial = this.form.value.serial
@@ -115,17 +111,24 @@ export class ProyectorPage implements OnInit {
                   jornada : this.form.value.jornada,
                   fecha   : this.fecha,
                   serial  : this.form.value.serial,
-                  sitio   : this.form.value.sitio };
+                  sitio   : this.form.value.sitio 
+                };
           
-        // <--- Este segmento recopila los datos de la reserva y los envia, tambien recive la respuesta del Api Rest --->  
-        // <--- Aqui tambien se envia el mensaje en caso de que la reserva sea valida o no --->
+      // <-- Este segmento recopila los datos de la reserva y los envia, tambien recive la respuesta del Api Rest --->  
     this.service.Reservar_Proyector_Service(this.todo).subscribe(
-        resp => {
-       console.log('resp :>> ', resp);
-    });
+       resp => {
+        this.respuesta = (resp)
+          
+          // <-- Aqui tambien se envia el mensaje en caso de que la reserva sea valida o no --->
+        if (this.respuesta.confirm == true ) return this.mostrarAlerta(`Ha reservado el ambiente en ${this.fecha.split('T', 1)[0]}`)
+        if (this.respuesta.confirm == false ) return this.mostrarAlerta(`Ya reservaron este proyector aqui, lo sentimos 😥`)
+        return this.mostrarAlerta('No se reconoce la respuesta del servido')
+      }
+    );
+
   }
 
-    // <----------- Esta función confirma si los datos del usuario son validos, de no, lo regresara al login ------------->
+    // <-- Esta función valida si los datos del usuario exiten, de no, lo regresara al login -->
   async ValidarDatos(){
     try { 
       let token = localStorage.getItem('token')
@@ -141,7 +144,7 @@ export class ProyectorPage implements OnInit {
     } catch (error){}
   }
 
-  // <---------- Esta función cancela la posibilidad de elegir fines de semana en el calendario desplegable ---------->
+    // <-- Función que cancela la posibilidad de elegir fines de semana en el calendario desplegable -->
   cancelarFinDeSemana = (dateString: string) => {
     const date = new Date(dateString);
     const utcDay = date.getUTCDay();
@@ -173,6 +176,5 @@ export class ProyectorPage implements OnInit {
       }
       return close();
     }
-
   }
 } // Este es el cierre de la clase de proyector 
