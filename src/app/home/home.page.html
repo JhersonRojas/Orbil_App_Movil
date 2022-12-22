@@ -1,5 +1,5 @@
 <ion-content>
-
+      <!-- Imagenes que cambian -->
     <div class="slider-container">
       <div class="slides">
           <ion-img src="../../assets/other/DSC_4615.JPG"></ion-img>
@@ -9,14 +9,17 @@
       </div>
     </div>
 
+      <!-- Titulo con el nombre del usuario -->
     <div class="titulo"> <p> Hola {{usuario}} bienvenido a Orbil</p> </div> 
   
+      <!-- Texto de bienvenida -->
     <div class="bienvenida">
       <p>En este aplicativo contara con la capacidad de reservar algunos de los 
         diferentes elementos que se encuentran en el ambiente de biblioteca por el momento.
       </p>
     </div>
-  
+
+      <!-- Botones para pasar a los modulos de los elementos -->
     <div class="buttons">
       <ion-card mode="ios" [routerLink]="['/computador']">
         <ion-card-header>
@@ -32,7 +35,7 @@
         <ion-card-content> Libros </ion-card-content>
       </ion-card>
 
-      <!-- Esta directiva valida que tipo de usuario accedio, si fue instructir o administrativo deja ver su contenido, si no, lo esconde -->
+      <!-- Esta directiva valida que tipo de usuario accedio, si fue instructor o administrativo deja ver su contenido, si no, lo esconde -->
       <ion-card mode="ios" [routerLink]="['/proyector']" *ngIf='permiso == true'>
         <ion-card-header>
           <ion-img class="proyector" src="../assets/pictures/proyector.svg"></ion-img> 
@@ -40,7 +43,7 @@
         <ion-card-content> Proyector </ion-card-content>
       </ion-card>
 
-      <!-- Esta directiva valida que tipo de usuario accedio, si fue instructir o administrativo deja ver su contenido, si no, lo esconde -->
+      <!-- Esta directiva valida que tipo de usuario accedio, si fue instructor o administrativo deja ver su contenido, si no, lo esconde -->
       <ion-card mode="ios" [routerLink]="['/ambiente']" *ngIf='permiso == true'>
         <ion-card-header>
           <ion-img class="ambiente" src="../assets/pictures/ambiente.svg"></ion-img> 
@@ -49,11 +52,13 @@
       </ion-card>
     </div>
 
+    <!-- Boton flotante -->
   <ion-fab class="fab-button">
     <ion-fab-button color="verde">
       <ion-icon name="chevron-up-circle"></ion-icon>
     </ion-fab-button>
 
+      <!-- Contenido del boton flotante -->
     <ion-fab-list side="top">
       <ion-fab-button color="verde">
         <ion-menu-button menu="main-menu" color="light"></ion-menu-button>

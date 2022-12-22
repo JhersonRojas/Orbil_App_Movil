@@ -39,15 +39,7 @@ const routes: Routes = [
   {
     path: 'detalle/:idl',
     loadChildren: () => import('./paginas/libros/detalle/detalle.module').then( m => m.DetallePageModule)
-  },
-  {
-    path: 'categorias', 
-    loadChildren: () => import('./paginas/libros/categorias/categorias.module').then( m => m.CategoriasPageModule) 
-  },
-  {
-    path: 'manual-usuario',
-    loadChildren: () => import('./manual-usuario/manual-usuario.module').then( m => m.ManualUsuarioPageModule)
-  },
+  }
 ];
 
 @NgModule({
