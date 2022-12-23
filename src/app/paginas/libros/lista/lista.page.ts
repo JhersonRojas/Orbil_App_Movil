@@ -9,31 +9,29 @@ import { librosService } from 'src/app/services/libros.service';
   styleUrls: ['./lista.page.scss'],
 })
 
-  // <--------------- Esta clase contentra las distintas funciones y variables del modulo de la lista de los libros ------------------>
+  // <-- Esta clase contiene las distintas funciones y variables del modulo de la lista de los libros -->
 export class ListaPage implements OnInit {
 
-    // <--------- Estas son las variables que almacenan la información obtenida del la categoria previamente elegida ---------->
+    // <-- Estas son las variables que almacenan la información obtenida del la categoria previamente elegida -->
   libros:    Dato[] = [];
     titulo_cat:   string;
     searchLibros:    any; 
+    setLibro: any;
+    serial: string
   
-    // <---------------- Aqui se almacena el mensaje del Api Rest dependiendode su respuesta ---------------->
+    // <-- Aqui se almacena el mensaje del Api Rest dependiendode su respuesta -->
   respuesta:         any;
     aviso:           any; 
   
-    // <----------------- El constructor obtiene los parametros importados de diferentes componentes ------------------->
+    // <-- El constructor obtiene los parametros importados de diferentes componentes -->
   constructor(
-      // <----------------- "service" obtiene los servicios proporcionados desde proyectores service ------------------->
-    private service:  librosService, 
+    private service:  librosService, // <-- "service" obtiene los servicios proporcionados desde proyectores service -->
+    private NgRouter: ActivatedRoute) {} // <-- "NgRouter", función de angular que me permite redirigir al usuario a otra ruta por medio de una orden -->
 
-      // <--------- "route" es una función de angular que me permite redirigir al usuario a otra ruta por medio de una orden ----------->
-    private route: ActivatedRoute) { }
-
-      // <----------------- Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista ------------------->
+      // <-- Es una función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista -->
   ngOnInit() {
-
-    // <---------- Esta sección llama los datos del Api Rest tomando en cuenta la categoria elegida ----------->
-    let idc = this.route.snapshot.paramMap.get('idc');
+    // <-- Esta sección llama los datos del Api Rest tomando en cuenta la categoria elegida -->
+    let idc = this.NgRouter.snapshot.paramMap.get('idc');
     this.listar_libros(idc);
   }
 
@@ -64,6 +62,19 @@ export class ListaPage implements OnInit {
         return (libros.Nombre_Elemento.toLowerCase().indexOf(text.toLowerCase()) > -1)
       })
     }
+  }
+
+  isModalOpen = false;
+
+  openDetailBook(isOpen: boolean, idl: string = 'nothing') {
+    this.isModalOpen = isOpen;
+
+    this.service.Listar_Un_Libro(idl).subscribe( resp => {
+      this.setLibro = resp
+      console.log(resp)
+      
+    })
+
   }
 
 }

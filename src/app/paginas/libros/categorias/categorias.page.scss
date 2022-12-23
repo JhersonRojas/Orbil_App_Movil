@@ -1,64 +1,69 @@
-
-$naranja: #ff7f00;
+@font-face {
+  font-family:orbil_Berlin;
+  src: url("../../../../assets/fonts/BerlinSansFBDemiBold.ttf");
+}
 
 ion-toolbar {
-    position: relative;
+  --background: #39A900;
 
-    .boton-menu {
-      float: left;
-      position: absolute;
-      width: 18%;
-      top: 50%;
-      left: 7%;
-      transform: translate(-50%, -50%); 
+  .items {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+    .boton-menu{
+      margin-right: 50%;
     }
-  
+
     .nombre {
-      position: absolute;
-      width: 18%;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);     
+      margin: auto;
+      width: 55%;  
     }
-  
+
     .logo {
-      float: right;
-      position: absolute;
-      width: auto;
-      top: 50%;
-      left: 93%;
-      transform: translate(-50%, -50%); 
+      margin: auto;
+      margin-left: 65%;
+      width: 25%;
     }
+  }
 }
 
-h1 {
-    font-size: 1.4rem;
-}
+.lists {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 2%;
 
-@media ( max-width: 300px) {
+  ion-card {
+    position: relative;
+    text-align: center;
+    border: 1.5px solid #87837f !important;
+    box-shadow: 4px 4px 20px #87837f ;
+    font-family: orbil_Berlin;
+    font-size: 100%;
+    padding: 1%;
 
-    ion-toolbar {
-    
-
-    .nombre{
-        margin-top: 5%;
-        margin-bottom: 5%;
-        width: 55px;
-        margin-left: 30%;
-        margin-right: 20%;
-    }
-    
-    .icono{
-        float: right;
-        width:13%;
-        margin-top:3%;
-        margin-right: 3%;
-        margin-bottom: 2%;
-    }
+    ion-card-header {
+      height: 120px ;
+      
+      ion-img{
+        width: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
     }
 
-    h1{ 
-        font-size: 20px;
+    ion-card-content{
+      margin: 2%;
+      height: 100%;
+      background-color: #428cff !important;
+      color: aliceblue !important;
+      text-align: center;
+      padding-top: 5%;
+      padding-bottom: 6%;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
     }
-    
+
+  }
 }

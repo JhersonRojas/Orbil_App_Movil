@@ -1,21 +1,24 @@
 <ion-header>
-  <ion-toolbar color="orange" >
-    <ion-back-button class="boton-menu" mode="md" defaultHref="/home"></ion-back-button>
-    <ion-img class="logo" mode="ios" src="../../assets/pictures/logo_orange.svg"></ion-img>
-    <ion-img class="nombre" mode="ios" src="../assets/pictures/OrbilText.svg"></ion-img>
-  </ion-toolbar>
-
   <ion-toolbar>
-    <ion-title>Categorias</ion-title>
+   <div class="items">
+    <ion-back-button class="boton-menu" color="light" mode="md" defaultHref="/home"></ion-back-button>
+    <ion-img class="nombre" mode="ios" src="../assets/pictures/OrbilText.svg"></ion-img>
+    <ion-img class="logo" mode="ios" src="../../assets/pictures/logo_orange.svg"></ion-img>
+   </div>
   </ion-toolbar>
-
 </ion-header>
 
 <ion-content>
-
+  <div class="lists">
     <!-- Esta sección lista las categorias y envia el parametro de la categoria que se elija en la vista -->
-  <ion-card *ngFor="let cat of categorias" [routerLink] = "['/lista', cat.Pk_Categoria]">
-        <h1 style="text-align:center;">{{cat.Nombre_Categoria}}</h1> 
-  </ion-card>
-
+    <ion-card *ngFor="let cat of categorias" [routerLink] = "['/lista', cat.Pk_Categoria]">
+      <ion-card-header>
+        <ion-img src="{{cat.Imagen_Categoria}}"></ion-img>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <h4>{{cat.Nombre_Categoria}}</h4>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

@@ -1,23 +1,26 @@
-<ion-header>
+<ion-header> <!-- Encabezado del App en ambiente -->
   <ion-toolbar>
-    <ion-back-button class="boton-menu" mode="md" color="light" defaultHref="/home"></ion-back-button>
-    <ion-img class="nombre" src="../assets/pictures/OrbilText.svg"></ion-img>
-    <ion-img class="logo" src="../../assets/pictures/logo_orange.svg"></ion-img>
+    <div class="items">    
+      <ion-back-button class="boton-menu" mode="md" color="light" defaultHref="/home"></ion-back-button>   
+      <ion-img class="nombre" src="../assets/pictures/OrbilText.svg"></ion-img>    
+      <ion-img class="logo" src="../../assets/pictures/logo_orange.svg"></ion-img>    
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content> <!-- Contenido interior del App -->
   <div class="container">
-    <ion-card>
+    <ion-card> <!-- Card que contiene los items -->
       <ion-card-header>
         <h1>Reserva del ambiente</h1>
       </ion-card-header>
 
+        <!-- Contenido del card con el formulario e imagen -->
       <ion-card-content>
-        
         <ion-img class="ambiente" src="../assets/pictures/ambiente.svg"></ion-img>
-
         <form [formGroup]="form" (ngSubmit)="Reserve()">
+
+            <!-- Modal con el calendario de días a elegir -->
           <div class="calendar">
             <h2 style="margin-right: 1%;"> Elige una fecha: </h2>
             <ion-datetime-button datetime="datetime"></ion-datetime-button>
@@ -32,6 +35,7 @@
             </ion-modal>
           </div>
 
+            <!-- Opciones de jornada a elegir por el usuario -->
           <ion-item class="select" lines="none">
             <ion-select formControlName="jornada" placeholder="Seleccione jornada" 
                         mode="ios" name="jornada" interface="action-sheet"  [interfaceOptions]="select_header">
@@ -42,15 +46,21 @@
           
           <h5 class="centrar"> A nombre de {{nombre}}</h5>
 
+            <!-- Boton para enviar los datos del formulario -->
           <ion-button shape="round" size="default" fill="solid" strong="strong"
           color="primary" (click)="confirmReserve()" [disabled]="!form.valid"> Reservar
           </ion-button>
         </form>
   
       </ion-card-content>
-    </ion-card>
+    </ion-card> <!-- Fin del card -->
   </div>
 
-  <div class="call-menu"><ion-menu-button menu="main-menu" color="light"></ion-menu-button></div>
+    <!-- Boton del menu desplegable -->
+  <ion-fab class="fab-button">
+    <ion-fab-button color="verde">
+      <ion-menu-button menu="main-menu" color="light"></ion-menu-button>
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>

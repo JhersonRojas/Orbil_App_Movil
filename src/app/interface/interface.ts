@@ -47,6 +47,7 @@ export interface Categoria {
 export interface Listar_Categorias_Interface {
     Pk_Categorias:    number;
     Nombre_Categoria: string;
+    Imagen_Categoria: string;
 }
 
     // <----------------- Mapeo de los datos que recive el Api Rest para reservar un computador ------------------->

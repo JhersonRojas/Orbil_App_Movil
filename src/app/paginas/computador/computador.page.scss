@@ -8,34 +8,27 @@ $verde: #38A900;
 $azul: #3880ff;
 
 ion-toolbar {
-    --background: #39A900;
-    position: relative;
+  --background: #39A900;
 
-    .boton-menu {
-      float: left;
-      position: absolute;
-      width: 18%;
-      top: 50%;
-      left: 7%;
-      transform: translate(-50%, -50%); 
+  .items {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+    .boton-menu{
+      margin-right: 50%;
     }
-  
+
     .nombre {
-      position: absolute;
-      width: 18%;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);     
+      margin: auto;
+      width: 55%;  
     }
-  
+
     .logo {
-      float: right;
-      position: absolute;
-      width: auto;
-      top: 50%;
-      left: 93%;
-      transform: translate(-50%, -50%); 
+      margin: auto;
+      margin-left: 65%;
+      width: 25%;
     }
+  }
 }
 
 .container{
