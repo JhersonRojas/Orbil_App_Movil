@@ -73,45 +73,24 @@ export class LoginPage implements OnInit {
           this.respuesta = (resp);
           this.token = (resp.token);
 
-          return this.Restric(resp.user.Tipo_Usuario)
+          this.identificacion = this.respuesta.user.Pk_Identificacion_SIREP,
+            localStorage.setItem('identificacion', this.identificacion);
+    
+           this.nombre = this.respuesta.user.Nombre_SIREP,          
+            localStorage.setItem('usuario', this.nombre);
+    
+          this.tipo_usuario = this.respuesta.user.Tipo_Usuario_SIREP
+            localStorage.setItem('tipo_usuario', this.tipo_usuario);
+    
+          localStorage.setItem('token', this.token);
+    
+        this.NgRouter.navigate(['/home'])
+    
+        return setTimeout( async () => { location.reload() }, 40) 
+
       })
-      return ingreso;  
+      return ingreso; 
 
     } catch (error) { console.log(error) }
-  }
-
-    // <-- "Restric", compara el cargo del usuario y valida si es aceptado o no por el App -->
-  public async Restric( cargo: string ) {
-    const roles = {
-      "Aprendiz":           "Aprendiz",
-      "Donado":             "Aprendiz",
-      "Instructor":         "Instructor",
-      "Administrativo 1":   "Administrativo",
-      "Administrativo 2":   "Administrativo", 
-      "Administrativo 3":   "Administrativo", 
-      "Auxiliar aseo":      "Administrativo", 
-      "Operarios":          "Administrativo", 
-      "Giras Especiales":   "Administrativo", 
-      "Visitas":            "Visitante",
-      "Aprendiz Visitante": "Visitante" 
-    }
-
-      // <-- En caso de reconocer el cargo, el sistema lo guardara en el almacenamiento interno -->
-    await roles[cargo] ?? this.msjToast('No se reconoce el cargo');
-
-    this.identificacion = this.respuesta.user.Pk_Identificacion,
-      localStorage.setItem('identificacion', this.identificacion);
-
-    this.nombre = this.respuesta.user.Nombre,          
-      localStorage.setItem('usuario', this.nombre);
-
-    this.tipo_usuario = roles[cargo],
-      localStorage.setItem('tipo_usuario', this.tipo_usuario);
-
-      localStorage.setItem('token', this.token);
-
-    this.NgRouter.navigate(['/home'])
-
-    return setTimeout( async () => { location.reload() }, 40) 
   }
 }

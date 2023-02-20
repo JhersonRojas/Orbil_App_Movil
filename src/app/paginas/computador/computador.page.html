@@ -18,7 +18,7 @@
       <ion-card-content>
 
         <ion-img class="computador" src="../../../assets/pictures/img_portatil.svg"></ion-img>
-        <p>Cantidad disponible: </p>
+        <h2>Cantidad disponible: </h2>
     
         <form [formGroup]="form" (ngSubmit)="ReservarComputador()">
     
@@ -36,13 +36,13 @@
             </ion-modal>
           </div> 
     
-          <div class="cantidad">
-            <ion-input type="number" placeholder="Cantidad a pedir: " formControlName="cantidad"></ion-input>
-          </div>
+          <ion-item class="cantidad">
+            <ion-label position="floating">Cantidad a pedir: </ion-label>
+            <ion-input type="number" formControlName="cantidad"></ion-input>
+          </ion-item>
 
           <h5> A nombre de {{nombre}}</h5>
 
-                  
           <ion-button shape="round" size="default" fill="solid" strong="strong"
             color="primary" (click)="ReservarComputador()" [disabled]="!form.valid"> Reservar
           </ion-button>

@@ -22,8 +22,8 @@ ion-content {
 
   .slider-container {
     overflow: hidden;
-    width: 100%;
-    height: 40%;
+    width: 100vw;
+    height: 25vh;
     padding: 0;
     margin: 0;
 
@@ -61,37 +61,44 @@ ion-content {
   .titulo {
     text-align: center;
     font-family: orbil_Berlin;
-    //font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    margin-top: 1%;
-    margin-left: 5%; 
-    margin-right: 5%;
   }
 
   .bienvenida {
+    * {
+      padding-bottom: 0;
+      margin: 0;
+    }
     text-align: justify;
-    margin-top: 1%;
-    margin-bottom: 8%;
-    margin-left: 5%; 
-    margin-right: 5%;
+    padding: 1.3rem;
+    padding-bottom: 0;
+ 
   }
   
   .buttons {
-    width: auto;
+
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    width: 98vw;
     height: 50%;
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-left: 1vw;
+    margin-right: 1vw;
     margin-bottom: 15%;
+    display: flex;
+    flex-wrap: wrap;
 
     ion-card {
-      float: left;
       position: relative;
       text-align: center;
       border: 1.5px solid #87837f !important;
       box-shadow: 4px 4px 20px #87837f ;
       font-family: orbil_Berlin;
-      font-size: 100%;
-      width: 40%;
+      font-size: 1rem;
+      width: 44vw;
       padding: 1%;
+      margin: auto;
 
       ion-card-header {
         height: 100px ;
@@ -110,7 +117,7 @@ ion-content {
       }
 
       ion-card-content{
-        margin: 2%;
+        margin: 1%;
         background-color: #428cff !important;
         color: aliceblue !important;
         text-align: center;

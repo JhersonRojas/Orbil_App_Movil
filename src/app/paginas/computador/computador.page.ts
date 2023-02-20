@@ -22,11 +22,6 @@ export class ComputadorPage implements OnInit {
     // <----------------- "form" es la variable que guarda los datos recibidos de "Fb" desde el HTML ------------------->
   form: FormGroup;
 
-    // <----------------- "nombre" e "id" son las variable que tomaran los datos del LocalStorage -------------------------->
-        // <--- El localStorage es un almacenamiento interno, este tiene guardados los datos del usuario que accedio --->
-  nombre= localStorage.getItem('usuario').split(' ', 1)[0];
-  id = localStorage.getItem('identificacion');
-
     // <----------------- Esta variable recibe la fecha actual, esto es un componente propio de angular ------------------->
   fechaHoy:Date = new Date();
 
@@ -41,26 +36,20 @@ export class ComputadorPage implements OnInit {
   todo:               any;
     cantidad:      number;
     fecha:            any;
-      fecha_fin:      any;
+    nombre:           any;
+    fecha_fin:        any;
 
     // <----------------- El constructor obtiene los parametros importados de diferentes componentes ------------------->
   constructor(
-      // <----------------- "service" obtiene los servicios proporcionados desde ambiente service ------------------->
-    private service: ComputadoresService,
-
-      // <---- "FB" me proporciona una función propia de angular para agrupar información traida desde algun formulario del HTML ------>
-    private FB: FormBuilder,
+    private service: ComputadoresService, // <-- "service" obtiene los servicios proporcionados desde ambiente service -->
+    private NgFb: FormBuilder, // <-- "FB" me proporciona una función propia de angular para agrupar información traida desde algun formulario del HTML -->
+    private NgRouter: Router, // <-- "route" es una función de angular que me permite redirigir al usuario a otra ruta por medio de una orden -->
+    private NgAlert: AlertController) {}// <-- "alert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas -->
     
-      // <--------- "route" es una función de angular que me permite redirigir al usuario a otra ruta por medio de una orden ----------->
-    private route: Router,
-
-      // <--------- "alert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas ----------->
-    private alert: AlertController) {}
-
     // <----------------- Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista ------------------->
   ngOnInit() {
       // <----------------- "form" añade los datos en el momento que alguien diligencie el formulario en la vista ------------------->
-    this.form = this.FB.group({
+    this.form = this.NgFb.group({
       fecha    : ['', Validators.required],
       cantidad : ['', Validators.required],
     });
@@ -75,13 +64,13 @@ export class ComputadorPage implements OnInit {
       let token = localStorage.getItem('token')
       if (token){
         this.rol = localStorage.getItem('tipo_usuario')
-        this.usuario = localStorage.getItem('usuario')
+        this.nombre = localStorage.getItem('usuario').split(" ",1)[0]
         this.identificacion = localStorage.getItem('identificacion')
 
         if(this.rol == "Instructor" || this.rol == "Administrativo") 
           {this.permiso = true } else { this.permiso = false}
 
-      } else {this.route.navigate(['/login'])}
+      } else {this.NgRouter.navigate(['/login'])}
     } catch (error){}
   }
 
@@ -95,7 +84,7 @@ export class ComputadorPage implements OnInit {
     // <------------- Esta función es la que me permite enviar un mensaje emergente al realizarse una reserva --------------->
   async mostrarAlerta() {
     const total = this.mensajefinal
-    const alert = await this.alert.create({ message:total});
+    const alert = await this.NgAlert.create({ message:total});
     await alert.present();
     console.log(total)
   }
@@ -104,10 +93,10 @@ export class ComputadorPage implements OnInit {
   ReservarComputador() {
     this.fecha =   this.form.value.fecha
     this.cantidad = this.form.value.cantidad
-    this.fecha_fin = this.fecha.split("T",1)
+    this.fecha_fin = this.fecha.split("T",1)[0]
 
       // <----------------- Aqui se estan enviando los datos y recibiendo la respuesta del Api respecto a su validación ------------------->
-    this.todo = {usuario: this.form.value.usuario, cantidad : this.form.value.cantidad, fecha : this.fecha_fin[0]}
+    this.todo = { usuario: this.identificacion, cantidad : this.form.value.cantidad, fecha : this.fecha_fin }
 
     this.service.Reservar_Computador_Service(this.todo).subscribe(
       resp => {
@@ -123,4 +112,3 @@ export class ComputadorPage implements OnInit {
   }
 
 }
-

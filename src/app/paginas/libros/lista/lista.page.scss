@@ -24,6 +24,10 @@ ion-toolbar {
   }
 }
 
+.search {
+  grid-template-columns: 1fr 1fr;
+}
+
 .container {
   padding: 1em;
 
