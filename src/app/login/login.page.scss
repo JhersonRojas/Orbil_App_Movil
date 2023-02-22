@@ -2,35 +2,35 @@
 $url: 'https://static.platzi.com/media/files/waves_c8551f5d-ecf6-4a81-ae1d-f3a0ad55ba10.png';
 $naranja: #ff7f00;
 
-@mixin input($tall:auto, $short:auto, $letter:medium) {
-  width: $short;
-  height: $tall;
-  font-size: $letter;
-  margin-top: 1%;
-  margin-bottom: 1%;
+@mixin input() {
+  width: auto;
+  height: 6vh;
+  font-size: 0.7rem;
+  margin-bottom: 2%;
   border-radius: 30px;
 }
 
 .items {
   overflow: hidden;
-  width: 100%;
-  height: 100%;
-  background: $naranja;
   position: fixed;
+  background: $naranja;
+  width: 100vw;
+  height: 100vh;
 
   .logo {
-    width: 50%;
-    margin-top: 15%;
-    margin-bottom: 5%;
-    margin-right: 25%;
-    margin-left: 25%;
+    width: 100vw;
+    height: 30vh;
+    display: grid;
+    img {
+      margin: auto;
+      width: 100%;
+    }
   }
   
   .inputs {
-    width: 70%;
-    margin-left: 15%;
-    margin-right: 15%;
-
+    margin: auto;
+    width: 70vw;
+    height: auto;
     .input1 { @include input();}
     .input2 { @include input();}
   }
@@ -43,7 +43,7 @@ $naranja: #ff7f00;
   }
 
   .ocean {
-    position: absolute;
+    position: fixed;
     overflow: hidden;
     height: 45%;
     width: 100%;
@@ -85,11 +85,7 @@ $naranja: #ff7f00;
             margin-left: 30%;
             margin-right: 30%;
           }
-    .inputs {
-      .input1 { @include input($tall:32px, $letter: x-small);}
-      .input2 { @include input($tall:32px, $letter: x-small);}
-    }
-    .ocean { .wave { height: 200px; left: -180%; } }
+    .ocean .wave { height: 200px; left: -180%; }
   }
 }
 
@@ -100,11 +96,8 @@ $naranja: #ff7f00;
             margin-left: 30%;
             margin-right: 30%;
           }
-    .inputs {
-      .input1 { @include input($tall:42px, $letter: small);}
-      .input2 { @include input($tall:42px, $letter: small);}
-    }
-    .ocean { .wave { height: 220px; left: -90%; } }
+
+    .ocean .wave { height: 220px; left: -90%; }
   }
 }
 
@@ -115,25 +108,18 @@ $naranja: #ff7f00;
             margin-left: 30%;
             margin-right: 30%;
           }
-    .inputs {
-      .input1 { @include input($tall:42px, $letter: small);}
-      .input2 { @include input($tall:42px, $letter: small);}
-    }
-    .ocean { .wave { height: 280px; left: -90%; } }
+
+    .ocean .wave { height: 280px; left: -90%; } 
   }
 }
 
-@media (min-height: 750px) and (max-height: 950px) {
+@media (min-height: 701px) and (max-height: 950px) {
   .items { 
     .logo { width: 50%; 
             margin-top: 25%;
             margin-left: 25%;
             margin-right: 25%;
           }
-    .inputs {
-      .input1 { @include input($tall:70px, $letter: larger);}
-      .input2 { @include input($tall:70px, $letter: larger);}
-    }
-    .ocean { .wave { height: 380px; left: -90%; } }
+    .ocean .wave { height: 380px; left: -90%; }
   }
 }

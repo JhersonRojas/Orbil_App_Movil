@@ -3,31 +3,29 @@
     <div class="items"> 
       
       <!-- Logo --> 
-      <ion-img class="logo" src="../../assets/pictures/icono.svg"></ion-img> 
+      <div class="logo">  
+        <img src="../../assets/pictures/icono.svg">
+      </div>
       
       <!--Formulario -->
-      <form [formGroup]="form" (ngSubmit)="ValidacionDeDatos()"> 
-        <ion-grid fixed>
-            
-            <!--Entrada de texto para el usuario -->
-          <div class="inputs">
-            <ion-item class="input1" mode="md" lines="none"> 
-              <ion-label position="floating">Usuario</ion-label>
-              <ion-input type="number" clearInput formControlName="user" name="user"></ion-input>
-            </ion-item>  
+      <form [formGroup]="form" (ngSubmit)="ValidacionDeDatos()">             
+          <!--Entrada de texto para el usuario -->
+        <div class="inputs">
+          <ion-item class="input1" mode="md" lines="none"> 
+            <ion-label position="floating">Usuario</ion-label>
+            <ion-input type="number" clearInput formControlName="user" name="user"></ion-input>
+          </ion-item>  
             
             <!-- Entrada de texto para contraseña -->
-            <ion-item class="input2" mode="md" lines="none"> 
-              <ion-label position="floating">Contraseña</ion-label>
-              <ion-input type="password" clearInput formControlName="pass"
-              name="pass" ></ion-input>
-            </ion-item>
-          </div>
-            <!--Cualidades del boton -->
-          <ion-button type="submit" [disabled]="!form.valid" size="default" fill="solid"
-                      strong="strong" color="light" class="boton" shape="round"> Ingresar 
-          </ion-button>
-        </ion-grid>
+          <ion-item class="input2" mode="md" lines="none"> 
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input type="password" clearInput formControlName="pass" name="pass" ></ion-input>
+          </ion-item>
+        </div>
+          <!--Cualidades del boton -->
+        <ion-button type="submit" [disabled]="!form.valid" size="default" fill="solid"
+                    strong="strong" color="light" class="boton" shape="round"> Ingresar 
+        </ion-button>
       </form>
 
     <!-- Animación -->
