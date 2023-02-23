@@ -82,23 +82,24 @@ ion-content {
     }
 
     width: 98vw;
-    height: 50%;
+    height: auto;
     margin-left: 1vw;
     margin-right: 1vw;
-    margin-bottom: 15%;
+    margin-bottom: 5%;
     display: flex;
     flex-wrap: wrap;
 
     ion-card {
       position: relative;
       text-align: center;
-      border: 1.5px solid #87837f !important;
-      box-shadow: 4px 4px 20px #87837f ;
+      //border: 1px solid #87837f !important;
+      box-shadow: 3px 3px 13px #87837f ;
       font-family: orbil_Berlin;
       font-size: 1rem;
       width: 44vw;
       padding: 1%;
       margin: auto;
+      margin-top: 7%;
 
       ion-card-header {
         height: 100px ;
@@ -135,7 +136,7 @@ ion-content {
     position: fixed;
     border-radius: 50%;
     box-shadow: 4px 4px 20px #87837f ;
-    top: 85%;
-    left: 75%;
+    top: 3%;
+    right: 5%;
   }
 }
