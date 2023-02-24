@@ -39,7 +39,11 @@ const routes: Routes = [
   {
     path: 'detalle/:idl',
     loadChildren: () => import('./paginas/libros/detalle/detalle.module').then( m => m.DetallePageModule)
+  },  {
+    path: 'historial',
+    loadChildren: () => import('./historial/historial.module').then( m => m.HistorialPageModule)
   }
+
 ];
 
 @NgModule({

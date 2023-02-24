@@ -13,6 +13,28 @@ export interface User {
     Tipo_Usuario:      string;
 }
 
+export interface Historial_Interface {
+    confirm: boolean;
+    usuario: Usuario;
+    elemento: Elemento2[];
+  }
+  
+ export interface Elemento2 {
+    Pk_Movimiento: number;
+    Estado_Mv: string;
+    Fk_Elemento: string;
+    Elemento: Elemento;
+  }
+  
+  interface Elemento {
+    Nombre_Elemento: string;
+    Tipo_Elemento: string;
+  }
+  
+  interface Usuario {
+    Pk_Identificacion: number;
+  }
+
     // <----------------- Mapear los proyectores que hay en la base de datos ------------------->
 export interface Listar_Proyectores_Interface {
     confirm: boolean;

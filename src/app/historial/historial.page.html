@@ -1,0 +1,23 @@
+<ion-header> <!-- Encabezado del App en ambiente -->
+  <ion-toolbar>
+    <div class="items">    
+      <ion-back-button class="boton-menu" mode="md" color="light" defaultHref="/home"></ion-back-button>   
+      <ion-img class="nombre" src="../assets/pictures/OrbilText.svg"></ion-img>    
+      <ion-img class="logo" src="../../assets/pictures/logo_orange.svg"></ion-img>    
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="container">
+    <ion-list *ngFor="let elem of elementos" class="info">
+  
+      <ion-item>
+        <ion-label>{{elem.Elemento.Nombre_Elemento}}</ion-label>
+        <ion-label>{{elem.Elemento.Tipo_Elemento}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+</ion-content>

@@ -77,14 +77,13 @@ export class ListaPage implements OnInit {
       this.searchLibros = this.libros;
 
         // <------- Esta condicional valida si se obtuvieron datos de la categoria elegida ------->
-          if (resp.confirm == false ){
-            this.aviso = "false"
-            this.titulo_cat = "😒" 
-          } else { 
-            this.titulo_cat = this.libros[0].Categoria.Nombre_Categoria  
-          }
-        console.log(resp.datos)
-      });
+      if (resp.confirm == false ){
+        this.aviso = "false"
+        this.titulo_cat = "😒" 
+      } 
+      else this.titulo_cat = this.libros[0].Categoria.Nombre_Categoria  
+      console.log(resp.datos)
+    });
   }
 
     // <------- Esta función se encarga de filtrar los datos para dar como respuesta una coincidencia de la información obtenida -------------------->
