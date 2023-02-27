@@ -23,10 +23,9 @@ ion-toolbar {
       width: 55%;  
     }
 
-    .logo {
+    .menu {
       margin: auto;
-      margin-left: 65%;
-      width: 25%;
+      margin-left: 55%;
     }
   }
 }
@@ -92,13 +91,4 @@ ion-toolbar {
     }
 
   }
-}
-
-.fab-button {
-  position: absolute;
-  position: fixed;
-  border-radius: 50%;
-  box-shadow: 4px 4px 20px #87837f ;
-  top: 85%;
-  left: 75%;
 }

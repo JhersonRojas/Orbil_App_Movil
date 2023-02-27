@@ -134,12 +134,16 @@ ion-content {
     }
   }
 
-  .fab-button {
-    position: absolute;
-    position: fixed;
-    border-radius: 50%;
-    box-shadow: 4px 4px 20px #87837f ;
-    top: 3%;
-    right: 5%;
-  }
+}
+
+.call-menu {
+  position: absolute;
+  position: fixed;
+  background-color: #39A900;
+  box-shadow: 4px 4px 20px #87837f ;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  top: 2%;
+  right: 5%; 
 }
