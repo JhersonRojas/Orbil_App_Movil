@@ -32,11 +32,10 @@ export class LoginPage implements OnInit {
     private NgRouter: Router, /* "NgRouter", Componente angular que me permite redirigir al usuario a otra ruta por medio de una orden */
     private NgMenu: MenuController, /* "NgMenu" me permite controlar el manejo del menú desplegable, como mostrarlo o no */
     private NgToast: ToastController, /* "NgToast", componente de angular que permite presentar ventanas emergentes con información en la vista*/
-    ) {}
+    ) { this.NgMenu.enable(false);} 
 
     // <-- Función de angular que se ejecuta al iniciarse esta pagina -->
   ngOnInit() {
-    this.NgMenu.enable(false); // <-- Bloqueo del menú desplegable en esta vista -->
     this.checkToken(); // <-- Llamado a la función que valida si hay o no Token -->
     this.form = this.NgFb.group({  // <--"NgFb.group()" añade los datos en el momento que alguien diligencie el formulario en la vista -->
       user: ['', Validators.required],
@@ -64,6 +63,7 @@ export class LoginPage implements OnInit {
     // <-- Función que envia los datos del formulario al servidor para su validación -->
   async ValidacionDeDatos(){
     try{
+      localStorage.clear()
       const ingreso = this.service.Login_Service(this.form.value).subscribe(
         async resp => {
 
@@ -86,7 +86,7 @@ export class LoginPage implements OnInit {
     
         this.NgRouter.navigate(['/home'])
     
-        return setTimeout( async () => { location.reload() }, 40) 
+        //return setTimeout( async () => { location.reload() }, 40) 
 
       })
       return ingreso; 

@@ -22,8 +22,9 @@ export class HomePage implements OnInit {
   constructor(
       // <--------- "NgRouter" es una función de angular que me permite redirigir al usuario a otra ruta por medio de una orden ----------->
     private NgRouter: Router,
-    private NgAlert: AlertController
-  ) { }
+    private NgAlert: AlertController,
+    private NgMenu: MenuController,
+  ) { this.NgMenu.enable(true); } // <-- Bloqueo del menú desplegable en esta vista -->
 
     // <----------------- Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista ------------------->
   ngOnInit() {
