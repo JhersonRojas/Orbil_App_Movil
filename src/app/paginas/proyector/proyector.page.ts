@@ -121,9 +121,9 @@ export class ProyectorPage implements OnInit {
           
           // <-- Aqui tambien se envia el mensaje en caso de que la reserva sea valida o no --->
         if ( resp === undefined ) return this.mostrarAlerta('No se encuentra conectado al servidor')          
-        if (this.respuesta.confirm == true ) return this.mostrarAlerta(`Ha reservado el ambiente en ${this.fecha.split('T', 1)[0]}`)
+        if (this.respuesta.confirm == true ) return this.mostrarAlerta(`Ha reservado el proyector en ${this.fecha.split('T', 1)[0]}`)
         if (this.respuesta.confirm == false ) return this.mostrarAlerta(`Ya reservaron este proyector aqui, lo sentimos 😥`)
-        return this.mostrarAlerta('No se reconoce la respuesta del servido')
+        return this.mostrarAlerta('No se reconoce la respuesta del servidor')
       }
     );
 

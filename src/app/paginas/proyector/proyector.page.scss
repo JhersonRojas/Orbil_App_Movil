@@ -32,23 +32,25 @@ ion-toolbar {
 }
 
 .container{
-  text-align: center;
-  
+  display: grid;
+  place-content: center;
+
   ion-card {
-    padding: 2%;
-    box-shadow: 2px 2px 20px #87837f ;
+    width: 90vw;
+    height: 88vh;
+    box-shadow: 2px 2px 15px #87837f;
+    @media screen and ( max-height: 500px) {
+      height: auto;
+    }
   
     ion-card-header {
-      font-family: orbil_Berlin;
       display: grid;
-      place-items: center;
+      place-content: center;
+      font-family: orbil_Berlin;
       background-color: $azul;
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
-      color: aliceblue !important;
-        
-      h1 {
-        margin: 0;
+      color: white !important;
+      @media screen and ( max-width: 355px) {
+        h1 { font-size: 1rem; }
       }
     }
   
@@ -67,14 +69,10 @@ ion-toolbar {
   
       .calendar {
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
-        padding: 1em;
-  
-        h2 {
-          float: left;
-          margin: 0;
-          padding: 0;
-        }
+        margin-top: 15%;
+        margin-bottom: 15%;
       }
   
       .select {
@@ -99,5 +97,5 @@ ion-toolbar {
   box-shadow: 4px 4px 20px #87837f ;
   border-radius: 50%;
   top: 85%;
-  left: 75%; 
+  left: 75%;
 }

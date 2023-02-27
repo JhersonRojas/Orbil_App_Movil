@@ -19,7 +19,6 @@ export class AmbientePage implements OnInit {
     identificacion: string; 
 
   select_header = {
-    header: 'Jornada a elegir',
     subHeader: 'Elige una jornada a reservar',
   };
 

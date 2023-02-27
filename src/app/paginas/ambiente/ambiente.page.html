@@ -22,7 +22,7 @@
 
             <!-- Modal con el calendario de días a elegir -->
           <div class="calendar">
-            <h2 style="margin-right: 1%;"> Elige una fecha: </h2>
+            <h2> Elige una fecha: </h2>
             <ion-datetime-button datetime="datetime"></ion-datetime-button>
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
@@ -38,7 +38,7 @@
             <!-- Opciones de jornada a elegir por el usuario -->
           <ion-item class="select" lines="none">
             <ion-select formControlName="jornada" placeholder="Seleccione jornada" 
-                        mode="ios" name="jornada" interface="action-sheet"  [interfaceOptions]="select_header">
+                        name="jornada"  [interfaceOptions]="select_header">
               <ion-select-option value="Mañana"> Jornada mañana </ion-select-option>
               <ion-select-option value="Tarde"> Jornada tarde </ion-select-option>
             </ion-select>
@@ -58,7 +58,7 @@
 
     <!-- Boton del menu desplegable -->
   <ion-fab class="fab-button">
-    <ion-fab-button color="verde">
+    <ion-fab-button color="v-claro">
       <ion-menu-button menu="main-menu" color="light"></ion-menu-button>
     </ion-fab-button>
   </ion-fab>

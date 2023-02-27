@@ -4,6 +4,22 @@
 /** Ionic CSS Variables **/
 :root {
 
+  --ion-color-v-claro: #39A900 ;
+	--ion-color-v-claro-rgb: 57,169,0;
+	--ion-color-v-claro-contrast: #ffffff;
+	--ion-color-v-claro-contrast-rgb: 255,255,255;
+	--ion-color-v-claro-shade: #329500;
+	--ion-color-v-claro-tint: #4db21a;
+
+  .ion-color-v-claro {
+    --ion-color-base: var(--ion-color-v-claro);
+    --ion-color-base-rgb: var(--ion-color-v-claro-rgb);
+    --ion-color-contrast: var(--ion-color-v-claro-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-v-claro-contrast-rgb);
+    --ion-color-shade: var(--ion-color-v-claro-shade);
+    --ion-color-tint: var(--ion-color-v-claro-tint);
+  }
+
       /** orange **/
   --ion-color-orange: #ff7f00;
 	--ion-color-orange-rgb: 255,127,0;
@@ -37,6 +53,8 @@
 	--ion-color-shade: var(--ion-color-verde-shade);
 	--ion-color-tint: var(--ion-color-verde-tint);
 }
+
+
   /** primary **/
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
