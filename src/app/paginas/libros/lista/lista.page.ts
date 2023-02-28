@@ -54,7 +54,6 @@ export class ListaPage implements OnInit {
     let idc = this.NgRouter.snapshot.paramMap.get('idc');
     this.listar_libros(idc);
     this.ValidarDatos();
-    console.log(this.fechaHoy)
   }
 
   
@@ -82,7 +81,6 @@ export class ListaPage implements OnInit {
         this.titulo_cat = "😒" 
       } 
       else this.titulo_cat = this.libros[0].Categoria.Nombre_Categoria  
-      console.log(resp.datos)
     });
   }
 

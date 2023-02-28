@@ -24,7 +24,7 @@
   
     <!-- Este modulo lisata los diferentes libros de la categoria elegida en el modulo de categorias -->
   <div class="container">
-    <ion-card *ngFor="let libro of searchLibros" class="info" (click)="openDetailBook(true, libro.Pk_Elemento)">
+    <ion-card *ngFor="let libro of searchLibros" class="info" [routerLink] = "['/detalle', libro.Pk_Elemento]">
   
       <ion-card-header>
         <ion-card-subtitle>{{libro.Autor}}</ion-card-subtitle>
@@ -38,23 +38,4 @@
   
     </ion-card>
   </div>
-
-  <ion-modal [isOpen]="isModalOpen" >
-    <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-buttons slot="end" style="color: white;"><ion-button (click)="openDetailBook(false)">Cerrar</ion-button></ion-buttons>
-          <ion-buttons slot="start"><ion-button >Reservar Libro</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding">
-        <strong>{{setAutor}}</strong>
-        <ion-title style="font-size: 1rem;">{{setNombre}}</ion-title>
-        <ion-img src="{{setImg}}" loading="lazy"></ion-img>
-        <p>{{setDesc}}</p>
-      </ion-content>
-    </ng-template>
-  </ion-modal>
-
 </ion-content>

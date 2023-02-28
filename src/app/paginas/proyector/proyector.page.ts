@@ -14,6 +14,14 @@ import { Dato } from 'src/app/interface/interface';
     // <-- Clase para el modulos de proyectores -->
 export class ProyectorPage implements OnInit {
 
+  header_proyector = {
+    subHeader: 'Elige un proyector a reservar',
+  };
+
+  header_jornada = {
+    subHeader: 'Elige una jornada a reservar',
+  };
+
   permiso: boolean = false 
     rol: string  
     usuario:string 

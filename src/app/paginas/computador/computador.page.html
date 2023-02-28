@@ -23,18 +23,18 @@
         <form [formGroup]="form" (ngSubmit)="ReservarComputador()">
     
           <div class="calendar">
-            <h2 style="margin-right: 1%;"> Elige una fecha: </h2>
+            <h2> Elige una fecha: </h2>
             <ion-datetime-button datetime="datetime"></ion-datetime-button>
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
                 <ion-datetime id="datetime" formControlName="fecha" name="fecha" color="primary"
                 presentation="date" min="{{fechaHoy | date: 'YYYY-MM-dd'}}" max="2024-12-30T23:59:59"
-                display-format="YYYY-MM-dd" [isDateEnabled]="cancelarFinDeSemana" mode="md" [showDefaultButtons]="true" 
-                style=" width: auto; margin: 1%; color: rgb(136, 107, 107) !important;">
+                display-format="YYYY-MM-dd" [isDateEnabled]="cancelarFinDeSemana" [showDefaultButtons]="true" 
+                style=" width: auto; color: rgb(136, 107, 107) !important; width: 90vw !important;">
                 <span slot="title"> Elige la fecha a reservar </span></ion-datetime>
               </ng-template>
             </ion-modal>
-          </div> 
+          </div>
     
           <ion-item class="cantidad">
             <ion-label position="floating">Cantidad a pedir: </ion-label>
@@ -52,7 +52,4 @@
     </ion-card>
 
   </div>
-
-  <div class="call-menu"><ion-menu-button menu="main-menu" color="light"></ion-menu-button></div>
-
 </ion-content>

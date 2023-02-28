@@ -21,21 +21,21 @@
 
         <form [formGroup]="form" (ngSubmit)="Reserve()">
           <div class="calendar">
-            <h2 style="margin-right: 4%;"> Elige una fecha: </h2>
+            <h2> Elige una fecha: </h2>
             <ion-datetime-button datetime="datetime"></ion-datetime-button>
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
                 <ion-datetime id="datetime" formControlName="fecha" name="fecha" color="primary"
                 presentation="date" min="{{fechaHoy | date: 'YYYY-MM-dd'}}" max="2024-12-30T23:59:59"
-                display-format="YYYY-MM-dd" [isDateEnabled]="cancelarFinDeSemana" mode="md" [showDefaultButtons]="true" 
-                style=" width: auto; margin: 1%; color: rgb(136, 107, 107) !important;">
+                display-format="YYYY-MM-dd" [isDateEnabled]="cancelarFinDeSemana" [showDefaultButtons]="true" 
+                style=" width: auto; margin: 1%; color: rgb(136, 107, 107) !important; width: 90vw !important;">
                 <span slot="title"> Elige la fecha a reservar </span></ion-datetime>
               </ng-template>
             </ion-modal>
           </div>
 
           <ion-item>
-            <ion-select placeholder="Seleccione proyector" formControlName="serial">
+            <ion-select placeholder="Seleccione proyector" formControlName="serial" [interfaceOptions]="header_proyector">
               <ion-select-option *ngFor="let pro of proyector" value="{{pro.Pk_Elemento}}">
                 {{pro.Nombre_Elemento}}
               </ion-select-option>
@@ -43,7 +43,7 @@
           </ion-item>
 
           <ion-item>
-            <ion-select formControlName="jornada" placeholder="Seleccione jornada" name="jornada">
+            <ion-select formControlName="jornada" placeholder="Seleccione jornada" name="jornada" [interfaceOptions]="header_jornada">
               <ion-select-option value="Mañana"> Jornada mañana </ion-select-option>
               <ion-select-option value="Tarde"> Jornada tarde </ion-select-option>
               <ion-select-option value="Completo"> Jornada Completa </ion-select-option>

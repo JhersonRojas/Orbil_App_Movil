@@ -30,18 +30,16 @@ export class AppComponent implements OnInit {
     try {
 
       let token = localStorage.getItem('token')
-      if (token){
-        this.rol = localStorage.getItem('tipo_usuario')
-        this.usuario = localStorage.getItem('usuario')
-        this.identificacion = localStorage.getItem('identificacion')
+      if (!token) this.route.navigate(['/login'])
 
-          if(this.rol == "Instructor" || this.rol == "Administrativo") 
-            {this.permiso = true } else { this.permiso = false}
+      this.rol = localStorage.getItem('tipo_usuario')
+      this.usuario = localStorage.getItem('usuario')
+      this.identificacion = localStorage.getItem('identificacion')
 
-      } else {this.route.navigate(['/login'])}
+      if(this.rol == "Instructor" || this.rol == "Administrativo") 
+        {this.permiso = true } else { this.permiso = false}
 
     } catch (error){}
-
   }
 
   async logout() {

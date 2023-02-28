@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { librosService } from 'src/app/services/libros.service';
 import { AlertController } from '@ionic/angular';
+import { Dato } from 'src/app/interface/interface';
 
 @Component({
   selector: 'app-detalle',
@@ -24,8 +25,12 @@ export class DetallePage implements OnInit {
    
     // <---------- Aqui se alamacena individualmente los datos que son insertados en el formulario, esto desde la variable "form" ------------>
   todo: any 
-    libros: any
+    libro: any
       serial: any
+      Nombre: any
+      Autor: any
+      Descripcion: any
+      Imagen: any
 
   usuario: any
     rol: any
@@ -37,29 +42,23 @@ export class DetallePage implements OnInit {
     alertFin: any;
 
   constructor(
-      // <----------------- "service" obtiene los servicios proporcionados desde proyectores service ------------------->
-    private service: librosService,
-
-      // <---- "FB" me proporciona una función propia de angular para agrupar información traida desde algun formulario del HTML ------>
-    private FB: FormBuilder,
-    
-      // <--------- "route" es una función de angular que me permite redirigir al usuario a otra ruta por medio de una orden ----------->
-    private route: ActivatedRoute,
-
-      // <--------- "alert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas ----------->
-    private alert: AlertController) {}
+    private service: librosService, // <-- "service" obtiene los servicios proporcionados desde proyectores service -->
+    private NgFb: FormBuilder, // <-- "FB" me proporciona una función propia de angular para agrupar información traida desde algun formulario del HTML -->
+    private NgRouter: ActivatedRoute, // <-- "route" es una función de angular que me permite redirigir al usuario a otra ruta por medio de una orden -->
+    private NgAlert: AlertController) {}// <-- "alert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas -->
 
       // <----------------- Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista ------------------->
   ngOnInit() {
-    let idl = this.route.snapshot.paramMap.get('idl');
+    let idl = this.NgRouter.snapshot.paramMap.get('idl');
     this.service.Listar_Un_Libro(idl).subscribe( resp => {
-      this.libros = resp
-      this.serial = resp[0].Pk_Elemento
-      console.log(resp)
+      this.Nombre = (resp.datos.Nombre_Elemento)
+      this.Imagen = (resp.datos.Imagen)
+      this.Autor = (resp.datos.Autor)
+      this.Descripcion = (resp.datos.Descripcion)
     })
 
         // <----------------- "for" añade los datos en el momento que alguien diligencie el formulario en la vista ------------------->
-    this.form = this.FB.group({
+    this.form = this.NgFb.group({
     fecha : ['', Validators.required],
     }); 
 
@@ -72,7 +71,7 @@ export class DetallePage implements OnInit {
     // <------------- Esta función es la que me permite enviar un mensaje emergente al realizarse una reserva --------------->
   async mostrarAlerta() {
     const total = await this.alertFin
-    const alert = await this.alert.create({ message:total});
+    const alert = await this.NgAlert.create({ message:total});
     await alert.present();
     console.log(total)
   }

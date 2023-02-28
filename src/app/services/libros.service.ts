@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Reserva_Ambiente_Interface, Listar_Categorias_Interface, Listar_Libros_Interface } from '../interface/interface';
+import { Reserva_Ambiente_Interface, Listar_Categorias_Interface, Listar_Libros_Interface, Libro_Unico_Interface } from '../interface/interface';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -29,7 +29,7 @@ export class librosService {
 
     // <----------------- Función que obtiene un libro de la lista ------------------->
   Listar_Un_Libro(idl:string){
-    return this.http.get<Listar_Libros_Interface>( this.url + `/libros/serial/${idl}`) // <- Aqui se añade la ruta especifica
+    return this.http.get<Libro_Unico_Interface>( this.url + `/libros/serial/${idl}`) // <- Aqui se añade la ruta especifica
   }
 
     // <----------------- Función que envia los datos para reservar un libro  ------------------->

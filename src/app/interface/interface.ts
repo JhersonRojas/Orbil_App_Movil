@@ -65,6 +65,20 @@ export interface Categoria {
     Nombre_Categoria: string;
 }
 
+export interface Libro_Unico_Interface {
+    confirm: boolean;
+    datos: Datos;
+    msj: string;
+  }
+  
+export interface Datos {
+  Pk_Elemento: string;
+  Imagen: string;
+  Nombre_Elemento: string;
+  Autor: string;
+  Descripcion: string;
+}
+
 // <----------------- Mapear las categorias de los libros de la base de datos ------------------->
 export interface Listar_Categorias_Interface {
     Pk_Categorias:    number;
