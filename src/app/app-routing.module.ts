@@ -29,17 +29,14 @@ const routes: Routes = [
     loadChildren: () => import('./paginas/proyector/proyector.module').then( m => m.ProyectorPageModule)
   },
   {
-    path: 'categorias',
-    loadChildren: () => import('./paginas/libros/categorias/categorias.module').then( m => m.CategoriasPageModule)
-  },
-  {
     path: 'lista/:idc',
     loadChildren: () => import('./paginas/libros/lista/lista.module').then( m => m.ListaPageModule)
   },
   {
     path: 'detalle/:idl',
     loadChildren: () => import('./paginas/libros/detalle/detalle.module').then( m => m.DetallePageModule)
-  },  {
+  },
+  {
     path: 'historial',
     loadChildren: () => import('./historial/historial.module').then( m => m.HistorialPageModule)
   }

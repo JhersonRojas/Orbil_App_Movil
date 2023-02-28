@@ -77,6 +77,7 @@ export interface Datos {
   Nombre_Elemento: string;
   Autor: string;
   Descripcion: string;
+  Fk_Categoria: number;
 }
 
 // <----------------- Mapear las categorias de los libros de la base de datos ------------------->
