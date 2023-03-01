@@ -15,6 +15,10 @@ export class ListaPage implements OnInit {
 
   @ViewChild('anuncio',{ static: true})anuncio!: ElementRef
 
+  header_libros: {} = {
+    subHeader: 'Elige la categoria de los libros',
+  };
+
     // <-- Estas son las variables que almacenan la información obtenida del la categoria previamente elegida -->
   libros:    Dato[] = [];
     titulo_cat:   string;

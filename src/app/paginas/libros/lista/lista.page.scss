@@ -3,23 +3,22 @@ ion-toolbar {
   --background: #39A900;
   color: aliceblue;
 
+  ion-searchbar {
+    margin-top: 1%;
+    margin-bottom: 1%;
+  }
+
   .items {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-
-    .boton-menu{
-      margin-right: 50%;
-    }
+  grid-template-columns: 0.5fr 2fr 0.5fr;
 
     .titulo {
       margin: auto;
     }
 
-    .logo {
-      grid-column: 3/4;
+    .menu {
       margin: auto;
-      margin-left: 65%;
-      width: 25%;
+      margin-right: 5%;
     }
   }
 }
@@ -32,7 +31,7 @@ ion-toolbar {
   padding: 1em;
 
   ion-card {
-    border: 1px solid #87837f !important;
+    box-shadow: 2px 2px 5px gray;
 
     ion-card-header {
       ion-card-title {
@@ -40,10 +39,6 @@ ion-toolbar {
       }
     }
 
-    ion-card-content{ 
-      padding: 2em;
-      padding-top: 0;
-    }
   }
 
 }

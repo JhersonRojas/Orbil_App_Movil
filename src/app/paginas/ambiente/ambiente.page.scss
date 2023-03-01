@@ -46,7 +46,7 @@ ion-toolbar {
       display: grid;
       place-content: center;
       font-family: orbil_Berlin;
-      background-color: $azul;
+      background-color: $verde;
       color: white !important;
       @media screen and ( max-width: 355px) {
         h1 { font-size: 1rem; }
@@ -60,9 +60,9 @@ ion-toolbar {
       width: 100%;
   
       .ambiente {
-        width: 70%;
-        margin-top: 10%;
-        margin-bottom: 10%;
+        width: 60%;
+        margin-top: 7%;
+        margin-bottom: 7%;
 
         @media screen and ( max-height: 680px) {
           width: 45%;

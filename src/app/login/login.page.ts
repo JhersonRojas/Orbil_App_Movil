@@ -68,7 +68,7 @@ export class LoginPage implements OnInit {
         async resp => {
 
           if ( resp === undefined ) return this.msjToast('No se encuentra conectado al servidor')          
-          if ( resp.confirm == false ) return this.msjToast('Contraseña o usuario incorrecto')
+          if ( resp.confirm == false ) return this.msjToast('Usuario o Contraseña incorrecto')
 
           this.respuesta = (resp);
           this.token = (resp.token);

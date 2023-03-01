@@ -34,7 +34,7 @@ export class librosService {
 
     // <----------------- Función que envia los datos para reservar un libro  ------------------->
   Reservar_Libro(data: string){
-    return this.http.post<Reserva_Ambiente_Interface>( this.url + '/libro/reservar', data) // <- Aqui se añade la ruta especifica
+    return this.http.post<Reserva_Ambiente_Interface>( this.url + '/movimientos/reserva/libro', data) // <- Aqui se añade la ruta especifica
   }
 
 }

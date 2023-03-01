@@ -1,14 +1,15 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar mode="md">
       <div class="items">
         <ion-back-button mode="md" class="boton-menu" defaultHref="/home"></ion-back-button>
         <ion-title class="titulo">{{titulo_cat}}</ion-title>
+        <ion-menu-button menu="main-menu" color="light" class="menu"></ion-menu-button>
       </div>
   </ion-toolbar>
   <ion-toolbar class="search" mode="md">        <!-- Esta es la barra de busqueda para los libros -->
     <ion-searchbar color="light" placeholder="Buscar" animated (ionChange)="searchCustomer($event)"></ion-searchbar>
     <ion-item>
-      <ion-select placeholder="Categoria del libro que busca" (ionChange)="filtrar($event)" >
+      <ion-select placeholder="Categoria del libro que busca" (ionChange)="filtrar($event)" [interfaceOptions]="header_libros">
         <ion-select-option *ngFor="let cat of categorias" value ="{{cat.Pk_Categoria}}">{{cat.Nombre_Categoria}}</ion-select-option>
       </ion-select>
     </ion-item>
@@ -29,7 +30,11 @@
 
       <ion-card-content class="miniatura">
         <ion-img src="{{libro.Imagen}}" loading="lazy"></ion-img>
+      </ion-card-content>
+
+      <ion-card-content>
         <strong class="desc">{{libro.Descripcion}}</strong>
+
       </ion-card-content>
   
     </ion-card>

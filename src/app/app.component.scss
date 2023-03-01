@@ -46,18 +46,18 @@ ion-menu::part(backdrop) {
 }
 
 .list{
-
   ion-list-header{
     font-size: medium;
     margin-bottom: 1%;
   }
-
+  
   ion-icon {
     margin-right: 20px;
     color: #39A100; 
   }
-
+  
   ion-item {
+    color: rgb(85, 85, 85);
     padding-left: 20px;
     margin-bottom: 10px;
     width: 75%;

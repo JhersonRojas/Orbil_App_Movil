@@ -17,12 +17,12 @@
 
         <!-- Contenido del card con el formulario e imagen -->
       <ion-card-content>
-        <ion-img class="ambiente" src="../assets/pictures/ambiente.svg"></ion-img>
+        <ion-img class="ambiente" src="../assets/pictures/home.png"></ion-img>
         <form [formGroup]="form" (ngSubmit)="Reserve()">
 
             <!-- Modal con el calendario de días a elegir -->
           <div class="calendar">
-            <h2> Elige una fecha: </h2>
+            <h2 style="margin-right: 5px;"> Elige una fecha: </h2>
             <ion-datetime-button datetime="datetime"></ion-datetime-button>
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
@@ -48,7 +48,7 @@
 
             <!-- Boton para enviar los datos del formulario -->
           <ion-button shape="round" size="default" fill="solid" strong="strong"
-          color="primary" (click)="confirmReserve()" [disabled]="!form.valid"> Reservar
+          color="v-claro" (click)="confirmReserve()" [disabled]="!form.valid"> Reservar
           </ion-button>
         </form>
   

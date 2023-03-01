@@ -55,6 +55,7 @@ export class DetallePage implements OnInit {
       this.Imagen = (resp.datos.Imagen)
       this.Autor = (resp.datos.Autor)
       this.Descripcion = (resp.datos.Descripcion)
+      this.serial = (resp.datos.Pk_Elemento)
     })
 
         // <----------------- "for" añade los datos en el momento que alguien diligencie el formulario en la vista ------------------->
@@ -95,8 +96,9 @@ export class DetallePage implements OnInit {
       resp => {
         this.respuesta = (resp)
         this.alerta = (resp.confirm)
-          if ( this.alerta == "false"){ this.alertFin = "Lo siento, alguien ya reservo este libro" } 
+          if ( this.alerta == false){ this.alertFin = "Lo siento, alguien ya reservo este libro" } 
           else { this.alertFin = "A reservado el libro en la fecha " + this.fecha_fin }
+          console.log('resp :>> ', resp);
           return this.mostrarAlerta()
       }
     )

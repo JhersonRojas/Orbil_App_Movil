@@ -23,14 +23,14 @@
     <div class="buttons">
       <ion-card mode="ios" [routerLink]="['/computador']">
         <ion-card-header>
-          <ion-img class="portatil" src="../assets/pictures/img_portatil.svg"></ion-img> 
+          <ion-img class="portatil" src="../assets/pictures/computer.png"></ion-img> 
         </ion-card-header>
         <ion-card-content> Portatiles </ion-card-content>
       </ion-card>
       
-      <ion-card mode="ios" [routerLink]="['/lista/2']">
+      <ion-card mode="ios" [routerLink]="['/lista/3']">
         <ion-card-header>
-          <ion-img class="libro" src="../assets/pictures/libro.svg"></ion-img> 
+          <ion-img class="libro" src="../assets/pictures/book.png"></ion-img> 
         </ion-card-header>
         <ion-card-content> Libros </ion-card-content>
       </ion-card>
@@ -38,7 +38,7 @@
       <!-- Esta directiva valida que tipo de usuario accedio, si fue instructor o administrativo deja ver su contenido, si no, lo esconde -->
       <ion-card mode="ios" [routerLink]="['/proyector']" *ngIf='permiso == true'>
         <ion-card-header>
-          <ion-img class="proyector" src="../assets/pictures/proyector.svg"></ion-img> 
+          <ion-img class="proyector" src="../assets/pictures/proyector.png"></ion-img> 
         </ion-card-header>
         <ion-card-content> Proyector </ion-card-content>
       </ion-card>
@@ -46,7 +46,7 @@
       <!-- Esta directiva valida que tipo de usuario accedio, si fue instructor o administrativo deja ver su contenido, si no, lo esconde -->
       <ion-card mode="ios" [routerLink]="['/ambiente']" *ngIf='permiso == true'>
         <ion-card-header>
-          <ion-img class="ambiente" src="../assets/pictures/ambiente.svg"></ion-img> 
+          <ion-img class="ambiente" src="../assets/pictures/home.png"></ion-img> 
         </ion-card-header>
         <ion-card-content> Ambiente </ion-card-content>
       </ion-card>

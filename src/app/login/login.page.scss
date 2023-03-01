@@ -3,11 +3,12 @@ $url: '../../assets/pictures/waves.png';
 $naranja: #ff7f00;
 
 @mixin input() {
-  width: auto;
-  height: 12vw;
-  font-size: 0.7rem;
+  font-size: 0.9rem;
   margin-bottom: 2%;
   border-radius: 30px;
+  width: auto;
+  height: 12vw;
+  @media (max-width: 325px) {font-size: 0.8rem; }
 }
 
 .items {
