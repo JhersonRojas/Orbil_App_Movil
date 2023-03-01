@@ -11,11 +11,16 @@
 <ion-content>
 
   <div class="container">
-    <ion-list *ngFor="let elem of elementos" class="info">
-  
+    <ion-list *ngFor="let elem of elementos" class="info" lines="inset">
       <ion-item>
-        <ion-label>{{elem.Elemento.Nombre_Elemento}}</ion-label>
-        <ion-label>{{elem.Elemento.Tipo_Elemento}}</ion-label>
+        <ion-thumbnail slot="start">
+          <img [src]="elem.Elemento.Imagen" loading="lazy">
+        </ion-thumbnail>
+        <ion-label>
+          <h1> {{elem.Elemento.Tipo_Elemento}}</h1>
+          <h2>{{elem.Estado_Mv}}</h2>
+          <p>Nombre:&nbsp;{{elem.Elemento.Nombre_Elemento}} </p>
+        </ion-label>
       </ion-item>
     </ion-list>
   </div>

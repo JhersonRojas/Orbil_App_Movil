@@ -22,14 +22,14 @@
 
             <!-- Modal con el calendario de días a elegir -->
           <div class="calendar">
-            <h2 style="margin-right: 5px;"> Elige una fecha: </h2>
+            <h2> Elige una fecha: &nbsp;</h2>
             <ion-datetime-button datetime="datetime"></ion-datetime-button>
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
-                <ion-datetime id="datetime" formControlName="fecha" name="fecha" color="primary"
+                <ion-datetime id="datetime" formControlName="fecha" name="fecha" color="v-claro"
                 presentation="date" min="{{fechaHoy | date: 'YYYY-MM-dd'}}" max="2024-12-30T23:59:59"
                 display-format="YYYY-MM-dd" [isDateEnabled]="cancelarFinDeSemana" [showDefaultButtons]="true" 
-                style=" width: auto; margin: 1%; color: rgb(136, 107, 107) !important; width: 90vw !important;">
+                style=" width: auto; color: rgb(136, 107, 107) !important; width: 90vw !important;">
                 <span slot="title"> Elige la fecha a reservar </span></ion-datetime>
               </ng-template>
             </ion-modal>

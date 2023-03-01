@@ -29,6 +29,7 @@ export interface Historial_Interface {
   interface Elemento {
     Nombre_Elemento: string;
     Tipo_Elemento: string;
+    Imagen: string;
   }
   
   interface Usuario {
