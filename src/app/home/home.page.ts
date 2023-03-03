@@ -1,4 +1,4 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, MenuController } from '@ionic/angular';
 
@@ -29,9 +29,8 @@ export class HomePage implements OnInit {
     // <----------------- Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista ------------------->
   ngOnInit() {
     // <----------------- "return" llama a la función de "validarDatos" ------------------->
-  return this.ValidarDatos(); 
+    return this.ValidarDatos(); 
   }
-
 
     // <----------- Esta función confirma si los datos del usuario son validos, de no, lo regresara al login ------------->
   async ValidarDatos(){
@@ -76,6 +75,5 @@ export class HomePage implements OnInit {
     }
 
   }
-
 
 }

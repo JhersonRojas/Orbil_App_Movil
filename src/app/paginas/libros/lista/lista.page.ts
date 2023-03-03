@@ -96,6 +96,7 @@ export class ListaPage implements OnInit {
 
   filtrar(e: any) {
     let idc = (e.detail.value);
+    console.log('e.detail :>> ', e);
     this.service.Listar_Libros_Service(idc).subscribe( resp => {
       this.respuesta = resp
       this.libros = this.respuesta.datos;
