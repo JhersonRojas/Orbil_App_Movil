@@ -85,12 +85,13 @@ export class LoginPage implements OnInit {
           localStorage.setItem('token', this.token);
     
         this.NgRouter.navigate(['/home'])
-    
-        //return setTimeout( async () => { location.reload() }, 40) 
-
+        return this.NgMenu.enable(true);
+          
       })
       return ingreso; 
 
-    } catch (error) { console.log(error) }
+    } catch (error) { 
+      console.log('error :>> \n ', error);
+    }
   }
 }

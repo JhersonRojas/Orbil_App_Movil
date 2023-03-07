@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
   templateUrl: './computador.page.html',
   styleUrls: ['./computador.page.scss'],
 })
+
+  // <-- Esta clase contiene las funciones y variables del modulo de computador -->
 export class ComputadorPage implements OnInit {
 
   permiso: boolean = false 
@@ -16,73 +18,68 @@ export class ComputadorPage implements OnInit {
     usuario:        string;
     identificacion: string;
 
-    // <-----------------Esta variable almacena la cantidad de computadores que envia el Api Rest ---------------------->
+    // <-- Esta variable almacena la cantidad de computadores que envia el Api Rest -->
   computadores:       any;
 
-    // <----------------- "form" es la variable que guarda los datos recibidos de "Fb" desde el HTML ------------------->
+    // <-- "form" es la variable que guarda los datos recibidos de "Fb" desde el HTML -->
   form: FormGroup;
 
-    // <----------------- Esta variable recibe la fecha actual, esto es un componente propio de angular ------------------->
-  fechaHoy:Date = new Date();
+    // <-- Esta variable recibe la fecha actual, esto es un componente propio de angular -->
+  fechaHoy: Date = new Date();
 
-    // <----------------- "respuesta" recibe los datos retornados por el Api Rest al realizar una reserva  ------------------->
+    // <-- "respuesta" recibe los datos retornados por el Api Rest al realizar una reserva  -->
   respuesta:          any;
    
-      // <--------- Estas variables son las que tomara la función que mostrara un mensaje emergente en la vista al reservar --------------->
+      // <-- Estas variables son las que tomara la función que mostrara un mensaje emergente en la vista al reservar -->
   mensaje:            any;
     mensajefinal:  string;
 
-      // <---------- Aqui se alamacena individualmente los datos que son insertados en el formulario, esto desde la variable "form" ------------>
+      // <-- Aqui se alamacena individualmente los datos que son insertados en el formulario, esto desde la variable "form" -->
   todo:               any;
     cantidad:      number;
     fecha:            any;
     nombre:           any;
     fecha_fin:        any;
 
-    // <----------------- El constructor obtiene los parametros importados de diferentes componentes ------------------->
+    // <-- El constructor obtiene los parametros importados de diferentes componentes -->
   constructor(
     private service: ComputadoresService, // <-- "service" obtiene los servicios proporcionados desde ambiente service -->
     private NgFb: FormBuilder, // <-- "FB" me proporciona una función propia de angular para agrupar información traida desde algun formulario del HTML -->
     private NgRouter: Router, // <-- "route" es una función de angular que me permite redirigir al usuario a otra ruta por medio de una orden -->
-    private NgAlert: AlertController) {}// <-- "alert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas -->
+    private NgAlert: AlertController // <-- "alert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas -->
+  ) {
+    this.checkToken();
+  }
     
-    // <----------------- Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista ------------------->
+    // <-- Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista -->
   ngOnInit() {
-      // <----------------- "form" añade los datos en el momento que alguien diligencie el formulario en la vista ------------------->
+      // <-- "form" añade los datos en el momento que alguien diligencie el formulario en la vista -->
     this.form = this.NgFb.group({
       fecha    : ['', Validators.required],
       cantidad : ['', Validators.required],
     });
-
-      // <----- "return" regresa la función que valida los datos al ingresar a esta pagina ---->
-    return this.ValidarDatos();
   }
 
     // <----------- Esta función confirma si los datos del usuario son validos, de no, lo regresara al login ------------->
-  async ValidarDatos(){
+  async checkToken(){
     try { 
       let token = localStorage.getItem('token')
-      if (token){
-        this.rol = localStorage.getItem('tipo_usuario')
-        this.nombre = localStorage.getItem('usuario').split(" ",1)[0]
-        this.identificacion = localStorage.getItem('identificacion')
+      if (!token) return this.NgRouter.navigate(['/login'])
 
-        if(this.rol == "Instructor" || this.rol == "Administrativo") 
-          {this.permiso = true } else { this.permiso = false}
+      this.rol = localStorage.getItem('tipo_usuario')
+      this.usuario = localStorage.getItem('usuario').split(' ', 1)[0]
+      this.identificacion = localStorage.getItem('identificacion')
 
-      } else {this.NgRouter.navigate(['/login'])}
-    } catch (error){}
+      if(this.rol == "Instructor" || this.rol == "Administrativo") return this.permiso = true 
+      else return this.permiso = false
+
+    } catch (error){ 
+      console.log('error :>> ', error); 
+    }
   }
 
-    // <---------- Esta función cancela la posibilidad de elegir fines de semana en el calendario desplegable ---------->
-  cancelarFinDeSemana = (dateString: string) => {
-    const date = new Date(dateString);
-    const utcDay = date.getUTCDay();
-    return utcDay !== 0 && utcDay !== 6;
-  };
-
     // <------------- Esta función es la que me permite enviar un mensaje emergente al realizarse una reserva --------------->
-  async mostrarAlerta() {
+  async showAlert() {
     const total = this.mensajefinal
     const alert = await this.NgAlert.create({ message:total});
     await alert.present();
@@ -90,7 +87,7 @@ export class ComputadorPage implements OnInit {
   }
 
   // <------- Esta función se encarga de agrupar los datos y enviarlos por medio del servicio al Api Rest -------->
-  ReservarComputador() {
+  async reserveComputer() {
     this.fecha =   this.form.value.fecha
     this.cantidad = this.form.value.cantidad
     this.fecha_fin = this.fecha.split("T",1)[0]
@@ -107,8 +104,15 @@ export class ComputadorPage implements OnInit {
         else {this.mensajefinal = `Se han reservado ${this.cantidad} computadores`}
 
         // <------- Este "return" me regresa la función de mostrarAlert, lo que muestra el mensaje emergente en la vista al reservar --------->
-        return this.mostrarAlerta()
+        return this.showAlert()
     });
   }
+
+    // <---------- Esta función cancela la posibilidad de elegir fines de semana en el calendario desplegable ---------->
+  cancelarFinDeSemana = (dateString: string) => {
+    const date = new Date(dateString);
+    const utcDay = date.getUTCDay();
+    return utcDay !== 0 && utcDay !== 6;
+  };
 
 }

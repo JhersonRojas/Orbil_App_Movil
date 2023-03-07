@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, MenuController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -8,72 +8,44 @@ import { AlertController, MenuController } from '@ionic/angular';
   styleUrls: ['./home.page.scss'],
 })
 
-    // <----------------- Esta clase contiene las funciones y variables del modulo de proyector ------------------->
+    // <-- Esta clase contiene las funciones y variables del modulo de proyector -->
 export class HomePage implements OnInit {
 
   permiso: boolean = false 
 
-    // <------ Estas variables son aquellas que tomaran los datos del usuarios guardados en el localstorage ----------->
+    // <-- Estas variables son aquellas que tomaran los datos del usuarios guardados en el localstorage -->
   rol: string  
   usuario:string 
   identificacion: string 
 
-    // <----------------- El constructor obtiene los parametros importados de diferentes componentes ------------------->
+    // <-- El constructor obtiene los parametros importados de diferentes componentes -->
   constructor(
-      // <--------- "NgRouter" es una función de angular que me permite redirigir al usuario a otra ruta por medio de una orden ----------->
-    private NgRouter: Router,
-    private NgAlert: AlertController,
+    private NgRouter: Router,// <-- "NgRouter" es una función de angular que me permite redirigir al usuario a otra ruta por medio de una orden -->
     private NgMenu: MenuController,
-  ) { this.NgMenu.enable(true); } // <-- Bloqueo del menú desplegable en esta vista -->
+  ) {
+    this.checkToken(); // <-- validacion de la existencia del token -->
+    this.NgMenu.enable(true); // <-- Bloqueo del menú desplegable en esta vista -->
+  } 
 
-    // <----------------- Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista ------------------->
-  ngOnInit() {
-    // <----------------- "return" llama a la función de "validarDatos" ------------------->
-    return this.ValidarDatos(); 
-  }
+    // <-- Funció de angular, su contenido es lo primero que se ejecuta al entrar a esta vista -->
+  ngOnInit() {}
 
-    // <----------- Esta función confirma si los datos del usuario son validos, de no, lo regresara al login ------------->
-  async ValidarDatos(){
+    // <-- Esta función confirma si los datos del usuario son validos, de no, lo regresara al login -->
+  async checkToken(){
     try { 
       let token = localStorage.getItem('token')
-      if (token){
-        this.rol = localStorage.getItem('tipo_usuario')
-        this.usuario = localStorage.getItem('usuario').split(' ', 1)[0]
-        this.identificacion = localStorage.getItem('identificacion')
+      if (!token) return this.NgRouter.navigate(['/login'])
 
-          if(this.rol == "Instructor" || this.rol == "Administrativo") 
-            {this.permiso = true } else { this.permiso = false}
+      this.rol = localStorage.getItem('tipo_usuario')
+      this.usuario = localStorage.getItem('usuario').split(' ', 1)[0]
+      this.identificacion = localStorage.getItem('identificacion')
 
-      } else {this.NgRouter.navigate(['/login'])}
-    } catch (error){}
-  }
+      if(this.rol == "Instructor" || this.rol == "Administrativo") return this.permiso = true 
+      else return this.permiso = false
 
-  async logout() {
-    const alert = await this.NgAlert.create({
-      header: `Desea cerrar sesión?`,
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-        },
-        {
-          text: 'Confirmar',
-          role: 'confirm',
-        },
-      ],
-    });
-    await alert.present();
-    const confirm = await alert.onDidDismiss();
-
-    if ( confirm.role == 'confirm') {
-      const close = async () => {
-        localStorage.clear()
-        this.NgRouter.navigate(['/login'])
-        await location.reload()
-      }
-      return close();
+    } catch (error){ 
+      console.log('error :>> ', error); 
     }
-
   }
 
 }
