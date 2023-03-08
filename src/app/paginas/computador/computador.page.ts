@@ -17,9 +17,12 @@ export class ComputadorPage implements OnInit {
     rol:            string;  
     usuario:        string;
     identificacion: string;
+    token:          string;
 
     // <-- Esta variable almacena la cantidad de computadores que envia el Api Rest -->
   computadores:       any;
+    inventario:       any;
+    disponible: any;
 
     // <-- "form" es la variable que guarda los datos recibidos de "Fb" desde el HTML -->
   form: FormGroup;
@@ -53,6 +56,7 @@ export class ComputadorPage implements OnInit {
     
     // <-- Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista -->
   ngOnInit() {
+    this.amountComputer();
       // <-- "form" añade los datos en el momento que alguien diligencie el formulario en la vista -->
     this.form = this.NgFb.group({
       fecha    : ['', Validators.required],
@@ -63,8 +67,8 @@ export class ComputadorPage implements OnInit {
     // <----------- Esta función confirma si los datos del usuario son validos, de no, lo regresara al login ------------->
   async checkToken(){
     try { 
-      let token = localStorage.getItem('token')
-      if (!token) return this.NgRouter.navigate(['/login'])
+      this.token = localStorage.getItem('token')
+      if (!this.token) return this.NgRouter.navigate(['/login'])
 
       this.rol = localStorage.getItem('tipo_usuario')
       this.usuario = localStorage.getItem('usuario').split(' ', 1)[0]
@@ -86,8 +90,18 @@ export class ComputadorPage implements OnInit {
     console.log(total)
   }
 
+  async amountComputer() {
+    this.service.Cantidad_Computador_Service().subscribe(resp => {
+      this.inventario = (resp)
+      if (!resp.confirm) return this.disponible = 'No es valido!'
+      if ( resp.confirm == true ) return this.disponible = (resp.datos.exhibidos)
+      return this.disponible = 'No se encuentran equipos'
+    })
+  }
+
   // <------- Esta función se encarga de agrupar los datos y enviarlos por medio del servicio al Api Rest -------->
   async reserveComputer() {
+    if (!this.token) return this.NgRouter.navigate(['/login'])
     this.fecha =   this.form.value.fecha
     this.cantidad = this.form.value.cantidad
     this.fecha_fin = this.fecha.split("T",1)[0]

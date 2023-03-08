@@ -19,22 +19,22 @@ export interface Historial_Interface {
     elemento: Elemento2[];
   }
   
- export interface Elemento2 {
-    Pk_Movimiento: number;
-    Estado_Mv: string;
-    Fk_Elemento: string;
-    Elemento: Elemento;
-  }
+export interface Elemento2 {
+  Pk_Movimiento: number;
+  Estado_Mv: string;
+  Fk_Elemento: string;
+  Elemento: Elemento;
+}
   
-  interface Elemento {
-    Nombre_Elemento: string;
-    Tipo_Elemento: string;
-    Imagen: string;
-  }
+interface Elemento {
+  Nombre_Elemento: string;
+  Tipo_Elemento: string;
+  Imagen: string;
+}
   
-  interface Usuario {
-    Pk_Identificacion: number;
-  }
+interface Usuario {
+  Pk_Identificacion: number;
+}
 
     // <----------------- Mapear los proyectores que hay en la base de datos ------------------->
 export interface Listar_Proyectores_Interface {
@@ -70,7 +70,7 @@ export interface Libro_Unico_Interface {
     confirm: boolean;
     datos: Datos;
     msj: string;
-  }
+}
   
 export interface Datos {
   Pk_Elemento: string;
@@ -95,6 +95,16 @@ export interface Reservar_Computador_Interface {
     joranadaReserva:  string; 
     fecha:            string;
     mensaje:          string;
+}
+export interface Cantidad_Computador_Interface {
+    confirm: boolean;
+    datos: Datos2;
+  }
+  
+export interface Datos2 {
+    catidad: number;
+    exhibidos: number;
+    disponibles: number;
 }
 
     // <----------------- Mapeo de los datos que recive el Api Rest para reservar un ambiente ------------------->

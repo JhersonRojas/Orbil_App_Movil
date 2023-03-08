@@ -44,6 +44,7 @@ export class AppComponent implements OnInit, AfterViewInit{
       this.subscriber$ = this.router.events.pipe(
         filter(event => event instanceof NavigationEnd)
       ).subscribe(async (event) => {
+        this.checkToken();
          //console.log('The URL changed to: ' + event['url'].split('/')[1])
         const pages = {
           "login":      "1",         

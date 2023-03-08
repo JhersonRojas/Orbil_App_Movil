@@ -122,7 +122,7 @@ export class AmbientePage implements OnInit  {
         resp => {
           this.respuesta = (resp)
           
-          if ( this.respuesta.confirm === true ) return this.showAlert(`Ha reservado el ambiente en ${this.fecha_fin[0]} 🤩` )
+          if ( this.respuesta.confirm === true ) return this.showAlert(`Ha reservado el ambiente en ${this.fecha_fin[0]}, horario ${this.jornada} 🤩` )
           if ( this.respuesta.confirm === false) return this.showAlert('Ya existe una reserva aqui, lo sentimos 😥')
 
           return this.showAlert('Ocurrio un error en el pedido, lo sentimos 😒')
