@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ComputadoresService } from '../../services/computador.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonModal } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
@@ -56,7 +56,7 @@ export class ComputadorPage implements OnInit {
     
     // <-- Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista -->
   ngOnInit() {
-    this.amountComputer();
+    this.get_Computers();
       // <-- "form" añade los datos en el momento que alguien diligencie el formulario en la vista -->
     this.form = this.NgFb.group({
       fecha    : ['', Validators.required],
@@ -90,13 +90,34 @@ export class ComputadorPage implements OnInit {
     console.log(total)
   }
 
-  async amountComputer() {
+  async get_Computers() {
     this.service.Cantidad_Computador_Service().subscribe(resp => {
-      this.inventario = (resp)
+      this.inventario = (resp.datos)
+      console.log('this.inventario :>> ', this.inventario);
       if (!resp.confirm) return this.disponible = 'No es valido!'
-      if ( resp.confirm == true ) return this.disponible = (resp.datos.exhibidos)
+      if ( resp.confirm == true ) return this.disponible = (resp.cantidad)
       return this.disponible = 'No se encuentran equipos'
     })
+  }
+
+  @ViewChild('modal', { static: true }) modal!: IonModal;
+  
+  selectedFruitsText = '0 💻';
+  selectedFruits: string[] = [];
+
+  private formatData(data: string[]) {
+    if (data.length === 1) {
+      const fruit = this.inventario.find(pc => pc.Pk_Elemento === data[0])
+      return fruit.text;
+    }
+  
+    return `${data.length} 💻`;
+  }
+  
+  fruitSelectionChanged(fruits: string[]) {
+    this.selectedFruits = fruits;
+    this.selectedFruitsText = this.formatData(this.selectedFruits);
+    this.modal.dismiss();
   }
 
   // <------- Esta función se encarga de agrupar los datos y enviarlos por medio del servicio al Api Rest -------->

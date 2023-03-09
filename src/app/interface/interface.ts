@@ -96,16 +96,19 @@ export interface Reservar_Computador_Interface {
     fecha:            string;
     mensaje:          string;
 }
-export interface Cantidad_Computador_Interface {
+
+export interface Exhibicion_Computador_Interface {
     confirm: boolean;
-    datos: Datos2;
+    cantidad: number;
+    datos: Dato2[];
   }
-  
-export interface Datos2 {
-    catidad: number;
-    exhibidos: number;
-    disponibles: number;
-}
+  export  interface Dato2 {
+    Pk_Elemento: string;
+    Estado_Elemento: string;
+    Nombre_Elemento: string;
+    Autor: string;
+    Descripcion: string;
+  }
 
     // <----------------- Mapeo de los datos que recive el Api Rest para reservar un ambiente ------------------->
 export interface Reserva_Ambiente_Interface {

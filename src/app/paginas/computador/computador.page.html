@@ -19,6 +19,21 @@
 
         <ion-img class="computador" src="../../../assets/pictures/computer.png"></ion-img>
         <h2>Cantidad disponible: {{disponible}}</h2>
+
+        <!-- <ion-item>
+          <ion-select multiple="true" placeholder="Computador(es) a reservar" [interfaceOptions]="{subHeader:'Computadores disponibles'}">
+            <ion-select-option *ngFor="let pc of inventario" [value]="pc.Pk_Elemento">
+              <h3>{{pc.Nombre_Elemento}} &nbsp; {{pc.Pk_Elemento}}</h3>
+            </ion-select-option>
+          </ion-select>
+        </ion-item> -->
+
+        <ion-list [inset]="true">
+          <ion-item [button]="true" [detail]="false" id="select-fruits">
+            <ion-label>Computadores Elegidos</ion-label>
+            <div slot="end" id="selected-fruits">{{ selectedFruitsText }}</div>
+          </ion-item>
+        </ion-list>
     
         <form [formGroup]="form" (ngSubmit)="reserveComputer()">
     
@@ -53,3 +68,16 @@
 
   </div>
 </ion-content>
+
+<ion-modal trigger="select-fruits" #modal>
+  <ng-template>
+    <app-lista
+      class="ion-page"
+      title="Computadores"
+      [items]="inventario"
+      [selectedItems]="selectedFruits"
+      (selectionChange)="fruitSelectionChanged($event)"
+      (selectionCancel)="modal.dismiss()"
+    ></app-lista>
+  </ng-template>
+</ion-modal>

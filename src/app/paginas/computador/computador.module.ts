@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ComputadorPageRoutingModule } from './computador-routing.module';
 
 import { ComputadorPage } from './computador.page';
+import { ListaComponent } from './lista_component/lista.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { ComputadorPage } from './computador.page';
     ComputadorPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [ComputadorPage]
+  declarations: [ComputadorPage, ListaComponent]
 })
 export class ComputadorPageModule {}

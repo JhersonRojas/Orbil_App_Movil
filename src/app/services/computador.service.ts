@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Cantidad_Computador_Interface, Reservar_Computador_Interface } from '../interface/interface'
+import { Exhibicion_Computador_Interface, Reservar_Computador_Interface } from '../interface/interface'
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class ComputadoresService {
   constructor( private http: HttpClient ) { }
 
   Cantidad_Computador_Service() {
-    return this.http.get<Cantidad_Computador_Interface>(this.url + '/computadores/cantidad');
+    return this.http.get<Exhibicion_Computador_Interface>(this.url + '/computadores/disponibles');
   }
 
     // <----------------- Función que envia los datos para la reserva de un computador al Api Rest ------------------->
