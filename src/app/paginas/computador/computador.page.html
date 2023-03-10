@@ -28,15 +28,15 @@
           </ion-select>
         </ion-item> -->
 
-        <ion-list [inset]="true">
+        <ion-list [inset]="true" style="margin:0.3%">
           <ion-item [button]="true" [detail]="false" id="select-fruits">
             <ion-label>Computadores Elegidos</ion-label>
-            <div slot="end" id="selected-fruits">{{ selectedFruitsText }}</div>
+            <div slot="end" id="selected-fruits">{{ selectedComputerText }}</div>
           </ion-item>
         </ion-list>
     
         <form [formGroup]="form" (ngSubmit)="reserveComputer()">
-    
+
           <div class="calendar">
             <h2> Elige una fecha: &nbsp;</h2>
             <ion-datetime-button datetime="datetime"></ion-datetime-button>
@@ -50,11 +50,6 @@
               </ng-template>
             </ion-modal>
           </div>
-    
-          <ion-item class="cantidad">
-            <ion-label position="floating">Cantidad a pedir: </ion-label>
-            <ion-input type="number" formControlName="cantidad"></ion-input>
-          </ion-item>
 
           <h5> A nombre de {{usuario}}</h5>
 
@@ -75,8 +70,8 @@
       class="ion-page"
       title="Computadores"
       [items]="inventario"
-      [selectedItems]="selectedFruits"
-      (selectionChange)="fruitSelectionChanged($event)"
+      [selectedItems]="selectedComputer"
+      (selectionChange)="computerSelectionChanged($event)"
       (selectionCancel)="modal.dismiss()"
     ></app-lista>
   </ng-template>

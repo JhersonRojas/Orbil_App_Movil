@@ -60,7 +60,6 @@ export class ComputadorPage implements OnInit {
       // <-- "form" añade los datos en el momento que alguien diligencie el formulario en la vista -->
     this.form = this.NgFb.group({
       fecha    : ['', Validators.required],
-      cantidad : ['', Validators.required],
     });
   }
 
@@ -102,21 +101,16 @@ export class ComputadorPage implements OnInit {
 
   @ViewChild('modal', { static: true }) modal!: IonModal;
   
-  selectedFruitsText = '0 💻';
-  selectedFruits: string[] = [];
+  selectedComputerText = '0 💻';
+  selectedComputer: string[] = [];
 
   private formatData(data: string[]) {
-    if (data.length === 1) {
-      const fruit = this.inventario.find(pc => pc.Pk_Elemento === data[0])
-      return fruit.text;
-    }
-  
     return `${data.length} 💻`;
   }
   
-  fruitSelectionChanged(fruits: string[]) {
-    this.selectedFruits = fruits;
-    this.selectedFruitsText = this.formatData(this.selectedFruits);
+  computerSelectionChanged(computer: string[]) {
+    this.selectedComputer = computer;
+    this.selectedComputerText = this.formatData(this.selectedComputer);
     this.modal.dismiss();
   }
 
@@ -124,19 +118,23 @@ export class ComputadorPage implements OnInit {
   async reserveComputer() {
     if (!this.token) return this.NgRouter.navigate(['/login'])
     this.fecha =   this.form.value.fecha
-    this.cantidad = this.form.value.cantidad
     this.fecha_fin = this.fecha.split("T",1)[0]
 
       // <----------------- Aqui se estan enviando los datos y recibiendo la respuesta del Api respecto a su validación ------------------->
-    this.todo = { usuario: this.identificacion, cantidad : this.form.value.cantidad, fecha : this.fecha_fin }
+    this.todo = { usuario: this.identificacion, computadores : this.selectedComputer, fecha : this.fecha_fin }
+
+    console.log('this.todo :>> ', this.todo);
 
     this.service.Reservar_Computador_Service(this.todo).subscribe(
       resp => {
         this.respuesta = (resp)
-        this.mensaje = this.respuesta.estado;
+        this.mensaje = this.respuesta.confirm;
         
-        if ( this.mensaje == false ){ this.mensajefinal = "Lo siento, no se encuentra esa cantidad disponible"} 
-        else {this.mensajefinal = `Se han reservado ${this.cantidad} computadores`}
+        if ( this.mensaje == false ){ this.mensajefinal = "Lo siento, algún computador que eligio no esta disponible"}
+        if ( this.mensaje == false && this.respuesta == "A excedido el limite para reservar"){ this.mensajefinal = "Lo siento, no se encuentra esa cantidad disponible"}
+        else {this.mensajefinal = `Se han reservado ${this.selectedComputer.length} computadores`}
+
+        console.log('resp :>> ', resp);
 
         // <------- Este "return" me regresa la función de mostrarAlert, lo que muestra el mensaje emergente en la vista al reservar --------->
         return this.showAlert()

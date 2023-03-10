@@ -5,6 +5,7 @@ import { Dato2 } from '../../../interface/interface'
 @Component({
   selector: 'app-lista',
   templateUrl: 'lista.component.html',
+  styleUrls: ['./lista.component.scss'],
 })
 
 export class ListaComponent implements OnInit {
@@ -40,17 +41,7 @@ export class ListaComponent implements OnInit {
     this.filterList(ev.target.value);
   }
   
-  /**
-   * Update the rendered view with
-   * the provided search query. If no
-   * query is provided, all data
-   * will be rendered.
-   */
   filterList(searchQuery: any | undefined) {
-    /**
-     * If no search query is defined,
-     * return all options.
-     */
     if (searchQuery === undefined) return this.filteredItems = [...this.items];
     else {
       this.filteredItems = this.items.filter(item => {

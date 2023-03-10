@@ -1,0 +1,13 @@
+$naranja: #ff7f00;
+$verde: #38A900;
+$azul: #3880ff;
+
+ion-header ion-toolbar {
+  --background: #39A900;
+  color: white;
+  display: grid;
+
+  ion-title {
+    margin: auto;
+  }
+}
