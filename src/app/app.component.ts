@@ -12,6 +12,8 @@ import { filter } from 'rxjs/operators';
 
 export class AppComponent implements OnInit, AfterViewInit{
 
+  darkMode: boolean = false
+
   rol: any 
   usuario: any
   identificacion: any 
@@ -33,6 +35,8 @@ export class AppComponent implements OnInit, AfterViewInit{
 
   ngOnInit(){
     this.selected ='1'
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    if ( prefersDark.matches ) document.body.classList.toggle('light') 
   }
 
   ngAfterViewInit(): void {
@@ -40,8 +44,7 @@ export class AppComponent implements OnInit, AfterViewInit{
   }
 
   changeTheme() {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-    console.log(prefersDark);
+    document.body.classList.toggle('dark')
   }
 
   async selectPage() {

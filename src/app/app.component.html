@@ -9,6 +9,13 @@
           <p> Buen día {{rol}} </p>
         </ion-label>
       </div>
+      
+    <div class="themes">
+      <ion-item lines="none">
+        <ion-label>Cambiar el tema </ion-label>
+        <ion-toggle aria-label="Dark toggle" color="dark" [checked]="darkMode" (ionChange)="changeTheme()" slot="end"></ion-toggle>
+      </ion-item>
+    </div>
 
     <ion-menu-toggle>
       <ion-list class="list" lines="none">
