@@ -39,6 +39,11 @@ export class AppComponent implements OnInit, AfterViewInit{
     this.selectPage()
   }
 
+  changeTheme() {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    console.log(prefersDark);
+  }
+
   async selectPage() {
     try {
       this.subscriber$ = this.router.events.pipe(

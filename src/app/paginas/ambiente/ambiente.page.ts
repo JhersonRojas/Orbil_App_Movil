@@ -118,6 +118,9 @@ export class AmbientePage implements OnInit  {
 
       // <--------------- Estos son los datos que se envian a las variables antes mencionadas --------------------->
     this.todo = { usuario: this.form.value.usuario, jornada : this.form.value.jornada, fecha : this.fecha_fin[0]}
+
+    console.log(this.todo);
+    
       await this.service.Reservar_Ambiente_Service(this.todo).subscribe(
         resp => {
           this.respuesta = (resp)

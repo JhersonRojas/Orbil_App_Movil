@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Exhibicion_Computador_Interface, Reservar_Computador_Interface } from '../interface/interface'
 
@@ -7,23 +7,26 @@ import { Exhibicion_Computador_Interface, Reservar_Computador_Interface } from '
   providedIn: 'root'
 })
 
-  // <----------------- Esta clase contiene los servicios con los metodos para comunicarse con el Api Rest ------------------->
+// <----------------- Esta clase contiene los servicios con los metodos para comunicarse con el Api Rest ------------------->
 export class ComputadoresService {
 
-    // <----------------- "url" es la variable de la ruta que se obtiene desde enviroments ------------------->
+  // <----------------- "url" es la variable de la ruta que se obtiene desde enviroments ------------------->
   url = environment.url
+  token = localStorage.getItem('token')
+  headers = new HttpHeaders({ "token": this.token });
 
-      // <----------------- La función del contructor llama los parametros importados desde otros componentes ------------------->
-    // <----------------- En este caso esta obteniendo los metodos Http para realizar las consultas ------------------->
-  constructor( private http: HttpClient ) { }
+  // <----------------- La función del contructor llama los parametros importados desde otros componentes ------------------->
+  // <----------------- En este caso esta obteniendo los metodos Http para realizar las consultas ------------------->
+  constructor(private http: HttpClient) { }
 
   Cantidad_Computador_Service() {
-    return this.http.get<Exhibicion_Computador_Interface>(this.url + '/computadores/disponibles');
+    return this.http.get<Exhibicion_Computador_Interface>(this.url + '/computadores/disponibles', { headers: this.headers});
   }
 
-    // <----------------- Función que envia los datos para la reserva de un computador al Api Rest ------------------->
+  // <----------------- Función que envia los datos para la reserva de un computador al Api Rest ------------------->
   Reservar_Computador_Service(data: string) {
-    return this.http.post<Reservar_Computador_Interface>( this.url + '/movimientos/reserva/computador', data ) 
+    let headers = new HttpHeaders({ "token": this.token });
+    return this.http.post<Reservar_Computador_Interface>(this.url + '/movimientos/reserva/computador', data, { headers })
   }
 
 }

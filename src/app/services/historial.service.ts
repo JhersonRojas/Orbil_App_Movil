@@ -11,13 +11,13 @@ export class HistorialService {
 
   url = environment.url
 
-  constructor ( private http: HttpClient , ) { }
+  constructor(private http: HttpClient) { }
 
-  public History_Service( token: any, id: any) {
+  public History_Service(token: any, id: any) {
     let headers = new HttpHeaders({
       "token": token
     });
-    return this.http.get<Historial_Interface>(this.url + `/usuarios/historial/${id}`, { headers : headers});
+    return this.http.get<Historial_Interface>(this.url + `/usuarios/historial/${id}`, { headers: headers });
   }
 
 }

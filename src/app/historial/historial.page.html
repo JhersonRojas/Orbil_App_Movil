@@ -10,6 +10,7 @@
 
 <ion-content>
 
+  <h1 *ngIf='elementos == undefined'> Parece que aun no reservas nada chicuel@</h1>
   <div class="container">
     <ion-list *ngFor="let elem of elementos" class="info" lines="inset">
       <ion-item>

@@ -136,4 +136,4 @@ export interface Reserva_Proyector_Interface{
     mensaje:          string; 
     datos:            string;
     boolean:          string; 
-}
+}   
