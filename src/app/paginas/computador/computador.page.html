@@ -11,68 +11,69 @@
 <ion-content>
   <div class="container">
     <ion-card>
+      <!-- Titulo del card de computadores -->
       <ion-card-header>
         <h1>Reserva de computador</h1>
       </ion-card-header>
 
+      <!-- Contenedor del card de computadores -->
       <ion-card-content>
 
+        <!-- Imagen de computador-->
         <ion-img class="computador" src="../../../assets/pictures/computer.png"></ion-img>
-        <h2>Cantidad disponible: {{disponible}}</h2>
 
-        <!-- <ion-item>
-          <ion-select multiple="true" placeholder="Computador(es) a reservar" [interfaceOptions]="{subHeader:'Computadores disponibles'}">
-            <ion-select-option *ngFor="let pc of inventario" [value]="pc.Pk_Elemento">
-              <h3>{{pc.Nombre_Elemento}} &nbsp; {{pc.Pk_Elemento}}</h3>
-            </ion-select-option>
-          </ion-select>
-        </ion-item> -->
+        <!-- Cantidad disponible que se muestra -->
+        <h2>Cantidad disponible: {{computadores_cantidad}}</h2>
 
-        <ion-list [inset]="true" style="margin:0.3%">
-          <ion-item [button]="true" [detail]="false" id="select-fruits">
-            <ion-label>Computadores Elegidos</ion-label>
-            <div slot="end" id="selected-fruits">{{ selectedComputerText }}</div>
-          </ion-item>
-        </ion-list>
-    
+        <!-- Formulario que toma los datso que seran enviados al Api para su validación -->
         <form [formGroup]="form" (ngSubmit)="reserveComputer()">
-
+          <!-- Contenedor del calendario -->
           <div class="calendar">
             <h2> Elige una fecha: &nbsp;</h2>
+            <!-- Boton para desplegar el calendario -->
             <ion-datetime-button datetime="datetime"></ion-datetime-button>
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
-                <ion-datetime id="datetime" formControlName="fecha" name="fecha" color="v-claro"
-                presentation="date" min="{{fechaHoy | date: 'YYYY-MM-dd'}}" max="2024-12-30T23:59:59"
-                display-format="YYYY-MM-dd" [isDateEnabled]="cancelarFinDeSemana" [showDefaultButtons]="true" 
-                style=" width: auto; color: rgb(136, 107, 107) !important; width: 90vw !important;">
-                <span slot="title"> Elige la fecha a reservar </span></ion-datetime>
+                <!-- DatePicker con restricciones donde se tomara la fecha de la reserva -->
+                <ion-datetime id="datetime" formControlName="fecha" name="fecha" color="v-claro" presentation="date"
+                  (ionChange)="filtradoPorDia($event)" min="{{fecha_hoy | date: 'YYYY-MM-dd'}}"
+                  max="2026-12-30T23:59:59" display-format="YYYY-MM-dd" [isDateEnabled]="cancelarFinDeSemana"
+                  [showDefaultButtons]="true" doneText="Aceptar" cancelText="Cancelar"
+                  style=" width: auto; color: rgb(136, 107, 107) !important; width: 90vw !important;">
+                  <span slot="title"> Elige la fecha a reservar </span>
+                </ion-datetime>
               </ng-template>
             </ion-modal>
           </div>
 
+          <!-- Vinculo a el modal del listado de los computadores -->
+          <ion-list [inset]="true">
+            <ion-item [button]="true" [detail]="false" id="select-computadores" disabled="{{computadores_permiso}}">
+              <ion-label>Computadores Elegidos</ion-label>
+              <div slot="end" id="selected-fruits">{{ selectedComputerText }}</div>
+            </ion-item>
+          </ion-list>
+
+          <!-- Etiqueta que muestra el nombre de quien reserva -->
           <h5> A nombre de {{usuario}}</h5>
 
-          <ion-button shape="round" size="default" fill="solid" strong="strong"
-            color="v-claro" (click)="reserveComputer()" [disabled]="!form.valid"> Reservar
+          <!-- Boton para activar la función de reservar -->
+          <ion-button shape="round" size="default" fill="solid" strong="strong" color="v-claro"
+            (click)="reserveComputer()" [disabled]="!form.valid"> Reservar
           </ion-button>
-                
         </form>
+
       </ion-card-content>
     </ion-card>
-
   </div>
 </ion-content>
 
-<ion-modal trigger="select-fruits" #modal>
+<!-- Modal que se muestra cuando se quieren elegiurt los computadores -->
+<ion-modal trigger="select-computadores" #modal>
   <ng-template>
-    <app-lista
-      class="ion-page"
-      title="Computadores"
-      [items]="inventario"
-      [selectedItems]="selectedComputer"
-      (selectionChange)="computerSelectionChanged($event)"
-      (selectionCancel)="modal.dismiss()"
-    ></app-lista>
+    <!-- Listado de los computadores disponibles -->
+    <app-lista class="ion-page" title="Computadores" [items]="computadores_muestra" [selectedItems]="selectedComputer"
+      (selectionChange)="computerSelectionChanged($event)" (selectionCancel)="modal.dismiss()">
+    </app-lista>
   </ng-template>
 </ion-modal>

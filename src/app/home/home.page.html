@@ -1,58 +1,66 @@
 <ion-content>
-      <!-- Imagenes que cambian -->
-    <div class="slider-container">
-      <div class="slides">
-          <ion-img src="../../assets/other/DSC_4615.JPG"></ion-img>
-          <ion-img src="../../assets/other/DSC_4633.JPG"></ion-img>
-          <ion-img src="../../assets/other/DSC_4709.JPG"></ion-img>
-          <ion-img src="../../assets/other/DSC_4564.JPG"></ion-img>
-      </div>
+  <!-- Imagenes que cambian -->
+  <div class="slider-container">
+    <div class="slides">
+      <ion-img src="../../assets/other/DSC_4615.JPG"></ion-img>
+      <ion-img src="../../assets/other/DSC_4633.JPG"></ion-img>
+      <ion-img src="../../assets/other/DSC_4709.JPG"></ion-img>
+      <ion-img src="../../assets/other/DSC_4564.JPG"></ion-img>
     </div>
+  </div>
 
-      <!-- Titulo con el nombre del usuario -->
-    <div class="titulo"> <p> Hola {{usuario}} bienvenido a Orbil</p> </div> 
-  
-      <!-- Texto de bienvenida -->
-    <div class="bienvenida">
-      <p>En este aplicativo contara con la capacidad de reservar algunos de los 
-        diferentes elementos que se encuentran en el ambiente de biblioteca por el momento.
-      </p>
-    </div>
+  <!-- Titulo con el nombre del usuario -->
+  <div class="titulo"><p>Hola {{usuario}} bienvenido a Orbil</p></div>
 
-      <!-- Botones para pasar a los modulos de los elementos -->
-    <div class="buttons">
-      <ion-card mode="ios" [routerLink]="['/computador']">
-        <ion-card-header>
-          <ion-img class="portatil" src="../assets/pictures/computer.png"></ion-img> 
-        </ion-card-header>
-        <ion-card-content> Portatiles </ion-card-content>
-      </ion-card>
-      
-      <ion-card mode="ios" [routerLink]="['/lista/2']">
-        <ion-card-header>
-          <ion-img class="libro" src="../assets/pictures/book.png"></ion-img> 
-        </ion-card-header>
-        <ion-card-content> Libros </ion-card-content>
-      </ion-card>
+  <!-- Texto de bienvenida -->
+  <div class="bienvenida">
+    <p>
+      En este aplicativo contara con la capacidad de reservar algunos de los
+      diferentes elementos que se encuentran en el ambiente de biblioteca por el
+      momento.
+    </p>
+  </div>
 
-      <!-- Esta directiva valida que tipo de usuario accedio, si fue instructor o administrativo deja ver su contenido, si no, lo esconde -->
-      <ion-card mode="ios" [routerLink]="['/proyector']" *ngIf='permiso == true'>
-        <ion-card-header>
-          <ion-img class="proyector" src="../assets/pictures/proyector.png"></ion-img> 
-        </ion-card-header>
-        <ion-card-content> Proyector </ion-card-content>
-      </ion-card>
+  <!-- Botones para pasar a los modulos de los elementos -->
+  <div class="buttons">
+    <ion-card mode="ios" [routerLink]="['/computador']">
+      <ion-card-header>
+        <ion-img
+          class="portatil"
+          src="../assets/pictures/computer.png"
+        ></ion-img>
+      </ion-card-header>
+      <ion-card-content> Portatiles </ion-card-content>
+    </ion-card>
 
-      <!-- Esta directiva valida que tipo de usuario accedio, si fue instructor o administrativo deja ver su contenido, si no, lo esconde -->
-      <ion-card mode="ios" [routerLink]="['/ambiente']" *ngIf='permiso == true'>
-        <ion-card-header>
-          <ion-img class="ambiente" src="../assets/pictures/home.png"></ion-img> 
-        </ion-card-header>
-        <ion-card-content> Ambiente </ion-card-content>
-      </ion-card>
-    </div>
+    <ion-card mode="ios" [routerLink]="['/lista/2']">
+      <ion-card-header>
+        <ion-img class="libro" src="../assets/pictures/book.png"></ion-img>
+      </ion-card-header>
+      <ion-card-content> Libros </ion-card-content>
+    </ion-card>
 
-  <div class="call-menu"><ion-menu-button menu="main-menu" color="light"></ion-menu-button></div>
+    <!-- Esta directiva valida que tipo de usuario accedio, si fue instructor o administrativo deja ver su contenido, si no, lo esconde -->
+    <ion-card mode="ios" [routerLink]="['/proyector']" *ngIf="permiso == true">
+      <ion-card-header>
+        <ion-img
+          class="proyector"
+          src="../assets/pictures/proyector.png"
+        ></ion-img>
+      </ion-card-header>
+      <ion-card-content> Proyector </ion-card-content>
+    </ion-card>
 
+    <!-- Esta directiva valida que tipo de usuario accedio, si fue instructor o administrativo deja ver su contenido, si no, lo esconde -->
+    <ion-card mode="ios" [routerLink]="['/ambiente']" *ngIf="permiso == true">
+      <ion-card-header>
+        <ion-img class="ambiente" src="../assets/pictures/home.png"></ion-img>
+      </ion-card-header>
+      <ion-card-content> Ambiente </ion-card-content>
+    </ion-card>
+  </div>
 
+  <div class="call-menu">
+    <ion-menu-button menu="main-menu" color="light"></ion-menu-button>
+  </div>
 </ion-content>

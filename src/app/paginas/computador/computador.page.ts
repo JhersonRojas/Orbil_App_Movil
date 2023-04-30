@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ComputadoresService } from '../../services/computador.service';
 import { AlertController, IonModal } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { CheckTokenService } from 'src/app/middlewares/check-token.service';
 
 @Component({
   selector: 'app-computador',
@@ -10,142 +10,138 @@ import { Router } from '@angular/router';
   styleUrls: ['./computador.page.scss'],
 })
 
-  // <-- Esta clase contiene las funciones y variables del modulo de computador -->
+// Esta clase contiene las funciones y variables del modulo de computador
 export class ComputadorPage implements OnInit {
 
-  permiso: boolean = false 
-    rol:            string;  
-    usuario:        string;
-    identificacion: string;
-    token:          string;
-
-    // <-- Esta variable almacena la cantidad de computadores que envia el Api Rest -->
-  computadores:       any;
-    inventario:       any;
-    disponible: any;
-
-    // <-- "form" es la variable que guarda los datos recibidos de "Fb" desde el HTML -->
-  form: FormGroup;
-
-    // <-- Esta variable recibe la fecha actual, esto es un componente propio de angular -->
-  fechaHoy: Date = new Date();
-
-    // <-- "respuesta" recibe los datos retornados por el Api Rest al realizar una reserva  -->
-  respuesta:          any;
-   
-      // <-- Estas variables son las que tomara la función que mostrara un mensaje emergente en la vista al reservar -->
-  mensaje:            any;
-    mensajefinal:  string;
-
-      // <-- Aqui se alamacena individualmente los datos que son insertados en el formulario, esto desde la variable "form" -->
-  todo:               any;
-    cantidad:      number;
-    fecha:            any;
-    nombre:           any;
-    fecha_fin:        any;
-
-    // <-- El constructor obtiene los parametros importados de diferentes componentes -->
-  constructor(
-    private service: ComputadoresService, // <-- "service" obtiene los servicios proporcionados desde ambiente service -->
-    private NgFb: FormBuilder, // <-- "FB" me proporciona una función propia de angular para agrupar información traida desde algun formulario del HTML -->
-    private NgRouter: Router, // <-- "route" es una función de angular que me permite redirigir al usuario a otra ruta por medio de una orden -->
-    private NgAlert: AlertController // <-- "alert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas -->
-  ) {
-    this.checkToken();
-  }
-    
-    // <-- Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista -->
-  ngOnInit() {
-    this.get_Computers();
-      // <-- "form" añade los datos en el momento que alguien diligencie el formulario en la vista -->
-    this.form = this.NgFb.group({
-      fecha    : ['', Validators.required],
-    });
-  }
-
-    // <----------- Esta función confirma si los datos del usuario son validos, de no, lo regresara al login ------------->
-  async checkToken(){
-    try { 
-      this.token = localStorage.getItem('token')
-      if (!this.token) return this.NgRouter.navigate(['/login'])
-
-      this.rol = localStorage.getItem('tipo_usuario')
-      this.usuario = localStorage.getItem('usuario').split(' ', 1)[0]
-      this.identificacion = localStorage.getItem('identificacion')
-
-      if(this.rol == "Instructor" || this.rol == "Administrativo") return this.permiso = true 
-      else return this.permiso = false
-
-    } catch (error){ 
-      console.log('error :>> ', error); 
-    }
-  }
-
-    // <------------- Esta función es la que me permite enviar un mensaje emergente al realizarse una reserva --------------->
-  async showAlert() {
-    const total = this.mensajefinal
-    const alert = await this.NgAlert.create({ message:total});
-    await alert.present();
-    console.log(total)
-  }
-
-  async get_Computers() {
-    this.service.Cantidad_Computador_Service().subscribe(resp => {
-      this.inventario = (resp.datos)
-      console.log('this.inventario :>> ', this.inventario);
-      if (!resp.confirm) return this.disponible = 'No es valido!'
-      if ( resp.confirm == true ) return this.disponible = (resp.cantidad)
-      return this.disponible = 'No se encuentran equipos'
-    })
-  }
-
+  // Referencia al despliegue del Modal de computadores 
   @ViewChild('modal', { static: true }) modal!: IonModal;
-  
+
+  // Variables de los datos mostrados en el formulario
   selectedComputerText = '0 💻';
   selectedComputer: string[] = [];
 
-  private formatData(data: string[]) {
-    return `${data.length} 💻`;
-  }
-  
-  computerSelectionChanged(computer: string[]) {
-    this.selectedComputer = computer;
-    this.selectedComputerText = this.formatData(this.selectedComputer);
-    this.modal.dismiss();
-  }
+  usuario: string;
+  identificacion: string;
 
-  // <------- Esta función se encarga de agrupar los datos y enviarlos por medio del servicio al Api Rest -------->
-  async reserveComputer() {
-    if (!this.token) return this.NgRouter.navigate(['/login'])
-    this.fecha =   this.form.value.fecha
-    this.fecha_fin = this.fecha.split("T",1)[0]
+  // Esta variable almacena la cantidad de computadores que envia el Api Rest
+  computadores: any;
+  computadores_permiso: boolean = true;
+  computadores_muestra: any;
+  computadores_cantidad: string | number = 'Elija el día';
 
-      // <----------------- Aqui se estan enviando los datos y recibiendo la respuesta del Api respecto a su validación ------------------->
-    this.todo = { usuario: this.identificacion, computadores : this.selectedComputer, fecha : this.fecha_fin }
+  form: FormGroup; // "form" es la variable que guarda los datos recibidos de "Fb" desde el HTML
+  fecha_hoy: Date = new Date(); // Esta variable recibe la fecha actual, esto es un componente propio de angular
 
-    console.log('this.todo :>> ', this.todo);
+  // Estas variables son las que tomara la función que mostrara un mensaje emergente en la vista al reservar
+  mensaje: any;
+  mensaje_final: string;
 
-    this.service.Reservar_Computador_Service(this.todo).subscribe(
-      resp => {
-        this.respuesta = (resp)
-        this.mensaje = this.respuesta.confirm;
-        
-        if ( this.mensaje == false ){ this.mensajefinal = "Lo siento, algún computador que eligio no esta disponible"}
-        if ( this.mensaje == false && this.respuesta == "A excedido el limite para reservar"){ this.mensajefinal = "Lo siento, no se encuentra esa cantidad disponible"}
-        else {this.mensajefinal = `Se han reservado ${this.selectedComputer.length} computadores`}
+  // "respuesta" recibe los datos retornados por el Api Rest al realizar una reserva 
+  respuesta: any;
 
-        console.log('resp :>> ', resp);
+  // Aqui se alamacena individualmente los datos que son insertados en el formulario, esto desde la variable "form"
+  todo: any;
+  cantidad: number;
+  fecha: any;
+  nombre: any;
+  fecha_fin: any;
 
-        // <------- Este "return" me regresa la función de mostrarAlert, lo que muestra el mensaje emergente en la vista al reservar --------->
-        return this.showAlert()
+  // El constructor obtiene los parametros importados de diferentes componentes
+  constructor(
+    private service: ComputadoresService, // "service" obtiene los servicios proporcionados desde ambiente service
+    private valideAccess: CheckTokenService, // valideAccess obtiene la verificación del inicio de sesión
+    private NgFb: FormBuilder, // "FB" me proporciona una función propia de angular para agrupar información traida desde algun formulario del HTML
+    private NgAlert: AlertController // "alert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas
+  ) {
+    this.valideAccess.checkToken().then(() => {
+      this.usuario = localStorage.getItem('usuario').split(' ', 1)[0];
+      this.identificacion = localStorage.getItem('identificacion');
     });
   }
 
-    // <---------- Esta función cancela la posibilidad de elegir fines de semana en el calendario desplegable ---------->
-  cancelarFinDeSemana = (dateString: string) => {
+  // Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista
+  ngOnInit() {
+    // "form" añade los datos en el momento que alguien diligencie el formulario en la vista
+    this.form = this.NgFb.group({ fecha: ['', Validators.required], });
+  }
+
+  // Esta función cancela la posibilidad de elegir fines de semana en el calendario desplegable
+  public cancelarFinDeSemana = (dateString: string) => {
     const date = new Date(dateString);
     const utcDay = date.getUTCDay();
     return utcDay !== 0 && utcDay !== 6;
   };
 
+  // Esta función es la que me permite enviar un mensaje emergente al realizarse una reserva
+  public mostrarAlerta = async () => {
+    const total = this.mensaje_final;
+    const alert = await this.NgAlert.create({ message: total });
+    await alert.present();
+  }
+
+  // Esta función llama la cantidad e informacion de los computadores disponibles actualmente
+  public filtradoPorDia = (event: any) => {
+    let fecha = event.detail.value
+    fecha = fecha.split('T', 1)[0];
+    this.service.Disponibles_Computador_Service(fecha).subscribe(resp => {
+      console.log(resp);
+      this.computadores_muestra = resp.datos
+      if (!resp.confirm) return (this.computadores_cantidad = 'No es valido!');
+      if (resp.confirm) {
+        this.computadores_permiso = false;
+        return this.computadores_cantidad = resp.cantidad 
+      }
+      return (this.computadores_cantidad = 'No se encuentran equipos');
+    });
+  }
+
+  // Aqui cambia el valor de los computadores mostrados
+  private formatData(data: string[]) {
+    return `${data.length} 💻`;
+  }
+
+  // Función para obtener la cantidad de computadores elegidos por el usuario
+  public computerSelectionChanged = async (computer: string[]) => {
+    this.selectedComputer = computer;
+    this.selectedComputerText = this.formatData(this.selectedComputer);
+    await this.modal.dismiss();
+  }
+
+  // Esta función se encarga de agrupar los datos y enviarlos por medio del servicio al Api Rest
+  public reserveComputer = async () => {
+
+    // Validacion de si elegieron algún computador
+    if (this.selectedComputer.length == 0) {
+      this.mensaje_final = 'Lo siento, debe elegir minimo un computador';
+      return this.mostrarAlerta();
+    }
+
+    // Fecha a reservar de los computadores
+    this.fecha = this.form.value.fecha;
+    this.fecha_fin = this.fecha.split('T', 1)[0];
+
+    // Aqui se estan enviando los datos y recibiendo la respuesta del Api respecto a su validación
+    this.todo = {
+      usuario: this.identificacion,
+      computadores: this.selectedComputer,
+      fecha: this.fecha_fin,
+    };
+
+    // Llamado al servicio para realziar la petición y hacer la reserva
+    this.service.Reservar_Computador_Service(this.todo).subscribe(resp => {
+      this.respuesta = resp;
+      this.mensaje = this.respuesta.confirm;
+      if (this.mensaje == false)
+        this.mensaje_final = 'Lo siento, algún computador que eligio no esta disponible';
+      if (this.mensaje == false && this.respuesta == 'A excedido el limite para reservar')
+        this.mensaje_final = 'Lo siento, no se encuentra esa cantidad disponible';
+      if (this.mensaje == true)
+        this.mensaje_final = `Se han reservado ${this.selectedComputer.length} computadores`, this.computadores_permiso = true;
+      else
+        this.mensaje_final = `No se han reservado los computadores, esto puede ser un error, por favor comuniquelo con los administradores`;
+
+      // Este "return" me regresa la función de mostrarAlert, lo que muestra el mensaje emergente en la vista al reservar
+      return this.mostrarAlerta();
+    });
+  }
 }

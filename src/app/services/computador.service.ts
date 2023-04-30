@@ -19,8 +19,9 @@ export class ComputadoresService {
   // <----------------- En este caso esta obteniendo los metodos Http para realizar las consultas ------------------->
   constructor(private http: HttpClient) { }
 
-  Cantidad_Computador_Service() {
-    return this.http.get<Exhibicion_Computador_Interface>(this.url + '/computadores/disponibles', { headers: this.headers});
+  Disponibles_Computador_Service(fecha_filtro: string) {
+    let headers = new HttpHeaders({ "token": this.token });
+    return this.http.post<Exhibicion_Computador_Interface>(this.url + '/computadores/filtrados', { fecha_filtro }, { headers });
   }
 
   // <----------------- Función que envia los datos para la reserva de un computador al Api Rest ------------------->

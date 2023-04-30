@@ -73,13 +73,13 @@ export class LoginPage implements OnInit {
           this.respuesta = (resp);
           this.token = (resp.token);
 
-          this.identificacion = this.respuesta.user.Pk_Identificacion_SIREP,
+          this.identificacion = this.respuesta.data.Pk_Identificacion
             localStorage.setItem('identificacion', this.identificacion);
     
-           this.nombre = this.respuesta.user.Nombre_SIREP,          
+           this.nombre = this.respuesta.data.Nombre      
             localStorage.setItem('usuario', this.nombre);
     
-          this.tipo_usuario = this.respuesta.user.Tipo_Usuario_SIREP
+          this.tipo_usuario = this.respuesta.data.Tipo_Usuario
             localStorage.setItem('tipo_usuario', this.tipo_usuario);
     
           localStorage.setItem('token', this.token);

@@ -1,26 +1,26 @@
 @font-face {
-    font-family:orbil_Berlin;
-    src: url("../../../assets/fonts/BerlinSansFBDemiBold.ttf");
+  font-family: orbil_Berlin;
+  src: url("../../../assets/fonts/BerlinSansFBDemiBold.ttf");
 }
 
 $naranja: #ff7f00;
-$verde: #38A900;
+$verde: #38a900;
 $azul: #3880ff;
 
 ion-toolbar {
-  --background: #39A900;
+  --background: #39a900;
 
   .items {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 
-    .boton-menu{
+    .boton-menu {
       margin-right: 50%;
     }
 
     .nombre {
       margin: auto;
-      width: 55%;  
+      width: 55%;
     }
 
     .menu {
@@ -30,52 +30,64 @@ ion-toolbar {
   }
 }
 
-.container{
+.container {
   display: grid;
-  place-content: center;  
-  
+  place-content: center;
+
   ion-card {
     width: 90vw;
     height: 88vh;
     box-shadow: 2px 2px 15px #87837f;
-    @media screen and ( max-height: 500px) {
+    @media screen and (max-height: 500px) {
       height: auto;
     }
-  
+
     ion-card-header {
       display: grid;
       place-content: center;
       font-family: orbil_Berlin;
       background-color: $verde;
       color: white !important;
-      @media screen and ( max-width: 355px) {
-        h1 { font-size: 1rem; }
+      @media screen and (max-width: 355px) {
+        h1 {
+          font-size: 1rem;
+        }
       }
     }
-  
+
     ion-card-content {
       display: grid;
       place-items: center;
       text-align: center;
       width: 100%;
-  
+
       .computador {
         width: 60%;
         margin-top: 5%;
         margin-bottom: 5%;
 
-        @media screen and ( max-height: 680px) {
+        @media screen and (max-height: 680px) {
           width: 45%;
         }
       }
-  
+
       .calendar {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        margin-bottom: 10%;
+        margin-top: 7%;
+
+        h2 {
+          margin: auto;
+          margin-right: -5%;
+        }
+
+        ion-datetime-button {
+          margin: auto;
+          margin-left: 5%;
+        }
       }
-  
+
       .cantidad {
         margin-top: 10%;
         margin-bottom: 10%;

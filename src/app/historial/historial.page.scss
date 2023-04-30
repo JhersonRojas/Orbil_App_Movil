@@ -1,17 +1,17 @@
 ion-toolbar {
-  --background: #39A900;
+  --background: #39a900;
 
   .items {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 
-    .boton-menu{
+    .boton-menu {
       margin-right: 50%;
     }
 
     .nombre {
       margin: auto;
-      width: 55%;  
+      width: 55%;
     }
 
     .menu {
