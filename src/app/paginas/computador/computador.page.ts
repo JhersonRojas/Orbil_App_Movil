@@ -72,24 +72,16 @@ export class ComputadorPage implements OnInit {
     return utcDay !== 0 && utcDay !== 6;
   };
 
-  // Esta función es la que me permite enviar un mensaje emergente al realizarse una reserva
-  public mostrarAlerta = async () => {
-    const total = this.mensaje_final;
-    const alert = await this.NgAlert.create({ message: total });
-    await alert.present();
-  }
-
   // Esta función llama la cantidad e informacion de los computadores disponibles actualmente
   public filtradoPorDia = (event: any) => {
     let fecha = event.detail.value
     fecha = fecha.split('T', 1)[0];
     this.service.Disponibles_Computador_Service(fecha).subscribe(resp => {
-      console.log(resp);
       this.computadores_muestra = resp.datos
       if (!resp.confirm) return (this.computadores_cantidad = 'No es valido!');
       if (resp.confirm) {
         this.computadores_permiso = false;
-        return this.computadores_cantidad = resp.cantidad 
+        return this.computadores_cantidad = resp.cantidad
       }
       return (this.computadores_cantidad = 'No se encuentran equipos');
     });
@@ -105,6 +97,34 @@ export class ComputadorPage implements OnInit {
     this.selectedComputer = computer;
     this.selectedComputerText = this.formatData(this.selectedComputer);
     await this.modal.dismiss();
+  }
+
+  // Esta función es la que me permite enviar un mensaje emergente al realizarse una reserva
+  public mostrarAlerta = async () => {
+    const total = this.mensaje_final;
+    const alert = await this.NgAlert.create({ message: total });
+    await alert.present();
+  }
+
+  // Es la primera verificación para confirmar la reserva del usuario
+  public confirmReserve = async () =>{
+    const alert = await this.NgAlert.create({
+      header: `Confirmar la reserva?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Confirmar',
+          role: 'confirm',
+        },
+      ],
+    });
+    await alert.present();
+    const confirm = await alert.onDidDismiss();
+
+    if (confirm.role == 'confirm') return this.reserveComputer();
   }
 
   // Esta función se encarga de agrupar los datos y enviarlos por medio del servicio al Api Rest
@@ -135,8 +155,11 @@ export class ComputadorPage implements OnInit {
         this.mensaje_final = 'Lo siento, algún computador que eligio no esta disponible';
       if (this.mensaje == false && this.respuesta == 'A excedido el limite para reservar')
         this.mensaje_final = 'Lo siento, no se encuentra esa cantidad disponible';
-      if (this.mensaje == true)
-        this.mensaje_final = `Se han reservado ${this.selectedComputer.length} computadores`, this.computadores_permiso = true;
+      if (this.mensaje == true) {
+        this.mensaje_final = `Se han reservado ${this.selectedComputer.length} computadores`
+        this.selectedComputerText = '0 💻';
+        this.computadores_permiso = true;
+      }
       else
         this.mensaje_final = `No se han reservado los computadores, esto puede ser un error, por favor comuniquelo con los administradores`;
 
