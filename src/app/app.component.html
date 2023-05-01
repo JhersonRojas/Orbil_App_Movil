@@ -20,35 +20,35 @@
     <ion-menu-toggle>
       <ion-list class="list" lines="none">
         <ion-list-header> Indice </ion-list-header>
-        <ion-item class="active" [routerLink]="['/home']" (click)="selectList($event)"  id="1">
+        <ion-item class="active" [routerLink]="['/home']" (ionChange)="selectList($event)"  id="1">
           <ion-icon name="home-outline"></ion-icon> Inicio
         </ion-item>
-        <ion-item [routerLink]="['/lista/3']" (click)="selectList($event)" id="2">
+        <ion-item [routerLink]="['/lista/3']" (ionChange)="selectList($event)" id="2">
           <ion-icon name="library-outline"></ion-icon> Libros
         </ion-item>
-        <ion-item [routerLink]="['/computador']" (click)="selectList($event)" id="3">
+        <ion-item [routerLink]="['/computador']" (ionChange)="selectList($event)" id="3">
           <ion-icon name="laptop-outline"></ion-icon> Portatil
         </ion-item>
-        <ion-item *ngIf='permiso == true' [routerLink]="['/proyector']" (click)="selectList($event)" id="4">
+        <ion-item *ngIf='permiso_de_rango == true' [routerLink]="['/proyector']" (ionChange)="selectList($event)" id="4">
           <ion-icon name="videocam-outline"></ion-icon> Proyector
         </ion-item>
-        <ion-item *ngIf='permiso == true' [routerLink]="['/ambiente']" (click)="selectList($event)" id="5">
+        <ion-item *ngIf='permiso_de_rango == true' [routerLink]="['/ambiente']" (ionChange)="selectList($event)" id="5">
           <ion-icon name="storefront-outline"></ion-icon> Ambiente
         </ion-item>
       </ion-list>
 
       <ion-list class="list">
         <ion-list-header> Otros </ion-list-header>
-          <ion-item [routerLink]="['/home']" lines="none" (click)="selectList($event)" id="6">
+          <ion-item [routerLink]="['/home']" lines="none" (ionChange)="selectList($event)" id="6">
             <ion-icon name="notifications-outline"></ion-icon> Permisos
           </ion-item>
-          <ion-item [routerLink]="['/historial']" lines="none" (click)="selectList($event)" id="7">
+          <ion-item [routerLink]="['/historial']" lines="none" (ionChange)="selectList($event)" id="7">
             <ion-icon name="folder-outline"></ion-icon> Historial
           </ion-item>
       </ion-list>
 
       <ion-footer class="ion-no-border">
-        <ion-item [routerLink]="['/manual-usuario']" lines="none" (click)="selectList($event)" id="8">
+        <ion-item [routerLink]="['/manual-usuario']" lines="none" (ionChange)="selectList($event)" id="8">
           <ion-icon name="alert-circle-outline"></ion-icon> Manual de usuario
         </ion-item>
         <ion-item (click)="logout()" lines="none">

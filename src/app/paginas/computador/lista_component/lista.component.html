@@ -12,18 +12,18 @@
     <ion-searchbar animated (ionInput)="searchbarInput($event)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
-  
-  <ion-content color="light" class="ion-padding">
-    <ion-list id="modal-list" [inset]="true">
-      <ion-item *ngFor="let item of filteredItems; trackBy: trackItems">
-        <p>💻&nbsp;{{ item.Nombre_Elemento }} &nbsp;</p>
-        <ion-label> Puesto:{{ item.Autor }}</ion-label>
-        <ion-label>{{ item.Pk_Elemento }}</ion-label>
-        <ion-checkbox
-          [value]="item.Pk_Elemento" 
-          [checked]="isChecked(item.Pk_Elemento)"
-          (ionChange)="checkboxChange($event)"
-        ></ion-checkbox>
-      </ion-item>
-    </ion-list>
-  </ion-content>
+
+<ion-content color="light" class="ion-padding">
+  <ion-list id="modal-list" [inset]="true">
+    <ion-item *ngFor="let item of filteredItems; trackBy: trackItems">
+      <p>💻&nbsp;{{ item.Nombre_Elemento }} &nbsp;</p>
+      <ion-label> Puesto:{{ item.Autor }}</ion-label>
+      <ion-label>{{ item.Pk_Elemento }}</ion-label>
+      <ion-checkbox
+        [value]="item.Pk_Elemento"
+        [checked]="isChecked(item.Pk_Elemento)"
+        (ionChange)="checkboxChange($event)"
+      ></ion-checkbox>
+    </ion-item>
+  </ion-list>
+</ion-content>

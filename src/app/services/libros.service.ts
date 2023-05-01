@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Reserva_Ambiente_Interface, Listar_Categorias_Interface, Listar_Libros_Interface, Libro_Unico_Interface } from '../interface/interface';
+import { Reserva_Ambiente_Interface, Listar_Libros_Interface, Libro_Unico_Interface } from '../interface/interface';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -21,7 +21,7 @@ export class librosService {
 
   // <----------------- Función que obtiene las categorias de los libros desde el Api Rest ------------------->
   Listar_Categorias_Service() {
-    return this.http.get<Listar_Categorias_Interface>(this.url + '/categorias', { headers: this.headers }) // <- Aqui se añade la ruta especifica
+    return this.http.get<Listar_Libros_Interface>(this.url + '/categorias', { headers: this.headers }) // <- Aqui se añade la ruta especifica
   }
 
   // <----------------- Función que obtiene los libros dependiendo de la categoria elegida ------------------->
@@ -39,5 +39,4 @@ export class librosService {
     let headers = new HttpHeaders({ "token": this.token });
     return this.http.post<Reserva_Ambiente_Interface>(this.url + '/movimientos/reserva/libro', data, { headers }) // <- Aqui se añade la ruta especifica
   }
-
 }

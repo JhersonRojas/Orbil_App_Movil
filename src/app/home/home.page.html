@@ -10,7 +10,9 @@
   </div>
 
   <!-- Titulo con el nombre del usuario -->
-  <div class="titulo"><p>Hola {{usuario}} bienvenido a Orbil</p></div>
+  <div class="titulo">
+    <p>Hola {{usuario}} bienvenido a Orbil</p>
+  </div>
 
   <!-- Texto de bienvenida -->
   <div class="bienvenida">
@@ -25,10 +27,7 @@
   <div class="buttons">
     <ion-card mode="ios" [routerLink]="['/computador']">
       <ion-card-header>
-        <ion-img
-          class="portatil"
-          src="../assets/pictures/computer.png"
-        ></ion-img>
+        <ion-img class="portatil" src="../assets/pictures/computer.png"></ion-img>
       </ion-card-header>
       <ion-card-content> Portatiles </ion-card-content>
     </ion-card>
@@ -41,18 +40,15 @@
     </ion-card>
 
     <!-- Esta directiva valida que tipo de usuario accedio, si fue instructor o administrativo deja ver su contenido, si no, lo esconde -->
-    <ion-card mode="ios" [routerLink]="['/proyector']" *ngIf="permiso == true">
+    <ion-card mode="ios" [routerLink]="['/proyector']" *ngIf="permiso_de_rango == true">
       <ion-card-header>
-        <ion-img
-          class="proyector"
-          src="../assets/pictures/proyector.png"
-        ></ion-img>
+        <ion-img class="proyector" src="../assets/pictures/proyector.png"></ion-img>
       </ion-card-header>
       <ion-card-content> Proyector </ion-card-content>
     </ion-card>
 
     <!-- Esta directiva valida que tipo de usuario accedio, si fue instructor o administrativo deja ver su contenido, si no, lo esconde -->
-    <ion-card mode="ios" [routerLink]="['/ambiente']" *ngIf="permiso == true">
+    <ion-card mode="ios" [routerLink]="['/ambiente']" *ngIf="permiso_de_rango == true">
       <ion-card-header>
         <ion-img class="ambiente" src="../assets/pictures/home.png"></ion-img>
       </ion-card-header>

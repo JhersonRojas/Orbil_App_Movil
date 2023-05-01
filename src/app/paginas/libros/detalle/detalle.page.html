@@ -16,35 +16,37 @@
         <ion-card-subtitle><ion-icon name="person-outline" class="icono"></ion-icon> {{Autor}} </ion-card-subtitle>
         <ion-card-title>{{Nombre}}</ion-card-title>
       </ion-card-header>
-        
+
       <ion-card-content>
         <div class="foto" style="background-image: url('{{Imagen}}') "></div>
-        <form [formGroup]="form" (ngSubmit)="ReservarLibro()">
-  
+        
+        <form [formGroup]="form" (ngSubmit)="confirmReserve()">
           <div class="calendar">
-            <h2> Elige una fecha: &nbsp; </h2>
+            <h2> Fecha a reservar: &nbsp; </h2>
             <ion-datetime-button datetime="datetime"></ion-datetime-button>
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
-                <ion-datetime id="datetime" formControlName="fecha" name="fecha" color="v-claro"
-                presentation="date" min="{{fechaHoy | date: 'YYYY-MM-dd'}}" max="2024-12-30T23:59:59"
-                display-format="YYYY-MM-dd" [isDateEnabled]="cancelarFinDeSemana" [showDefaultButtons]="true" 
-                style=" width: auto; color: rgb(136, 107, 107) !important; width: 90vw !important;">
-                <span slot="title"> Elige la fecha a reservar </span></ion-datetime>
+                <ion-datetime id="datetime" formControlName="fecha" name="fecha" color="v-claro" presentation="date"
+                  min="{{fechaHoy | date: 'YYYY-MM-dd'}}" max="2024-12-30T23:59:59" display-format="YYYY-MM-dd"
+                  [isDateEnabled]="cancelarFinDeSemana" [showDefaultButtons]="true"
+                  style=" width: auto; color: rgb(136, 107, 107) !important; width: 90vw !important;">
+                  <span slot="title"> Elige la fecha a reservar </span></ion-datetime>
               </ng-template>
             </ion-modal>
           </div>
         </form>
-  
+
         <!-- boton que envie los datos del formulario -->
-        <ion-button (click)="ReservarLibro()" color="v-claro" [disabled]="!form.valid">Solicitar</ion-button>
-  
-        <div class="descripcion"> 
-          <h5> <ion-icon name="text-outline" class="icono"></ion-icon> 
-            Descripcion</h5> 
+        <ion-button (click)="confirmReserve()" color="v-claro" [disabled]="!form.valid">
+          Solicitar
+        </ion-button>
+
+        <div class="descripcion">
+          <h5> <ion-icon name="text-outline" class="icono"></ion-icon> Descripcion</h5>
           <span>{{Descripcion}}</span>
-        </div> 
+        </div>
       </ion-card-content>
+
     </ion-card>
   </div>
 
