@@ -46,13 +46,8 @@ export class DetallePage implements OnInit {
     private NgFb: FormBuilder, // "FB" me proporciona una función propia de angular para agrupar información traida desde algun formulario del HTML
     private NgRouter: ActivatedRoute, // "route" es una función de angular que me permite redirigir al usuario a otra ruta por medio de una orden
     private NgAlert: AlertController // "NgAlert", directiva de angular que muestra un mensaje emergente 
-  ) {
-    this.valideAccess.checkToken().then(() => {
-      this.usuario = localStorage.getItem('usuario').split(' ', 1)[0];
-      this.identificacion = localStorage.getItem('identificacion');
-      this.rol = localStorage.getItem('tipo_usuario');
-    })
-  }
+  ) {}
+  
 
   //  Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista
   ngOnInit() {

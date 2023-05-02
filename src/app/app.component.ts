@@ -15,8 +15,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   darkMode: boolean = false;
   public subscriber$: Subscription;
 
-  rol: any;
+
+  token: any;
   usuario: any;
+  rol: any;
   identificacion: any;
   permiso_de_rango: boolean;
 
@@ -42,10 +44,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     private NgRouter: Router,
     private NgMenu: MenuController /* "NgMenu" me permite controlar el manejo del menú desplegable, como mostrarlo o no */
   ) {
-    this.NgMenu.enable(false);
-    setTimeout(() => {
-      this.saveDataUser();
-    }, 500);
+    this.saveDataUser();
   }
 
   ngOnInit() {
@@ -58,16 +57,34 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.selectPage();
   }
 
-  private saveDataUser() {
-    this.valideAccess.checkToken().then( permiso => {
-      if (permiso) {
-        this.identificacion = localStorage.getItem('identificacion');
-        this.rol = localStorage.getItem('tipo_usuario');
-        this.usuario = localStorage.getItem('usuario').split(' ', 1)[0];
-        if (this.rol == 'Instructor' || this.rol == 'Administrador' || this.rol == 'Administrativo')
-          this.permiso_de_rango = true
-      }
-    });
+  private saveDataUser = () => {
+    this.token = localStorage.getItem('token');
+    if (!this.token) {
+      this.NgMenu.enable(false)
+      localStorage.clear()
+      setTimeout(() => {
+        this.NgRouter.navigate(['/login']);
+      }, 1000);
+    }
+    else {
+      this.valideAccess.checkToken(this.token).subscribe(resp => {
+        if (resp.confirm) {
+          this.identificacion = localStorage.getItem('identificacion');
+          this.rol = localStorage.getItem('tipo_usuario');
+          this.usuario = localStorage.getItem('usuario').split(' ', 1)[0];
+          if (this.rol == 'Instructor' || this.rol == 'Administrador' || this.rol == 'Administrativo')
+            this.permiso_de_rango = true
+        }
+      }, error => {
+        if (error.error.confirm === false) {
+          this.NgMenu.enable(false)
+          localStorage.clear()
+          setTimeout(() => {
+            this.NgRouter.navigate(['/login'], {skipLocationChange: true});
+          }, 1000);
+        }
+      });
+    }
   }
 
   public changeTheme = () => {
@@ -132,12 +149,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     const confirm = await alert.onDidDismiss();
 
     if (confirm.role == 'confirm') {
-      const close = async () => {
-        localStorage.clear();
-        this.NgRouter.navigate(['/login']);
-        this.NgMenu.enable(false);
-      };
-      return close();
+      localStorage.clear();
+      this.NgMenu.enable(false);
+      return this.NgRouter.navigateByUrl('/login', {skipLocationChange: true}).then(()=> this.NgRouter.navigate(["/login"]));
     }
   }
 }

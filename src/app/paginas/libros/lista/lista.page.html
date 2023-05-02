@@ -17,6 +17,10 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <div #anuncio> <h3 style="padding: 2rem;"> No tenemos libros de esta categoria por ahora, lo sentimos.</h3></div>
   
     <!-- Este modulo lisata los diferentes libros de la categoria elegida en el modulo de categorias -->

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, MenuController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AmbienteService } from '../../services/ambiente.service';
 import { CheckTokenService } from 'src/app/middlewares/check-token.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ambiente',
@@ -34,14 +35,19 @@ export class AmbientePage implements OnInit {
   jornada: any; // Esta variable toma la jornada elegida desde el formulario del HTML
   fecha: any; // Esta variable toma la fecha elegida desde el formulario del HTML
   fecha_fin: any;
+  token: string;
 
   // El constructor obtiene los parametros importados de diferentes componentes
   constructor(
     private service: AmbienteService, // "service" obtiene los servicios proporcionados desde ambiente service
     private valideAccess: CheckTokenService,
     private NgFb: FormBuilder, // "NgFb" me proporciona una función propia de angular para agrupar información traida desde algun formulario del HTML
-    private NgAlert: AlertController // "NgAlert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas
-  ) {}
+    private NgAlert: AlertController, // "NgAlert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas
+    private NgRouter: Router,
+    private NgMenu: MenuController
+  ) {
+    this.saveDataUser()
+  }
 
   // Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista
   ngOnInit() {
@@ -50,22 +56,36 @@ export class AmbientePage implements OnInit {
       fecha: ['', Validators.required],
       jornada: ['', Validators.required],
     });
-
-    setTimeout(() => {
-      this.saveDataUser()
-    }, 500);
   }
 
-  private saveDataUser() {
-    this.valideAccess.checkToken().then(permiso => {
-      if (permiso) {
-        this.identificacion = localStorage.getItem('identificacion');
-        this.rol = localStorage.getItem('tipo_usuario');
-        this.usuario = localStorage.getItem('usuario').split(' ', 1)[0];
-        if (this.rol == 'Instructor' || this.rol == 'Administrador' || this.rol == 'Administrativo')
-          this.permiso_de_rango = true
-      }
-    })
+  private saveDataUser () {
+    this.token = localStorage.getItem('token');
+    if (!this.token) {
+      this.NgMenu.enable(false)
+      localStorage.clear()
+      setTimeout(() => {
+        this.NgRouter.navigate(['/login']);
+      }, 400);
+    }
+    else {
+      this.valideAccess.checkToken(this.token).subscribe(resp => {
+        if (resp.confirm) {
+          this.identificacion = localStorage.getItem('identificacion');
+          this.rol = localStorage.getItem('tipo_usuario');
+          this.usuario = localStorage.getItem('usuario').split(' ', 1)[0];
+          if (this.rol == 'Instructor' || this.rol == 'Administrador' || this.rol == 'Administrativo')
+            this.permiso_de_rango = true
+        }
+      }, error => {
+        if (error.error.confirm === false) {
+          this.NgMenu.enable(false)
+          localStorage.clear()
+          setTimeout(() => {
+            this.NgRouter.navigate(['/login'], {skipLocationChange: true});
+          }, 400);
+        }
+      });
+    }
   }
 
   // Esta función cancela la posibilidad de elegir fines de semana en el calendario desplegable

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HistorialService } from '../services/historial.service';
 import { Elemento2 } from '../interface/interface';
 import { CheckTokenService } from '../middlewares/check-token.service';
+import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-historial',
@@ -14,23 +16,47 @@ export class HistorialPage implements OnInit {
   respuesta: any;
   elementos: Elemento2[] = [];
   identificacion: string;
+  token: string
 
   constructor(
     private service: HistorialService,
-    private valideAccess: CheckTokenService
-  ) {}
+    private valideAccess: CheckTokenService,
+    private NgRouter: Router,
+    private NgMenu: MenuController
+  ) {
+    this.saveDataUser()
+  }
 
   ngOnInit() {
-    this.list_History();
     setTimeout(() => {
-      this.saveDataUser();
+      this.list_History();
     }, 500);
   }
 
-  private saveDataUser() {
-    this.valideAccess.checkToken().then((permiso) => {
-      if (permiso) this.identificacion = localStorage.getItem('identificacion');
-    });
+  private saveDataUser = () => {
+    this.token = localStorage.getItem('token');
+    if (!this.token) {
+      this.NgMenu.enable(false)
+      localStorage.clear()
+      setTimeout(() => {
+        this.NgRouter.navigate(['/login']);
+      }, 500);
+    }
+    else {
+      this.valideAccess.checkToken(this.token).subscribe(resp => {
+        if (resp.confirm) {
+          this.identificacion = localStorage.getItem('identificacion');
+        }
+      }, error => {
+        if (error.error.confirm) {
+          this.NgMenu.enable(false)
+          localStorage.clear()
+          setTimeout(() => {
+            this.NgRouter.navigate(['/login'], {skipLocationChange: true});
+          }, 500);
+        }
+      });
+    }
   }
 
   async list_History() {

@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController, MenuController } from '@ionic/angular';
 import { librosService } from 'src/app/services/libros.service';
 import { Dato } from 'src/app/interface/interface';
 import { CheckTokenService } from 'src/app/middlewares/check-token.service';
@@ -34,37 +34,64 @@ export class ListaPage implements OnInit {
   rol: any;
   identificacion: any;
   datos_usuario: any;
+  token: string;
 
   // El constructor obtiene los parametros importados de diferentes componentes 
   constructor(
     private service: librosService, // "service" obtiene los servicios proporcionados desde proyectores service
     private valideAccess: CheckTokenService,
-    private NgRouter: ActivatedRoute, // "NgRouter", función de angular que me permite redirigir al usuario a otra ruta por medio de una orden 
+    private NgMenu: MenuController,
+    private NgRouter: Router,
+    private NgActiveRouter: ActivatedRoute, // "NgRouter", función de angular que me permite redirigir al usuario a otra ruta por medio de una orden 
     private NgAlert: AlertController, // "NgAlert", directiva de angular que muestra un mensaje emergente
-  ) {}
+  ) {
+    this.saveDataUser()
+  }
 
   // función de angular, su contenido es lo primero que se ejecuta al entrar a esta vista 
   ngOnInit() {
     // Esta sección llama los datos del Api Rest tomando en cuenta la categoria elegida 
-    let idc = this.NgRouter.snapshot.paramMap.get('idc');
+    let idc = this.NgActiveRouter.snapshot.paramMap.get('idc');
     this.anuncio.nativeElement.setAttribute('style', 'display: none')
     this.listarCategorias();
     this.listar_libros(idc);
+  }
 
+  private saveDataUser () {
+    this.token = localStorage.getItem('token');
+    if (!this.token) {
+      this.NgMenu.enable(false)
+      localStorage.clear()
+      setTimeout(() => {
+        this.NgRouter.navigate(['/login']);
+      }, 400);
+    }
+    else {
+      this.valideAccess.checkToken(this.token).subscribe(resp => {
+        if (resp.confirm) {
+          this.identificacion = localStorage.getItem('identificacion');
+          this.rol = localStorage.getItem('tipo_usuario');
+          this.usuario = localStorage.getItem('usuario').split(' ', 1)[0];
+        }
+      }, error => {
+        if (error.error.confirm === false) {
+          this.NgMenu.enable(false)
+          localStorage.clear()
+          setTimeout(() => {
+            this.NgRouter.navigate(['/login'], {skipLocationChange: true});
+          }, 400);
+        }
+      });
+    }
+  }
+
+  handleRefresh(event) {
+    let idc = this.NgActiveRouter.snapshot.paramMap.get('idc');
     setTimeout(() => {
-      this.saveDataUser()
-    }, 500);
-  }
-
-  private saveDataUser() {
-    this.valideAccess.checkToken().then(permiso => {
-      if (permiso) {
-        this.identificacion = localStorage.getItem('identificacion');
-        this.rol = localStorage.getItem('tipo_usuario');
-        this.usuario = localStorage.getItem('usuario').split(' ', 1)[0];
-      }
-    })
-  }
+      this.listar_libros(idc);
+      event.target.complete();
+    }, 2000);
+  };
 
   private listar_libros = (idc: any) => {
     this.service.Listar_Libros_Service(idc).subscribe(resp => {

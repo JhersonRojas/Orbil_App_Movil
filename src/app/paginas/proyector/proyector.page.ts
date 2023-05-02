@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertController } from '@ionic/angular';
+import { AlertController, MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Dato } from 'src/app/interface/interface';
 import { ProyectorService } from '../../services/proyector.service';
@@ -42,14 +42,19 @@ export class ProyectorPage implements OnInit {
   fecha: any; // Esta variable toma la fecha elegida desde el formulario del HTML
   jornada: any; // Esta variable toma la jornada elegida desde el formulario del HTML
   sitio: any; // Esta variable toma el sitio diligenciado en el formulario del HTML
+  token: any;
 
   // El constructor obtiene los parametros importados de diferentes componentes
   constructor(
     private service: ProyectorService, //  "service" obtiene los servicios proporcionados desde proyectores service
     private valideAccess: CheckTokenService,
+    private NgRouter: Router,
+    private NgMenu: MenuController,
     private NgFb: FormBuilder, //  "NgFb" me proporciona una función propia de angular para agrupar información traida desde algun formulario del HTML
     private NgAlert: AlertController // "NgAlert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas
-  ) {}
+  ) {
+    this.saveDataUser()
+  }
 
   //  Función de angular, su contenido es lo primero que se ejecuta al entrar a esta vista
   ngOnInit() {
@@ -67,20 +72,34 @@ export class ProyectorPage implements OnInit {
       serial: ['', Validators.required],
       sitio: [''],
     });
-
-   setTimeout(() => {
-    this.saveDataUser()
-   }, 500);
   }
 
-  private saveDataUser() {
-    this.valideAccess.checkToken().then(permiso => {
-      if (permiso) {
-        this.identificacion = localStorage.getItem('identificacion');
-        this.rol = localStorage.getItem('tipo_usuario');
-        this.usuario = localStorage.getItem('usuario').split(' ', 1)[0];
-      }
-    })
+  private saveDataUser () {
+    this.token = localStorage.getItem('token');
+    if (!this.token) {
+      this.NgMenu.enable(false)
+      localStorage.clear()
+      setTimeout(() => {
+        this.NgRouter.navigate(['/login']);
+      }, 400);
+    }
+    else {
+      this.valideAccess.checkToken(this.token).subscribe(resp => {
+        if (resp.confirm) {
+          this.identificacion = localStorage.getItem('identificacion');
+          this.rol = localStorage.getItem('tipo_usuario');
+          this.usuario = localStorage.getItem('usuario').split(' ', 1)[0];
+        }
+      }, error => {
+        if (error.error.confirm === false) {
+          this.NgMenu.enable(false)
+          localStorage.clear()
+          setTimeout(() => {
+            this.NgRouter.navigate(['/login'], {skipLocationChange: true});
+          }, 400);
+        }
+      });
+    }
   }
 
   // Función que cancela la posibilidad de elegir fines de semana en el calendario desplegable
