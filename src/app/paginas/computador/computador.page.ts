@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 
 // Esta clase contiene las funciones y variables del modulo de computador
 export class ComputadorPage implements OnInit {
-  
+
   // Referencia al despliegue del Modal de computadores
   @ViewChild('modal', { static: true }) modal!: IonModal;
 
@@ -58,17 +58,17 @@ export class ComputadorPage implements OnInit {
     private NgAlert: AlertController, // "alert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas
     private NgMenu: MenuController,
     private NgRouter: Router,
-  ) { 
+  ) {
     this.saveDataUser()
   }
-  
+
   // Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista
   ngOnInit() {
     // "form" añade los datos en el momento que alguien diligencie el formulario en la vista
     this.form = this.NgFb.group({ fecha: ['', Validators.required] });
   }
 
-  private saveDataUser () {
+  private saveDataUser() {
     this.token = localStorage.getItem('token');
     if (!this.token) {
       this.NgMenu.enable(false)
@@ -91,7 +91,7 @@ export class ComputadorPage implements OnInit {
           this.NgMenu.enable(false)
           localStorage.clear()
           setTimeout(() => {
-            this.NgRouter.navigate(['/login'], {skipLocationChange: true});
+            this.NgRouter.navigate(['/login'], { skipLocationChange: true });
           }, 400);
         }
       });
@@ -167,6 +167,14 @@ export class ComputadorPage implements OnInit {
       return this.mostrarAlerta();
     }
 
+    if (this.rol == 'Aprendiz' || this.rol == 'Visitante'){
+
+      if (this.selectedComputer.length > 1) {
+        this.mensaje_final = `Lo sentimos, siendo ${this.rol} no puede reservar mas de 1 computador`;
+        return this.mostrarAlerta();
+      }
+    }
+
     // Fecha a reservar de los computadores
     this.fecha = this.form.value.fecha;
     this.fecha_fin = this.fecha.split('T', 1)[0];
@@ -184,7 +192,7 @@ export class ComputadorPage implements OnInit {
       this.mensaje = this.respuesta.confirm;
       if (this.mensaje == false)
         this.mensaje_final = 'Lo siento, algún computador que eligio no esta disponible';
-      if ( this.mensaje == false && this.respuesta == 'A excedido el limite para reservar')
+      if (this.mensaje == false && this.respuesta == 'A excedido el limite para reservar')
         this.mensaje_final = 'Lo siento, no se encuentra esa cantidad disponible'
       if (this.mensaje == true) {
         this.mensaje_final = `Se han reservado ${this.selectedComputer.length} computadores`;

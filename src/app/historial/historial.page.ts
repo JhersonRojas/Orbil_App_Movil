@@ -3,7 +3,7 @@ import { HistorialService } from '../services/historial.service';
 import { Elemento2 } from '../interface/interface';
 import { CheckTokenService } from '../middlewares/check-token.service';
 import { Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { AlertController, MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-historial',
@@ -22,7 +22,8 @@ export class HistorialPage implements OnInit {
     private service: HistorialService,
     private valideAccess: CheckTokenService,
     private NgRouter: Router,
-    private NgMenu: MenuController
+    private NgMenu: MenuController,
+    private NgAlert: AlertController, // "alert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas
   ) {
     this.saveDataUser()
   }
@@ -30,7 +31,7 @@ export class HistorialPage implements OnInit {
   ngOnInit() {
     setTimeout(() => {
       this.list_History();
-    }, 500);
+    }, 1000);
   }
 
   private saveDataUser = () => {
@@ -43,7 +44,8 @@ export class HistorialPage implements OnInit {
       }, 500);
     }
     else {
-      this.valideAccess.checkToken(this.token).subscribe(resp => {
+      this.valideAccess.checkToken(this.token).subscribe(
+        resp => {
         if (resp.confirm) {
           this.identificacion = localStorage.getItem('identificacion');
         }
@@ -52,7 +54,7 @@ export class HistorialPage implements OnInit {
           this.NgMenu.enable(false)
           localStorage.clear()
           setTimeout(() => {
-            this.NgRouter.navigate(['/login'], {skipLocationChange: true});
+            this.NgRouter.navigate(['/login'], { skipLocationChange: true });
           }, 500);
         }
       });
@@ -62,26 +64,36 @@ export class HistorialPage implements OnInit {
   async list_History() {
     try {
       let token = localStorage.getItem('token');
-      this.service.History_Service(token, this.identificacion).subscribe((resp) => {
-          this.respuesta = resp;
-          this.elementos = resp.elemento;
-
-          setTimeout(() => {
-            let clasifique = document.querySelectorAll('.estado');
-            for (let i = 0; i < clasifique.length; i++) {
-              if (clasifique[i].firstChild.textContent == 'Solicitud')
-                clasifique[i].setAttribute('style', 'color: blue');
-              if (clasifique[i].firstChild.textContent == 'Prestado')
-                clasifique[i].setAttribute('style', 'color: green');
-              if (clasifique[i].firstChild.textContent == 'Retornado')
-                clasifique[i].setAttribute('style', 'color: gray');
-              if (clasifique[i].firstChild.textContent == 'Cancelado')
-                clasifique[i].setAttribute('style', 'color: red');
-            }
-          }, 50);
-        });
+      this.service.History_Service(token, this.identificacion).subscribe((resp) => {        
+        this.respuesta = resp;
+        this.elementos = resp.elemento;
+      })
     } catch (error) {
       console.log('error :>> ', error);
     }
   }
+
+  public cancelReserveAlert = async () => {
+    const alert = await this.NgAlert.create({
+      header: `Cancealar reservación?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Confirmar',
+          role: 'confirm',
+        },
+      ],
+    });
+    await alert.present();
+    const confirm = await alert.onDidDismiss();
+    if (confirm.role == 'confirm') return this.cancelReserve();
+  };
+
+  cancelReserve() {
+    throw new Error('Method not implemented.');
+  }
+
 }

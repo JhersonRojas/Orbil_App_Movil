@@ -86,31 +86,31 @@ export class LoginPage implements OnInit {
   async ValidacionDeDatos() {
     try {
       this.service.Login_Service(this.form.value).subscribe(resp => {
+
         if (!resp) return this.msjToast('No se encuentra conectado al servidor')
         if (!resp.confirm) return this.msjToast('Usuario o Contraseña incorrecto')
 
-        return new Promise((resolve, reject) => {
+        this.respuesta = (resp)
+        this.token = (resp.token);
 
-          resolve(this.respuesta = (resp))
-          this.token = (resp.token);
+        this.identificacion = this.respuesta.user.Pk_Identificacion_SIREP
+        localStorage.setItem('identificacion', this.identificacion);
 
-          this.identificacion = this.respuesta.data.Pk_Identificacion
-          localStorage.setItem('identificacion', this.identificacion);
+        this.nombre = this.respuesta.user.Nombre_SIREP
+        localStorage.setItem('usuario', this.nombre);
 
-          this.nombre = this.respuesta.data.Nombre
-          localStorage.setItem('usuario', this.nombre);
+        this.tipo_usuario = this.respuesta.user.Tipo_Usuario_SIREP
+        localStorage.setItem('tipo_usuario', this.tipo_usuario);
 
-          this.tipo_usuario = this.respuesta.data.Tipo_Usuario
-          localStorage.setItem('tipo_usuario', this.tipo_usuario);
-
-          localStorage.setItem('token', this.token);
-
-          setTimeout(() => {
-            this.NgMenu.enable(true)
-            this.NgRouter.navigateByUrl('/home', {skipLocationChange: true}).then(()=> this.NgRouter.navigate(["/home"]));
-          },1000);
-        })
+        localStorage.setItem('token', this.token);
+        
+        this.NgRouter.navigateByUrl('/home', { skipLocationChange: true }).then(() => this.NgRouter.navigate(["/home"]));
+        this.NgMenu.enable(true)
+        setTimeout(() => {
+          location.reload();
+        }, 60);
       })
+
 
     } catch (error) {
       console.log('error :>> \n ', error);

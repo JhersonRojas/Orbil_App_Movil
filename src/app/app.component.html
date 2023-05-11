@@ -39,18 +39,18 @@
 
       <ion-list class="list">
         <ion-list-header> Otros </ion-list-header>
-          <ion-item [routerLink]="['/home']" lines="none" (ionChange)="selectList($event)" id="6">
+          <!-- <ion-item [routerLink]="['/home']" lines="none" (ionChange)="selectList($event)" id="6">
             <ion-icon name="notifications-outline"></ion-icon> Permisos
-          </ion-item>
+          </ion-item> -->
           <ion-item [routerLink]="['/historial']" lines="none" (ionChange)="selectList($event)" id="7">
             <ion-icon name="folder-outline"></ion-icon> Historial
           </ion-item>
       </ion-list>
 
       <ion-footer class="ion-no-border">
-        <ion-item [routerLink]="['/manual-usuario']" lines="none" (ionChange)="selectList($event)" id="8">
+        <!-- <ion-item [routerLink]="['/manual-usuario']" lines="none" (ionChange)="selectList($event)" id="8">
           <ion-icon name="alert-circle-outline"></ion-icon> Manual de usuario
-        </ion-item>
+        </ion-item> -->
         <ion-item (click)="logout()" lines="none">
           <ion-icon name="exit-outline"></ion-icon> Cerrar sesión
         </ion-item>

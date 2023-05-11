@@ -10,17 +10,20 @@
 
 <ion-content>
 
-  <h3 *ngIf='elementos == undefined'> No tiene reservas vigentes</h3>
+  <h3 *ngIf='elementos.length == 0'> No tiene reservas vigentes</h3>
   <div class="container">
-    <ion-list *ngFor="let elem of elementos" class="info" lines="inset">
-      <ion-item>
+    <ion-list *ngFor="let elem of elementos" class="info" lines="inset" >
+      <ion-item id={{elem.Estado_Mv}}>
         <ion-thumbnail slot="start">
           <img [src]="elem.Elemento.Imagen" loading="lazy">
         </ion-thumbnail>
         <ion-label>
           <h1> {{elem.Elemento.Tipo_Elemento}}</h1>
-          <h2 class="estado">{{elem.Estado_Mv}}</h2>
+          <h2 class={{elem.Estado_Mv}}>{{elem.Estado_Mv}}</h2>
           <p> Nombre:&nbsp;{{elem.Elemento.Nombre_Elemento}} </p>
+          <ion-button *ngIf='elem.Estado_Mv == "Solicitud"' (click)="cancelReserveAlert()">
+            Cancelar
+          </ion-button>
         </ion-label>
       </ion-item>
     </ion-list>

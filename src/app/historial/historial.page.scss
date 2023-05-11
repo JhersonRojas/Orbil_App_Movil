@@ -20,3 +20,21 @@ ion-toolbar {
     }
   }
 }
+
+ion-label {
+  .Solicitud {
+    color: blue;
+  }
+
+  .Prestado {
+    color: green;
+  }
+
+  .Retornado {
+    color: gray;
+  }
+
+  .Cancelado {
+    color: red;
+  }
+}
