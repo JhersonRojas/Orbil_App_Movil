@@ -12,20 +12,20 @@ import { AlertController, MenuController } from '@ionic/angular';
 })
 
 export class HistorialPage implements OnInit {
-
   respuesta: any;
   elementos: Elemento2[] = [];
   identificacion: string;
-  token: string
+  token: string;
+  mensaje_final: any;
 
   constructor(
     private service: HistorialService,
     private valideAccess: CheckTokenService,
     private NgRouter: Router,
     private NgMenu: MenuController,
-    private NgAlert: AlertController, // "alert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas
+    private NgAlert: AlertController // "alert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas
   ) {
-    this.saveDataUser()
+    this.saveDataUser();
   }
 
   ngOnInit() {
@@ -37,43 +37,49 @@ export class HistorialPage implements OnInit {
   private saveDataUser = () => {
     this.token = localStorage.getItem('token');
     if (!this.token) {
-      this.NgMenu.enable(false)
-      localStorage.clear()
+      this.NgMenu.enable(false);
+      localStorage.clear();
       setTimeout(() => {
         this.NgRouter.navigate(['/login']);
       }, 500);
-    }
-    else {
-      this.valideAccess.checkToken(this.token).subscribe(
-        resp => {
+    } else {
+      this.valideAccess.checkToken(this.token).subscribe((resp) => {
         if (resp.confirm) {
           this.identificacion = localStorage.getItem('identificacion');
         }
-      }, error => {
+      }, (error) => {
         if (error.error.confirm) {
-          this.NgMenu.enable(false)
-          localStorage.clear()
+          this.NgMenu.enable(false);
+          localStorage.clear();
           setTimeout(() => {
             this.NgRouter.navigate(['/login'], { skipLocationChange: true });
           }, 500);
         }
-      });
+      }
+      );
     }
-  }
+  };
 
   async list_History() {
     try {
-      let token = localStorage.getItem('token');
-      this.service.History_Service(token, this.identificacion).subscribe((resp) => {        
-        this.respuesta = resp;
-        this.elementos = resp.elemento;
-      })
+      this.service
+        .History_Service(this.token, this.identificacion)
+        .subscribe((resp) => {
+          this.respuesta = resp;
+          this.elementos = resp.elemento;
+        });
     } catch (error) {
       console.log('error :>> ', error);
     }
   }
 
-  public cancelReserveAlert = async ( id_reserva: any) => {
+  // Esta función es la que me permite enviar un mensaje emergente al realizarse una reserva
+  public mostrarAlerta = async () => {
+    const alert = await this.NgAlert.create({ message: this.mensaje_final });
+    await alert.present();
+  };
+
+  public cancelReserveAlert = async (id_reserva: any) => {
     const alert = await this.NgAlert.create({
       header: `Cancealar reservación?`,
       buttons: [
@@ -92,11 +98,30 @@ export class HistorialPage implements OnInit {
     if (confirm.role == 'confirm') return this.cancelReserve(id_reserva);
   };
 
-  cancelReserve(id_reserva: any) {
-    console.log(id_reserva);
+  async cancelReserve(id_reserva: any) {
+    try {
+      this.service.cancelReserve(this.token, id_reserva).subscribe((resp) => {
 
-    
-    
+        if (!resp) {
+          this.mensaje_final = 'Tal parece, ocurrio un error al cancelar su reserva'
+          return this.mostrarAlerta()
+        }
+
+        if (resp.confirm == false) { 
+          this.mensaje_final = 'No ha podido cancelar su reserva, lo sentimos'
+          return this.mostrarAlerta()
+        }
+
+        if (resp.confirm == true) {
+          this.mensaje_final = 'A cancelado su reserva'
+          this.mostrarAlerta()
+
+          setTimeout(() => {
+            window.location.reload()
+          }, 1500);
+        } 
+      
+      });
+    } catch (error) { }
   }
-
 }

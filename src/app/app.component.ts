@@ -15,7 +15,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   darkMode: boolean = false;
   public subscriber$: Subscription;
 
-
   token: any;
   usuario: any;
   rol: any;
@@ -80,7 +79,7 @@ export class AppComponent implements OnInit, AfterViewInit {
           this.NgMenu.enable(false)
           localStorage.clear()
           setTimeout(() => {
-            this.NgRouter.navigate(['/login'], {skipLocationChange: true});
+            this.NgRouter.navigate(['/login'], { skipLocationChange: true });
           }, 1000);
         }
       });
@@ -151,7 +150,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (confirm.role == 'confirm') {
       localStorage.clear();
       this.NgMenu.enable(false);
-      return this.NgRouter.navigateByUrl('/login', {skipLocationChange: true}).then(()=> this.NgRouter.navigate(["/login"]));
+      return this.NgRouter.navigateByUrl('/login', { skipLocationChange: true }).then(() => {
+        this.NgRouter.navigate(["/login"])
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      });
     }
   }
 }

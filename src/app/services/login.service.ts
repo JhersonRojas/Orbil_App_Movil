@@ -17,7 +17,7 @@ export class LoginService {
 
   // <-- Función que envía los datos de acceso para ser validados en el servidor -->
   public Login_Service(data: string): Observable<Login_Interface> {
-    return this.http.post<Login_Interface>(this.MyUrl + '/usuarios/auth/login', data) // <- Aqui se añade la ruta especifica
+    return this.http.post<Login_Interface>(this.MyUrl + '/usuarios/test/login', data) // <- Aqui se añade la ruta especifica
       .pipe(catchError(this.handleError<Login_Interface>('Login_Service')))
   }
 

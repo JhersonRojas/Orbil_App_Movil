@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Historial_Interface } from '../interface/interface';
+import { Historial_Interface, Listar_Libros_Interface } from '../interface/interface';
 
 
 @Injectable({
@@ -20,11 +20,9 @@ export class HistorialService {
     return this.http.get<Historial_Interface>(this.url + `/usuarios/historial/${id}`, { headers: headers });
   }
 
-  public cancelReserve( token: any, id_reserve: string) {
-    let headers = new HttpHeaders({
-      "token": token
-    });
-    return this.http.post(this.url + '', {})
+  public cancelReserve(token: any, id: string) {
+    let headers = new HttpHeaders({ "token": token });
+    return this.http.post<Listar_Libros_Interface>(this.url + '/movimientos/cancelar', { id: id} , {headers})
   }
 
 }
