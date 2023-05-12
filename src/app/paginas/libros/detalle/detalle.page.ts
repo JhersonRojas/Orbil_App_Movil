@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { librosService } from 'src/app/services/libros.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, MenuController } from '@ionic/angular';
 import { CheckTokenService } from 'src/app/middlewares/check-token.service';
 
 @Component({
@@ -39,22 +39,54 @@ export class DetallePage implements OnInit {
 
   // Estas variables son las que tomara la función que mostrara un mensaje emergente en la vista al reservar
   alertFin: any;
+  token: string;
 
   constructor(
     private service: librosService, // "service" obtiene los servicios proporcionados desde proyectores service
     private valideAccess: CheckTokenService, // "access token service"
+    private NgMenu: MenuController,
+    private NgRouter: Router,
     private NgFb: FormBuilder, // "FB" me proporciona una función propia de angular para agrupar información traida desde algun formulario del HTML
-    private NgRouter: ActivatedRoute, // "route" es una función de angular que me permite redirigir al usuario a otra ruta por medio de una orden
+    private NgActiveRouter: ActivatedRoute, // "route" es una función de angular que me permite redirigir al usuario a otra ruta por medio de una orden
     private NgAlert: AlertController // "NgAlert", directiva de angular que muestra un mensaje emergente 
   ) {}
   
 
   //  Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista
   ngOnInit() {
-    let idl = this.NgRouter.snapshot.paramMap.get('idl');
+    this.saveDataUser()
+    let idl = this.NgActiveRouter.snapshot.paramMap.get('idl');
     //  "for" añade los datos en el momento que alguien diligencie el formulario en la vista
     this.form = this.NgFb.group({ fecha: ['', Validators.required], });
     this.mostrarLibro(idl);
+  }
+
+  private saveDataUser () {
+    this.token = localStorage.getItem('token');
+    if (!this.token) {
+      this.NgMenu.enable(false)
+      localStorage.clear()
+      setTimeout(() => {
+        this.NgRouter.navigate(['/login']);
+      }, 400);
+    }
+    else {
+      this.valideAccess.checkToken(this.token).subscribe(resp => {
+        if (resp.confirm) {
+          this.identificacion = localStorage.getItem('identificacion');
+          this.rol = localStorage.getItem('tipo_usuario');
+          this.usuario = localStorage.getItem('usuario').split(' ', 1)[0];
+        }
+      }, error => {
+        if (error.error.confirm === false) {
+          this.NgMenu.enable(false)
+          localStorage.clear()
+          setTimeout(() => {
+            this.NgRouter.navigate(['/login'], {skipLocationChange: true});
+          }, 400);
+        }
+      });
+    }
   }
 
   private mostrarLibro = (idl: string) => {

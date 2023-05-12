@@ -42,11 +42,18 @@ ion-toolbar {
       display: grid;
       place-content: center;
       color: white !important;
+
+      ion-card-title {
+        font-size: 1.3rem !important;
+      }
+
       @media screen and (max-width: 355px) {
         h1 {
           font-size: 1rem;
         }
       }
+
+      
     }
 
     ion-card-content {

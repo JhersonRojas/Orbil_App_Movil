@@ -10,7 +10,7 @@
 
 <ion-content>
 
-  <h3 *ngIf='elementos.length == 0'> No tiene reservas vigentes</h3>
+  <ion-item *ngIf='noFile == true'> No tiene reservas vigentes</ion-item>
   <div class="container">
     <ion-list *ngFor="let elem of elementos" class="info" lines="inset" >
       <ion-item id={{elem.Estado_Mv}}>

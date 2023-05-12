@@ -3,7 +3,7 @@ import { HistorialService } from '../services/historial.service';
 import { Elemento2 } from '../interface/interface';
 import { CheckTokenService } from '../middlewares/check-token.service';
 import { Router } from '@angular/router';
-import { AlertController, MenuController } from '@ionic/angular';
+import { AlertController, LoadingController, MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-historial',
@@ -17,11 +17,13 @@ export class HistorialPage implements OnInit {
   identificacion: string;
   token: string;
   mensaje_final: any;
+  noFile: boolean = false;
 
   constructor(
     private service: HistorialService,
     private valideAccess: CheckTokenService,
     private NgRouter: Router,
+    private loadingCtrl: LoadingController,
     private NgMenu: MenuController,
     private NgAlert: AlertController // "alert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas
   ) {
@@ -29,9 +31,19 @@ export class HistorialPage implements OnInit {
   }
 
   ngOnInit() {
+    this.showLoading()
     setTimeout(() => {
       this.list_History();
     }, 1000);
+
+  }
+
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Cargando...',
+      duration: 800,
+    });
+    loading.present();
   }
 
   private saveDataUser = () => {
@@ -67,6 +79,7 @@ export class HistorialPage implements OnInit {
         .subscribe((resp) => {
           this.respuesta = resp;
           this.elementos = resp.elemento;
+          if (this.elementos.length == 0) this.noFile = true
         });
     } catch (error) {
       console.log('error :>> ', error);
