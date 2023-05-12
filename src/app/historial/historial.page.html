@@ -21,8 +21,9 @@
           <h1> {{elem.Elemento.Tipo_Elemento}}</h1>
           <h2 class={{elem.Estado_Mv}}>{{elem.Estado_Mv}}</h2>
           <p> Nombre:&nbsp;{{elem.Elemento.Nombre_Elemento}} </p>
-          <ion-button *ngIf='elem.Estado_Mv == "Solicitud"' (click)="cancelReserveAlert()">
-            Cancelar
+          <ion-button *ngIf='elem.Estado_Mv == "Solicitud"' color="danger" 
+          (click)="cancelReserveAlert(elem.Pk_Movimiento)">
+            Cancelar reserva?
           </ion-button>
         </ion-label>
       </ion-item>

@@ -73,7 +73,7 @@ export class HistorialPage implements OnInit {
     }
   }
 
-  public cancelReserveAlert = async () => {
+  public cancelReserveAlert = async ( id_reserva: any) => {
     const alert = await this.NgAlert.create({
       header: `Cancealar reservación?`,
       buttons: [
@@ -89,11 +89,14 @@ export class HistorialPage implements OnInit {
     });
     await alert.present();
     const confirm = await alert.onDidDismiss();
-    if (confirm.role == 'confirm') return this.cancelReserve();
+    if (confirm.role == 'confirm') return this.cancelReserve(id_reserva);
   };
 
-  cancelReserve() {
-    throw new Error('Method not implemented.');
+  cancelReserve(id_reserva: any) {
+    console.log(id_reserva);
+
+    
+    
   }
 
 }

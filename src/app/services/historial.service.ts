@@ -20,4 +20,11 @@ export class HistorialService {
     return this.http.get<Historial_Interface>(this.url + `/usuarios/historial/${id}`, { headers: headers });
   }
 
+  public cancelReserve( token: any, id_reserve: string) {
+    let headers = new HttpHeaders({
+      "token": token
+    });
+    return this.http.post(this.url + '', {})
+  }
+
 }
