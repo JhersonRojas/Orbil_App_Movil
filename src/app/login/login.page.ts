@@ -52,12 +52,16 @@ export class LoginPage implements OnInit {
       localStorage.clear()
       setTimeout(() => {
         this.NgRouter.navigate(['/login']);
-      }, 1000);
+      }, 100);
     }
+
     else {
       this.valideAccess.checkToken(this.token).subscribe(resp => {
-        if (resp.confirm) {
+        if (resp.confirm == true) {
           this.identificacion = localStorage.getItem('identificacion');
+          setTimeout(() => {
+            this.NgRouter.navigate(['/home']);
+          }, 100);
         }
       }, error => {
         if (error.error.confirm) {
@@ -90,27 +94,31 @@ export class LoginPage implements OnInit {
         if (!resp) return this.msjToast('No se encuentra conectado al servidor')
         if (!resp.confirm) return this.msjToast('Usuario o Contraseña incorrecto')
 
-        this.respuesta = (resp)
-        this.token = (resp.token);
-
-        this.identificacion = this.respuesta.user.Pk_Identificacion_SIREP
-        localStorage.setItem('identificacion', this.identificacion);
-
-        this.nombre = this.respuesta.user.Nombre_SIREP
-        localStorage.setItem('usuario', this.nombre);
-
-        this.tipo_usuario = this.respuesta.user.Tipo_Usuario_SIREP
-        localStorage.setItem('tipo_usuario', this.tipo_usuario);
-
-        localStorage.setItem('token', this.token);
-        
-        this.NgRouter.navigateByUrl('/home', { skipLocationChange: true }).then(() => this.NgRouter.navigate(["/home"]));
-        this.NgMenu.enable(true)
-        setTimeout(() => {
-          location.reload();
-        }, 60);
+        if (resp.confirm == true) {
+          this.respuesta = (resp)
+          this.token = (resp.token);
+  
+          this.identificacion = this.respuesta.user.Pk_Identificacion_SIREP
+          localStorage.setItem('identificacion', this.identificacion);
+  
+          this.nombre = this.respuesta.user.Nombre_SIREP
+          localStorage.setItem('usuario', this.nombre);
+  
+          this.tipo_usuario = this.respuesta.user.Tipo_Usuario_SIREP
+          localStorage.setItem('tipo_usuario', this.tipo_usuario);
+  
+          localStorage.setItem('token', this.token);
+          
+          this.NgRouter.navigateByUrl('/home', { skipLocationChange: true }).then(() => this.NgRouter.navigate(["/home"]));
+          this.NgMenu.enable(true)
+          
+          if (this.token) {
+            setTimeout(() => {
+              location.reload();
+            }, 700);
+          }
+        }
       })
-
 
     } catch (error) {
       console.log('error :>> \n ', error);
