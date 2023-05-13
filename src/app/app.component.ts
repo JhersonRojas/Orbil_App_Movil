@@ -79,9 +79,10 @@ export class AppComponent implements OnInit, AfterViewInit {
           this.permiso_de_rango = true : this.permiso_de_rango = false
       }
     }, error => {
-      if (error) {
+      if (error && localStorage.getItem('token')) {
         localStorage.clear()
-        setTimeout(() => this.NgRouter.navigate(['login']), 500);
+        this.NgRouter.navigate(['login'])
+        setTimeout(() => location.reload(), 500);
       }
     })
   }

@@ -134,8 +134,10 @@ export class DetallePage implements OnInit {
 
     //  Este modulo recibe la respuesta del Api dependiendo si los datos son correctos o no
     this.service.Reservar_Libro(this.info_de_envio).subscribe(resp => {
-      if (!resp.confirm) return this.mostrarAlerta("Lo siento, alguien ya reservo este libro")
+      if (resp.confirm == false) return this.mostrarAlerta("Lo siento, alguien ya reservo este libro")
       else return this.mostrarAlerta("A reservado el libro en la fecha \n " + this.fecha_fin)
+    }, error => {
+      if (error) return this.mostrarAlerta("Lo sentimos, ha ocurrido un error de conexión")
     })
   }
 }

@@ -95,7 +95,7 @@ export class ProyectorPage implements OnInit {
   };
 
   // Función que permite enviar un mensaje emergente al realizarse una reserva
-  async showAlert(msj: string) {
+  async mostrarAlerta(msj: string) {
     const alert = await this.NgAlert.create({ message: msj });
     await alert.present();
   }
@@ -140,10 +140,12 @@ export class ProyectorPage implements OnInit {
     this.service.Reservar_Proyector_Service(this.todo).subscribe(resp => {
       this.respuesta = resp;
       //  Aqui tambien se envia el mensaje en caso de que la reserva sea valida o no
-      if (resp === undefined) return this.showAlert('No se encuentra conectado al servidor');
-      if (this.respuesta.confirm) return this.showAlert(`Ha reservado el proyector en ${this.fecha.split('T', 1)[0]}`);
-      if (!this.respuesta.confirm) return this.showAlert(`Ya reservaron este proyector aqui, lo sentimos 😥`);
-      else return this.showAlert('No se reconoce la respuesta del servidor');
+      if (resp === undefined) return this.mostrarAlerta('No se encuentra conectado al servidor');
+      if (this.respuesta.confirm) return this.mostrarAlerta(`Ha reservado el proyector en ${this.fecha.split('T', 1)[0]}`);
+      if (!this.respuesta.confirm) return this.mostrarAlerta(`Ya reservaron este proyector aqui, lo sentimos 😥`);
+      else return this.mostrarAlerta('No se reconoce la respuesta del servidor');
+    }, error => {
+      if (error) return this.mostrarAlerta("Lo sentimos, ha ocurrido un error de conexión")
     });
   };
 }

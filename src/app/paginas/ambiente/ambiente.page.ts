@@ -131,6 +131,8 @@ export class AmbientePage implements OnInit {
         return this.showAlert('Ya existe una reserva aqui, lo sentimos 😥');
       else
         return this.showAlert('Ocurrio un error en el pedido, lo sentimos 😒');
+    }, error => {
+      if (error) return this.showAlert("Lo sentimos, ha ocurrido un error de conexión")
     });
   }
 }

@@ -7,8 +7,9 @@
 
 ### Configuración para admición del Api Rest
 
-  <android:screenOrientation="portrait">
-  <android:networkSecurityConfig="@xml/netwok_security_config">
+  <manifest
+  android:screenOrientation="portrait" 
+  android:networkSecurityConfig="@xml/netwok_security_config">
   
   <?xml version="1.0" encoding="utf-8" ?>
   <network-security-config>

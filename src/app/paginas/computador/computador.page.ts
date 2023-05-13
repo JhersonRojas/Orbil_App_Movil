@@ -37,7 +37,7 @@ export class ComputadorPage implements OnInit {
 
   // Estas variables son las que tomara la función que mostrara un mensaje emergente en la vista al reservar
   mensaje: any;
-  mensaje_final: string;
+  mensaje_final: any;
 
   // "respuesta" recibe los datos retornados por el Api Rest al realizar una reserva
   respuesta: any;
@@ -121,9 +121,8 @@ export class ComputadorPage implements OnInit {
   };
 
   // Esta función es la que me permite enviar un mensaje emergente al realizarse una reserva
-  public mostrarAlerta = async () => {
-    const total = this.mensaje_final;
-    const alert = await this.NgAlert.create({ message: total });
+  public mostrarAlerta = async (msj: string) => {
+    const alert = await this.NgAlert.create({ message: msj });
     await alert.present();
   };
 
@@ -151,15 +150,13 @@ export class ComputadorPage implements OnInit {
   public reserveComputer = async () => {
     // Validacion de si elegieron algún computador
     if (this.selectedComputer.length == 0) {
-      this.mensaje_final = 'Lo siento, debe elegir minimo un computador';
-      return this.mostrarAlerta();
+      return this.mostrarAlerta('Lo siento, debe elegir minimo un computador');
     }
 
     if (this.rol == 'Aprendiz' || this.rol == 'Visitante'){
 
       if (this.selectedComputer.length > 1) {
-        this.mensaje_final = `Lo sentimos, siendo ${this.rol} no puede reservar mas de 1 computador`;
-        return this.mostrarAlerta();
+        return this.mostrarAlerta(`Lo sentimos, siendo ${this.rol} no puede reservar mas de 1 computador`);
       }
     }
 
@@ -178,19 +175,17 @@ export class ComputadorPage implements OnInit {
     this.service.Reservar_Computador_Service(this.todo).subscribe((resp) => {
       this.respuesta = resp;
       this.mensaje = this.respuesta.confirm;
-      if (this.mensaje == false)
-        this.mensaje_final = 'Lo siento, algún computador que eligio no esta disponible';
-      if (this.mensaje == false && this.respuesta == 'A excedido el limite para reservar')
-        this.mensaje_final = 'Lo siento, no se encuentra esa cantidad disponible'
+      if (this.mensaje == false) this.mensaje_final = 'Lo siento, algún computador que eligio no esta disponible';
+      if (this.mensaje == false && this.respuesta == 'A excedido el limite para reservar') this.mensaje_final = 'Lo siento, no se encuentra esa cantidad disponible'
       if (this.mensaje == true) {
         this.mensaje_final = `Se han reservado ${this.selectedComputer.length} computadores`;
         this.selectedComputerText = '0 💻';
         this.computadores_permiso = true;
-      } else
-        this.mensaje_final = `No se han reservado los computadores, esto puede ser un error, por favor comuniquelo con los administradores`;
-
-      // Este "return" me regresa la función de mostrarAlert, lo que muestra el mensaje emergente en la vista al reservar
-      return this.mostrarAlerta();
+      }
+      return this.mostrarAlerta(this.mensaje_final);
+      
+    }, error => {
+      if (error) return this.mostrarAlerta("Lo sentimos, ha ocurrido un error de conexión")
     });
   };
 }

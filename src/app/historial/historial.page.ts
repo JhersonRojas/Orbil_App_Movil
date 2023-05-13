@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AlertController, LoadingController, MenuController } from '@ionic/angular';
 import { CheckTokenService } from '../middlewares/check-token.service';
 import { HistorialService } from '../services/historial.service';
-import { DatoElemento, DatoMovimiento } from '../interface/interface';
+import { DatoMovimiento } from '../interface/interface';
 
 @Component({
   selector: 'app-historial',
@@ -98,17 +98,15 @@ export class HistorialPage implements OnInit {
   cancelReserve = (id_reserva: any) => {
     this.service.cancelReserve(this.token, id_reserva).subscribe((resp) => {
 
-      if (!resp) return this.mostrarAlerta('Tal parece, ocurrio un error al cancelar su reserva')
       if (resp.confirm == false) return this.mostrarAlerta('No ha podido cancelar su reserva, lo sentimos')
-
       if (resp.confirm == true) {
         this.mostrarAlerta('A cancelado su reserva')
-
         setTimeout(() => {
           location.reload()
         }, 1500);
       }
-
+    }, error => {
+      if (error) return this.mostrarAlerta("Lo sentimos, ha ocurrido un error de conexión")
     });
   }
 }
