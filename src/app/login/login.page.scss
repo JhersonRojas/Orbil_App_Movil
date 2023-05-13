@@ -1,5 +1,4 @@
-
-$url: '../../assets/pictures/waves.png';
+$url: "../../assets/pictures/waves.png";
 $naranja: #ff7f00;
 
 @mixin input() {
@@ -8,7 +7,9 @@ $naranja: #ff7f00;
   border-radius: 30px;
   width: auto;
   height: 12vw;
-  @media (max-width: 325px) {font-size: 0.8rem; }
+  @media (max-width: 325px) {
+    font-size: 0.8rem;
+  }
 }
 
 .items {
@@ -27,20 +28,24 @@ $naranja: #ff7f00;
       width: 100%;
     }
   }
-  
+
   .inputs {
     margin: auto;
     width: 70vw;
     height: auto;
-    .input1 { @include input();}
-    .input2 { @include input();}
+    .input1 {
+      @include input();
+    }
+    .input2 {
+      @include input();
+    }
   }
 
-  .boton{
+  .boton {
     position: relative;
     top: 50%;
     left: 50%;
-    transform:translate(-50%,-1%);
+    transform: translate(-50%, -1%);
   }
 
   .ocean {
@@ -59,68 +64,90 @@ $naranja: #ff7f00;
       bottom: 0;
       left: -60%;
     }
-      .wave.a {
-        background-position: 0 -854px;
-      }
-      .wave.b {
-        background-position: 0 -427px;
-        animation-delay: .6s;
-      }
-      .wave.c {
-        background-position: 0 0;
-        animation-delay: 1.2s;
-      }
+    .wave.a {
+      background-position: 0 -854px;
+    }
+    .wave.b {
+      background-position: 0 -427px;
+      animation-delay: 0.6s;
+    }
+    .wave.c {
+      background-position: 0 0;
+      animation-delay: 1.2s;
+    }
 
     @keyframes efect {
-      0% { transform: translate(0 , 0); }
-      50% { transform: translate(-80px, 30px);}
-      100% { transform: translate(160px, -60px);}
+      0% {
+        transform: translate(0, 0);
+      }
+      50% {
+        transform: translate(-80px, 30px);
+      }
+      100% {
+        transform: translate(160px, -60px);
+      }
     }
   }
 }
 
 @media (min-height: 200px) and (max-height: 450px) {
-  .items { 
-    .logo { width: 40%; 
-            margin-top: 5%;
-            margin-left: 30%;
-            margin-right: 30%;
-          }
-    .ocean .wave { height: 200px; left: -180%; }
+  .items {
+    .logo {
+      width: 40%;
+      margin-top: 5%;
+      margin-left: 30%;
+      margin-right: 30%;
+    }
+    .ocean .wave {
+      height: 200px;
+      left: -180%;
+    }
   }
 }
 
 @media (min-height: 450px) and (max-height: 500px) {
-  .items { 
-    .logo { width: 40%; 
-            margin-top: 5%;
-            margin-left: 30%;
-            margin-right: 30%;
-          }
+  .items {
+    .logo {
+      width: 40%;
+      margin-top: 5%;
+      margin-left: 30%;
+      margin-right: 30%;
+    }
 
-    .ocean .wave { height: 220px; left: -90%; }
+    .ocean .wave {
+      height: 220px;
+      left: -90%;
+    }
   }
 }
 
 @media (min-height: 500px) and (max-height: 700px) {
-  .items { 
-    .logo { width: 40%; 
-            margin-top: 15%;
-            margin-left: 30%;
-            margin-right: 30%;
-          }
+  .items {
+    .logo {
+      width: 40%;
+      margin-top: 15%;
+      margin-left: 30%;
+      margin-right: 30%;
+    }
 
-    .ocean .wave { height: 280px; left: -90%; } 
+    .ocean .wave {
+      height: 280px;
+      left: -90%;
+    }
   }
 }
 
 @media (min-height: 701px) and (max-height: 950px) {
-  .items { 
-    .logo { width: 50%; 
-            margin-top: 25%;
-            margin-left: 25%;
-            margin-right: 25%;
-          }
-    .ocean .wave { height: 380px; left: -90%; }
+  .items {
+    .logo {
+      width: 50%;
+      margin-top: 25%;
+      margin-left: 25%;
+      margin-right: 25%;
+    }
+    .ocean .wave {
+      height: 380px;
+      left: -90%;
+    }
   }
 }

@@ -75,31 +75,7 @@ export class ProyectorPage implements OnInit {
   }
 
   private saveDataUser () {
-    this.token = localStorage.getItem('token');
-    if (!this.token) {
-      this.NgMenu.enable(false)
-      localStorage.clear()
-      setTimeout(() => {
-        this.NgRouter.navigate(['/login']);
-      }, 400);
-    }
-    else {
-      this.valideAccess.checkToken(this.token).subscribe(resp => {
-        if (resp.confirm) {
-          this.identificacion = localStorage.getItem('identificacion');
-          this.rol = localStorage.getItem('tipo_usuario');
-          this.usuario = localStorage.getItem('usuario').split(' ', 1)[0];
-        }
-      }, error => {
-        if (error.error.confirm === false) {
-          this.NgMenu.enable(false)
-          localStorage.clear()
-          setTimeout(() => {
-            this.NgRouter.navigate(['/login'], {skipLocationChange: true});
-          }, 400);
-        }
-      });
-    }
+
   }
 
   // Función que cancela la posibilidad de elegir fines de semana en el calendario desplegable

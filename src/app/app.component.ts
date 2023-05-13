@@ -10,21 +10,23 @@ import { CheckTokenService } from './middlewares/check-token.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
+
 export class AppComponent implements OnInit, AfterViewInit {
 
   darkMode: boolean = false;
   public subscriber$: Subscription;
 
   token: any;
+  identificacion: any;
   usuario: any;
   rol: any;
-  identificacion: any;
   permiso_de_rango: boolean;
 
   selected: any;
   other: any;
 
   pages: {} = {
+    raiz: ' ',
     login: '1',
     home: '1',
     lista: '2',
@@ -42,61 +44,47 @@ export class AppComponent implements OnInit, AfterViewInit {
     private NgAlert: AlertController,
     private NgRouter: Router,
     private NgMenu: MenuController /* "NgMenu" me permite controlar el manejo del menú desplegable, como mostrarlo o no */
-  ) {
-    this.saveDataUser();
-  }
+  ) { }
 
   ngOnInit() {
     this.selected = '1';
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
     if (prefersDark.matches) document.body.classList.toggle('light');
+    this.confirmUser()
   }
 
   ngAfterViewInit(): void {
     this.selectPage();
   }
 
-  private saveDataUser = () => {
-    this.token = localStorage.getItem('token');
-    if (!this.token) {
-      this.NgMenu.enable(false)
-      localStorage.clear()
-      setTimeout(() => {
-        this.NgRouter.navigate(['/login']);
-      }, 1000);
-    }
-    else {
-      this.valideAccess.checkToken(this.token).subscribe(resp => {
-        if (resp.confirm) {
-          this.identificacion = localStorage.getItem('identificacion');
-          this.rol = localStorage.getItem('tipo_usuario');
-          this.usuario = localStorage.getItem('usuario').split(' ', 1)[0];
-          if (this.rol == 'Instructor' || this.rol == 'Administrador' || this.rol == 'Administrativo')
-            this.permiso_de_rango = true
-        }
-      }, error => {
-        if (error.error.confirm === false) {
-          this.NgMenu.enable(false)
-          localStorage.clear()
-          setTimeout(() => {
-            this.NgRouter.navigate(['/login'], { skipLocationChange: true });
-          }, 1000);
-        }
-      });
-    }
-  }
-
   public changeTheme = () => {
     document.body.classList.toggle('dark');
   }
 
+  private confirmUser = () => {
+    this.valideAccess.checkToken().subscribe(resp => {
+      if (resp.confirm == true ) {
+        this.identificacion = this.valideAccess.setDataUser().identificacion
+        this.usuario = this.valideAccess.setDataUser().usuario.split(' ')[0]
+        this.rol = this.valideAccess.setDataUser().tipo_usuario
+        
+        this.rol == 'Administrador' || this.rol == 'Administrativo' || this.rol == 'Instructor' ? 
+          this.permiso_de_rango = true : this.permiso_de_rango = false
+      }
+    }, error => {
+      if (error) {
+        localStorage.clear()
+        setTimeout(() => this.NgRouter.navigate(['login']), 500);
+      }
+    })
+  }
+
   async selectPage() {
     try {
-      this.subscriber$ = this.NgRouter.events
-        .pipe(filter((event) => event instanceof NavigationEnd))
+      this.subscriber$ = this.NgRouter.events.pipe(filter((event) => event instanceof NavigationEnd))
         .subscribe(async (event) => {
           console.log('The URL changed to: ' + event['url'].split('/')[1]);
-          (await this.pages[event['url'].split('/')[1]]) ?? console.log('No se reconocio esta pagina');
+          await this.pages[event['url'].split('/')[1]]
           this.other = this.pages[event['url'].split('/')[1]];
           return this.selectList();
         });

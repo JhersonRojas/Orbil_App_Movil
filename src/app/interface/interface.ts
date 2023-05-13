@@ -7,9 +7,9 @@ export interface Login_Interface {
 }
 
 export interface User {
-    Pk_Identificacion: number;
-    Nombre: string;
-    Tipo_Usuario: string;
+    Pk_Identificacion_SIREP: string;
+    Nombre_SIREP: string;
+    Tipo_Usuario_SIREP: string;
 }
 
 //  Respuesta general del Api
@@ -21,7 +21,7 @@ export interface Peticion_Interface {
     datos: DatoElemento[];
 }
 
-    // Estructura de la respuesta de los elementos desde el Api Rest
+// Estructura de la respuesta de los elementos desde el Api Rest
 export interface DatoElemento extends DatoMovimiento {
     Archivo_Aporte: null | string;
     Autor: string;
@@ -52,7 +52,7 @@ export enum TipoElemento {
     Proyector = "Proyector",
 }
 
-    // Respuesta del lado de los movimientos 
+// Respuesta del lado de los movimientos 
 export interface DatoMovimiento {
     Estado_Mv: string;
     Fecha_Inicio: string;

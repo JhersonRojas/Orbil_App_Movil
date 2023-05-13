@@ -47,29 +47,6 @@ export class HistorialPage implements OnInit {
   }
 
   private saveDataUser = () => {
-    this.token = localStorage.getItem('token');
-    if (!this.token) {
-      this.NgMenu.enable(false);
-      localStorage.clear();
-      setTimeout(() => {
-        this.NgRouter.navigate(['/login']);
-      }, 500);
-    } else {
-      this.valideAccess.checkToken(this.token).subscribe((resp) => {
-        if (resp.confirm) {
-          this.identificacion = localStorage.getItem('identificacion');
-        }
-      }, (error) => {
-        if (error.error.confirm) {
-          this.NgMenu.enable(false);
-          localStorage.clear();
-          setTimeout(() => {
-            this.NgRouter.navigate(['/login'], { skipLocationChange: true });
-          }, 500);
-        }
-      }
-      );
-    }
   };
 
   async list_History() {

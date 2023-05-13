@@ -57,35 +57,10 @@ export class ListaPage implements OnInit {
     this.listar_libros(idc);
   }
 
-  private saveDataUser () {
-    this.token = localStorage.getItem('token');
-    if (!this.token) {
-      this.NgMenu.enable(false)
-      localStorage.clear()
-      setTimeout(() => {
-        this.NgRouter.navigate(['/login']);
-      }, 400);
-    }
-    else {
-      this.valideAccess.checkToken(this.token).subscribe(resp => {
-        if (resp.confirm) {
-          this.identificacion = localStorage.getItem('identificacion');
-          this.rol = localStorage.getItem('tipo_usuario');
-          this.usuario = localStorage.getItem('usuario').split(' ', 1)[0];
-        }
-      }, error => {
-        if (error.error.confirm === false) {
-          this.NgMenu.enable(false)
-          localStorage.clear()
-          setTimeout(() => {
-            this.NgRouter.navigate(['/login'], {skipLocationChange: true});
-          }, 400);
-        }
-      });
-    }
+  private saveDataUser = () => {
   }
 
-  handleRefresh(event) {
+  handleRefresh(event: any) {
     let idc = this.NgActiveRouter.snapshot.paramMap.get('idc');
     setTimeout(() => {
       this.listar_libros(idc);

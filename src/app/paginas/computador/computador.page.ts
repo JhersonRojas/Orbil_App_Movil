@@ -68,34 +68,7 @@ export class ComputadorPage implements OnInit {
     this.form = this.NgFb.group({ fecha: ['', Validators.required] });
   }
 
-  private saveDataUser() {
-    this.token = localStorage.getItem('token');
-    if (!this.token) {
-      this.NgMenu.enable(false)
-      localStorage.clear()
-      setTimeout(() => {
-        this.NgRouter.navigate(['/login']);
-      }, 400);
-    }
-    else {
-      this.valideAccess.checkToken(this.token).subscribe(resp => {
-        if (resp.confirm) {
-          this.identificacion = localStorage.getItem('identificacion');
-          this.rol = localStorage.getItem('tipo_usuario');
-          this.usuario = localStorage.getItem('usuario').split(' ', 1)[0];
-          if (this.rol == 'Instructor' || this.rol == 'Administrador' || this.rol == 'Administrativo')
-            this.permiso_de_rango = true
-        }
-      }, error => {
-        if (error.error.confirm === false) {
-          this.NgMenu.enable(false)
-          localStorage.clear()
-          setTimeout(() => {
-            this.NgRouter.navigate(['/login'], { skipLocationChange: true });
-          }, 400);
-        }
-      });
-    }
+  private saveDataUser = () => {
   }
 
   // Esta función cancela la posibilidad de elegir fines de semana en el calendario desplegable

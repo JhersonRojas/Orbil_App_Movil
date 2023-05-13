@@ -37,7 +37,7 @@ export class ListaComponent implements OnInit {
     this.selectionChange.emit(this.workingSelectedValues);
   }
   
-  searchbarInput(ev) {
+  searchbarInput(ev: any) {
     this.filterList(ev.target.value);
   }
   
@@ -54,7 +54,7 @@ export class ListaComponent implements OnInit {
     return this.workingSelectedValues.find(item => item === value);
   }
   
-  checkboxChange(ev) {
+  checkboxChange(ev: any) {
     const { checked, value } = ev.detail;
     
     if (checked) {

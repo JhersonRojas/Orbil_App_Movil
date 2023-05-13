@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-
   {
     path: '',
     redirectTo: 'login',
@@ -40,7 +39,6 @@ const routes: Routes = [
     path: 'historial',
     loadChildren: () => import('./historial/historial.module').then( m => m.HistorialPageModule)
   }
-
 ];
 
 @NgModule({
@@ -48,4 +46,5 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
     exports: [RouterModule]
 })
+
 export class AppRoutingModule { }
