@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { librosService } from 'src/app/services/libros.service';
 import { AlertController, MenuController } from '@ionic/angular';
 import { CheckTokenService } from 'src/app/middlewares/check-token.service';
+import { DatoElemento } from 'src/app/interface/interface';
 
 @Component({
   selector: 'app-detalle',
@@ -32,14 +33,11 @@ export class DetallePage implements OnInit {
   Descripcion: any
   Imagen: any
 
+  // Estas variables son las que tomara la función que mostrara un mensaje emergente en la vista al reservar
+  token: string;
+  identificacion: any
   usuario: any
   rol: any
-  identificacion: any
-  datos_usuario: any
-
-  // Estas variables son las que tomara la función que mostrara un mensaje emergente en la vista al reservar
-  alertFin: any;
-  token: string;
 
   constructor(
     private service: librosService, // "service" obtiene los servicios proporcionados desde proyectores service
@@ -79,18 +77,20 @@ export class DetallePage implements OnInit {
 
   private mostrarLibro = (idl: string) => {
     this.service.Listar_Un_Libro(idl).subscribe(resp => {
-      this.Nombre = (resp.Nombre_Elemento);
-      this.Imagen = (resp.Imagen);
-      this.Autor = (resp.Autor);
-      this.Descripcion = (resp.Descripcion);
-      this.serial = (resp.Pk_Elemento);
+      this.libro = resp.datos;
+
+      this.serial = this.libro.Pk_Elemento
+      this.Nombre = this.libro.Nombre_Elemento
+      this.Autor = this.libro.Autor
+      this.Descripcion = this.libro.Descripcion
+      this.Imagen = this.libro.Imagen
+
     });
   }
 
   // Esta función es la que me permite enviar un mensaje emergente al realizarse una reserva
-  private mostrarAlerta = async () => {
-    const total = await this.alertFin
-    const alert = await this.NgAlert.create({ message: total });
+  private mostrarAlerta = async (msj: string) => {
+    const alert = await this.NgAlert.create({ message: msj });
     await alert.present();
   }
 
@@ -134,11 +134,8 @@ export class DetallePage implements OnInit {
 
     //  Este modulo recibe la respuesta del Api dependiendo si los datos son correctos o no
     this.service.Reservar_Libro(this.info_de_envio).subscribe(resp => {
-      if (!resp.confirm) 
-        this.alertFin = "Lo siento, alguien ya reservo este libro"
-      else 
-        this.alertFin = "A reservado el libro en la fecha \n " + this.fecha_fin 
-      return this.mostrarAlerta()
+      if (!resp.confirm) return this.mostrarAlerta("Lo siento, alguien ya reservo este libro")
+      else return this.mostrarAlerta("A reservado el libro en la fecha \n " + this.fecha_fin)
     })
   }
 }

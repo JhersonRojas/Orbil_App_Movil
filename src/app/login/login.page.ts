@@ -13,6 +13,12 @@ import { CheckTokenService } from '../middlewares/check-token.service';
 
 export class LoginPage implements OnInit {
 
+  // Seleccionamos el elemento con el nombre que le pusimos con el #
+  @ViewChild('passwordEyeRegister', { read: ElementRef }) passwordEye: ElementRef;
+
+  passwordTypeInput: any = 'password';
+    // Variable para cambiar dinamicamente el tipo de Input que por defecto sera 'password'
+
   // <-- "form" variable que guarda los datos recibidos de "NgFb" desde el HTML -->
   public form: FormGroup;
 
@@ -76,7 +82,7 @@ export class LoginPage implements OnInit {
 
     setTimeout(() => {
       this.NgMenu.enable(true)
-      this.NgRouter.navigate(["/home"])
+      this.NgRouter.navigate(["/home"], { queryParams: { cargo: localStorage.getItem('tipo_usuario')}})
     }, 900);
   }
 
@@ -105,6 +111,8 @@ export class LoginPage implements OnInit {
           localStorage.setItem('tipo_usuario', resp.user.Tipo_Usuario_SIREP) :
           this.tipo_usuario = undefined
 
+        this.tipo_usuario = localStorage.getItem('tipo_usuario')
+
         localStorage.setItem('token', this.token)
         this.showLoading()
       }
@@ -112,11 +120,6 @@ export class LoginPage implements OnInit {
       if (error) return this.msjToast('No se encuentra conectado al servidor')
     })
   }
-
-  @ViewChild('passwordEyeRegister', { read: ElementRef }) passwordEye: ElementRef;
-  // Seleccionamos el elemento con el nombre que le pusimos con el #
-  passwordTypeInput = 'password';
-  // Variable para cambiar dinamicamente el tipo de Input que por defecto sera 'password'
 
   // Esta función verifica si el tipo de campo es texto lo cambia a password y viceversa, además verificara el icono si es 'eye-off' lo cambiara a 'eye' y viceversa
   togglePasswordMode() {

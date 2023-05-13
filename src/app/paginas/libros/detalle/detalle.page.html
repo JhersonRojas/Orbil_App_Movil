@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <div class="items">
-      <ion-back-button class="boton-menu" mode="md" color="light" defaultHref="/lista/3"></ion-back-button>
+      <ion-back-button class="boton-menu" mode="md" color="light" defaultHref="/home"></ion-back-button>
       <ion-img class="nombre" src="../../../../assets/pictures/OrbilText.svg"></ion-img>
       <ion-menu-button menu="main-menu" color="light" class="menu"></ion-menu-button>
     </div>
@@ -19,7 +19,7 @@
 
       <ion-card-content>
         <div class="foto" style="background-image: url('{{Imagen}}') "></div>
-        
+
         <form [formGroup]="form" (ngSubmit)="confirmReserve()">
           <div class="calendar">
             <h2> Fecha a reservar: &nbsp; </h2>
@@ -46,7 +46,6 @@
           <span>{{Descripcion}}</span>
         </div>
       </ion-card-content>
-
     </ion-card>
   </div>
 

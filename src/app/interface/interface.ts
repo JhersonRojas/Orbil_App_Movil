@@ -58,7 +58,6 @@ export interface DatoMovimiento {
     Pk_Movimiento: number;
     Usuario: Usuario;
     Elemento: Elemento;
-
 }
 
 export interface Usuario {

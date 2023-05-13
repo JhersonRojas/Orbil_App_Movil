@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { AlertController, MenuController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -41,10 +41,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     private valideAccess: CheckTokenService,
     private NgAlert: AlertController,
     private NgRouter: Router,
+    private NgActiveRouter: ActivatedRoute, // "route" es una función de angular que me permite redirigir al usuario a otra ruta por medio de una orden
     private NgMenu: MenuController /* "NgMenu" me permite controlar el manejo del menú desplegable, como mostrarlo o no */
   ) { }
 
-  ngOnInit() {
+  ngOnInit() {    
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
     if (prefersDark.matches) document.body.classList.toggle('light');
     this.confirmUser()
@@ -52,6 +53,15 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.selectPage();
+    setTimeout(() => {
+      this.NgActiveRouter.queryParams.subscribe((params: Params) => {  
+        this.rol = params['cargo']
+        if (this.rol) {
+          this.rol == 'Administrador' || this.rol == 'Administrativo' || this.rol == 'Instructor' ?
+          this.permiso_de_rango = true : this.permiso_de_rango = false
+        }
+      })
+    }, 400);
   }
 
   public changeTheme = () => {
@@ -80,11 +90,14 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.subscriber$ = this.NgRouter.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(async (event) => {
       let select = document.getElementById(this.selected);
       select.classList.remove('selected')
+      let url = event['url'].split('/', 2)[1]
+      
       setTimeout(() => {
-        this.selected = this.pages['/' + event['url'].split('/', 2)[1]]        
+        if (url.search(/\?/) > 0) this.selected = this.pages['/' + url.split('?')[0]]
+        else this.selected = this.pages['/' + url]        
         select = document.getElementById(this.selected)
         select.classList.add('selected')
-      }, 300);
+      }, 500);
     })
   }
 

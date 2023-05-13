@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { DatoElemento, Peticion_Interface } from '../interface/interface';
+import { Peticion_Interface } from '../interface/interface';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +31,7 @@ export class librosService {
 
   // <----------------- Función que obtiene un libro de la lista ------------------->
   Listar_Un_Libro(idl: string) {
-    return this.http.get<DatoElemento>(this.url + `/libros/serial/${idl}`, { headers: this.headers }) // <- Aqui se añade la ruta especifica
+    return this.http.get<Peticion_Interface>(this.url + `/libros/serial/${idl}`, { headers: this.headers }) // <- Aqui se añade la ruta especifica
   }
 
   // <----------------- Función que envia los datos para reservar un libro  ------------------->
