@@ -96,7 +96,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   async selectList(e = null) {
     try {
       let select: any = document.getElementById(this.selected);
-      select.setAttribute('style', 'color: rgb(85, 85, 85); border-left: 0');
+      select.setAttribute('style', 'color: #00000; border-left: none');
 
       if (e === null) {
         this.selected = this.other;

@@ -7,6 +7,7 @@ $naranja: #ff7f00;
   border-radius: 30px;
   width: auto;
   height: 12vw;
+
   @media (max-width: 325px) {
     font-size: 0.8rem;
   }
@@ -38,6 +39,9 @@ $naranja: #ff7f00;
     }
     .input2 {
       @include input();
+      ion-icon {
+        font-size: 20px;
+      }
     }
   }
 

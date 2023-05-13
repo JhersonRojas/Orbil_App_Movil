@@ -5,10 +5,11 @@
   siendo este unicamente la parte del cliente donde el tendra acceso a los diferetes elementos de la biblioteca y donde
   la encargada podra llevar un proceso mas facil de lo que se realzia  en la misma.
 
-### Configuración para adminción del Api Rest
+### Configuración para admición del Api Rest
 
-  android:screenOrientation="portrait">
-
+  <android:screenOrientation="portrait">
+  <android:networkSecurityConfig="@xml/netwok_security_config">
+  
   <?xml version="1.0" encoding="utf-8" ?>
   <network-security-config>
     <base-config cleartextTrafficPermitted="true">
