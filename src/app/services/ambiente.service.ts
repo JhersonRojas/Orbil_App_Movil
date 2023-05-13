@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Reserva_Ambiente_Interface } from '../interface/interface';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -21,7 +20,7 @@ export class AmbienteService {
   // <----------------- Función que envía los datos para la reserva del ambiente ------------------->
   Reservar_Ambiente_Service(data: string) {
     let headers = new HttpHeaders({ "token": this.token });
-    return this.http.post<Reserva_Ambiente_Interface>(this.url + '/movimientos/reserva/ambiente', data, { headers })
+    return this.http.post(this.url + '/movimientos/reserva/ambiente', data, { headers })
   }
 
 }

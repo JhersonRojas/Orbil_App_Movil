@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import type { OnInit } from '@angular/core';
-import { Dato2 } from '../../../interface/interface'
+import { OnInit } from '@angular/core';
+import { DatoElemento } from 'src/app/interface/interface';
 
 @Component({
   selector: 'app-lista',
@@ -10,14 +10,14 @@ import { Dato2 } from '../../../interface/interface'
 
 export class ListaComponent implements OnInit {
   
-  @Input() items: Dato2[] = [];
+  @Input() items: DatoElemento[] = [];
   @Input() selectedItems: string[] = [];
   @Input() title = 'Select Items';
 
   @Output() selectionCancel = new EventEmitter<void>();
   @Output() selectionChange = new EventEmitter<string[]>();
   
-  filteredItems: Dato2[] = [];
+  filteredItems: DatoElemento[] = [];
   workingSelectedValues: string[] = [];
   
   ngOnInit() {
@@ -25,7 +25,7 @@ export class ListaComponent implements OnInit {
     this.workingSelectedValues = [...this.selectedItems];
   }
   
-  trackItems(index: number, item: Dato2) {
+  trackItems(index: number, item: DatoElemento) {
     return item.Pk_Elemento;
   }
   

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { HistorialService } from '../services/historial.service';
-import { Elemento2 } from '../interface/interface';
-import { CheckTokenService } from '../middlewares/check-token.service';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, MenuController } from '@ionic/angular';
+import { CheckTokenService } from '../middlewares/check-token.service';
+import { HistorialService } from '../services/historial.service';
+import { DatoElemento } from '../interface/interface';
 
 @Component({
   selector: 'app-historial',
@@ -12,8 +12,9 @@ import { AlertController, LoadingController, MenuController } from '@ionic/angul
 })
 
 export class HistorialPage implements OnInit {
+
   respuesta: any;
-  elementos: Elemento2[] = [];
+  elementos: DatoElemento[] = [];
   identificacion: string;
   token: string;
   mensaje_final: any;
@@ -23,7 +24,7 @@ export class HistorialPage implements OnInit {
     private service: HistorialService,
     private valideAccess: CheckTokenService,
     private NgRouter: Router,
-    private loadingCtrl: LoadingController,
+    private NgLoading: LoadingController,
     private NgMenu: MenuController,
     private NgAlert: AlertController // "alert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas
   ) {
@@ -35,11 +36,10 @@ export class HistorialPage implements OnInit {
     setTimeout(() => {
       this.list_History();
     }, 1000);
-
   }
 
   async showLoading() {
-    const loading = await this.loadingCtrl.create({
+    const loading = await this.NgLoading.create({
       message: 'Cargando...',
       duration: 800,
     });
@@ -78,7 +78,7 @@ export class HistorialPage implements OnInit {
         .History_Service(this.token, this.identificacion)
         .subscribe((resp) => {
           this.respuesta = resp;
-          this.elementos = resp.elemento;
+          this.elementos = resp.datos;
           if (this.elementos.length == 0) this.noFile = true
         });
     } catch (error) {

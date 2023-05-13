@@ -91,11 +91,11 @@ export class DetallePage implements OnInit {
 
   private mostrarLibro = (idl: string) => {
     this.service.Listar_Un_Libro(idl).subscribe(resp => {
-      this.Nombre = (resp.datos.Nombre_Elemento);
-      this.Imagen = (resp.datos.Imagen);
-      this.Autor = (resp.datos.Autor);
-      this.Descripcion = (resp.datos.Descripcion);
-      this.serial = (resp.datos.Pk_Elemento);
+      this.Nombre = (resp.Nombre_Elemento);
+      this.Imagen = (resp.Imagen);
+      this.Autor = (resp.Autor);
+      this.Descripcion = (resp.Descripcion);
+      this.serial = (resp.Pk_Elemento);
     });
   }
 

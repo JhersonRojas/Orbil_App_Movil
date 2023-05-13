@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, MenuController } from '@ionic/angular';
 import { librosService } from 'src/app/services/libros.service';
-import { Dato } from 'src/app/interface/interface';
+import { DatoElemento } from 'src/app/interface/interface';
 import { CheckTokenService } from 'src/app/middlewares/check-token.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class ListaPage implements OnInit {
   };
 
   // Estas son las variables que almacenan la información obtenida del la categoria previamente elegida 
-  libros: Dato[] = [];
+  libros: DatoElemento[] = [];
   titulo_cat: string;
   searchLibros: any;
   categorias: any
@@ -100,6 +100,7 @@ export class ListaPage implements OnInit {
       this.searchLibros = this.libros;
 
       if (resp.confirm) return this.titulo_cat = this.libros[0].Categoria.Nombre_Categoria
+
       this.aviso = "false"
       this.titulo_cat = "😒"
     });

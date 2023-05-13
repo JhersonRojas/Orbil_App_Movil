@@ -15,12 +15,12 @@
     <ion-list *ngFor="let elem of elementos" class="info" lines="inset" >
       <ion-item id={{elem.Estado_Mv}}>
         <ion-thumbnail slot="start">
-          <img [src]="elem.Elemento.Imagen" loading="lazy">
+          <img src={{elem.Imagen}} loading="lazy">
         </ion-thumbnail>
         <ion-label>
-          <h1> {{elem.Elemento.Tipo_Elemento}}</h1>
+          <h1> {{elem.Tipo_Elemento}}</h1>
           <h2 class={{elem.Estado_Mv}}>{{elem.Estado_Mv}}</h2>
-          <p> Nombre:&nbsp;{{elem.Elemento.Nombre_Elemento}} </p>
+          <p> Nombre:&nbsp;{{elem.Nombre_Elemento}} </p>
           <ion-button *ngIf='elem.Estado_Mv == "Solicitud"' color="danger" 
           (click)="cancelReserveAlert(elem.Pk_Movimiento)">
             Cancelar reserva

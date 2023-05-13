@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, MenuController } from '@ionic/angular';
-import { Router } from '@angular/router';
-import { Dato } from 'src/app/interface/interface';
 import { ProyectorService } from '../../services/proyector.service';
 import { CheckTokenService } from 'src/app/middlewares/check-token.service';
+import { DatoElemento } from 'src/app/interface/interface';
 
 @Component({
   selector: 'app-proyector',
@@ -30,7 +30,7 @@ export class ProyectorPage implements OnInit {
   fecha_hoy: Date = new Date(); //  Esta variable recibe la fecha actual, esto es un componente propio de angular
 
   proyectores: any; //  "proyectores" es la variable que guarda los datos recibidos del servicio al Api Rest
-  proyector: Dato[] = [];
+  proyector: DatoElemento[] = [];
 
   //  "respuesta", regresa la respuesta del servidor
   respuesta: any;

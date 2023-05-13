@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Reserva_Ambiente_Interface, Listar_Libros_Interface, Libro_Unico_Interface } from '../interface/interface';
 import { environment } from 'src/environments/environment';
+import { DatoElemento, Peticion_Interface } from '../interface/interface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,22 +21,22 @@ export class librosService {
 
   // <----------------- Función que obtiene las categorias de los libros desde el Api Rest ------------------->
   Listar_Categorias_Service() {
-    return this.http.get<Listar_Libros_Interface>(this.url + '/categorias', { headers: this.headers }) // <- Aqui se añade la ruta especifica
+    return this.http.get<Peticion_Interface>(this.url + '/categorias', { headers: this.headers }) // <- Aqui se añade la ruta especifica
   }
 
   // <----------------- Función que obtiene los libros dependiendo de la categoria elegida ------------------->
   Listar_Libros_Service(idc: string) {
-    return this.http.get<Listar_Libros_Interface>(this.url + `/libros/categorias/${idc}`, { headers: this.headers }) // <- Aqui se añade la ruta especifica
+    return this.http.get<Peticion_Interface>(this.url + `/libros/categorias/${idc}`, { headers: this.headers }) // <- Aqui se añade la ruta especifica
   }
 
   // <----------------- Función que obtiene un libro de la lista ------------------->
   Listar_Un_Libro(idl: string) {
-    return this.http.get<Libro_Unico_Interface>(this.url + `/libros/serial/${idl}`, { headers: this.headers }) // <- Aqui se añade la ruta especifica
+    return this.http.get<DatoElemento>(this.url + `/libros/serial/${idl}`, { headers: this.headers }) // <- Aqui se añade la ruta especifica
   }
 
   // <----------------- Función que envia los datos para reservar un libro  ------------------->
   Reservar_Libro(data: string) {
     let headers = new HttpHeaders({ "token": this.token });
-    return this.http.post<Reserva_Ambiente_Interface>(this.url + '/movimientos/reserva/libro', data, { headers }) // <- Aqui se añade la ruta especifica
+    return this.http.post<Peticion_Interface>(this.url + '/movimientos/reserva/libro', data, { headers }) // <- Aqui se añade la ruta especifica
   }
 }
