@@ -11,12 +11,12 @@
       <form [formGroup]="form" (ngSubmit)="ValidacionDeDatos()">             
         <div class="inputs">
           <ion-item class="input1" mode="md" lines="none"> 
-            <ion-input type="number" clearInput="true" formControlName="user" name="user" placeholder="Usuario"></ion-input>
+            <ion-input type="number" [clearInput]="true" formControlName="user" name="user" placeholder="Usuario"></ion-input>
           </ion-item>  
             
             <!-- Entrada de texto para contraseña -->
           <ion-item class="input2" mode="md" lines="none"> 
-            <ion-input #passwordEyeRegister [type]="passwordTypeInput" clearInput="true" formControlName="pass" name="pass" placeholder="Contraseña" ></ion-input>
+            <ion-input #passwordEyeRegister [type]="passwordTypeInput" [clearInput]="true" formControlName="pass" name="pass" placeholder="Contraseña" ></ion-input>
             <span item-end  class="btn_eye_icon" (click)="togglePasswordMode()">
               <ion-icon [name]="(passwordTypeInput === 'text')?'eye-off':'eye'" color="medium"></ion-icon>
             </span>

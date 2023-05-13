@@ -44,6 +44,11 @@ ion-menu::part(container) {
   }
 }
 
+.selected{
+  border-left: 5px #39a100 solid;
+  margin-left: 15px;
+}
+
 .list {
   ion-list-header {
     font-size: medium;

@@ -26,7 +26,7 @@ export interface DatoElemento extends DatoMovimiento {
     Archivo_Aporte: null | string;
     Autor: string;
     Descripcion: null | string;
-    Estado_Elemento: EstadoElemento;
+    Estado_Elemento: string;
     Fk_Categoria: number | null;
     Imagen: null | string;
     Nombre_Elemento: string;
@@ -38,11 +38,6 @@ export interface DatoElemento extends DatoMovimiento {
 
 export interface Categoria {
     Nombre_Categoria: string;
-}
-
-export enum EstadoElemento {
-    Disponible = "Disponible",
-    NoDisponible = "NoDisponible",
 }
 
 export enum TipoElemento {
@@ -62,9 +57,17 @@ export interface DatoMovimiento {
     Otra_Fecha: string;
     Pk_Movimiento: number;
     Usuario: Usuario;
+    Elemento: Elemento;
+
 }
 
 export interface Usuario {
     Nombre: string;
     Pk_Identificacion: number;
+}
+
+export interface Elemento {
+    Imagen: string;
+    Nombre_Elemento: string;
+    Tipo_Elemento: string;
 }

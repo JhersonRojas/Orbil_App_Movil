@@ -155,3 +155,16 @@ $naranja: #ff7f00;
     }
   }
 }
+
+@media (min-height: 1000px) {
+  .items {
+    .logo {
+      width: 40%;
+      margin: 20% 30% 0 30%;
+    }
+    .ocean .wave {
+      height: 400px;
+      left: -90%;
+    }
+  }
+}

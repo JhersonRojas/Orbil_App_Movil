@@ -54,14 +54,27 @@ export class DetallePage implements OnInit {
 
   //  Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista
   ngOnInit() {
-    this.saveDataUser()
+    this.confirmUser()
     let idl = this.NgActiveRouter.snapshot.paramMap.get('idl');
     //  "for" añade los datos en el momento que alguien diligencie el formulario en la vista
     this.form = this.NgFb.group({ fecha: ['', Validators.required], });
     this.mostrarLibro(idl);
   }
 
-  private saveDataUser = () => {
+  private confirmUser = () => {
+    this.valideAccess.checkToken().subscribe(resp => {
+      if (resp.confirm == true ) {
+        this.identificacion = this.valideAccess.setDataUser().identificacion
+        this.usuario = this.valideAccess.setDataUser().usuario.split(' ')[0]
+        this.rol = this.valideAccess.setDataUser().tipo_usuario
+      }
+    }, error => {
+      if (error) {
+        localStorage.clear()
+        this.NgMenu.enable(false)
+        setTimeout(() => this.NgRouter.navigate(['login']), 500);
+      }
+    })
   }
 
   private mostrarLibro = (idl: string) => {

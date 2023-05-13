@@ -52,13 +52,11 @@ export class ProyectorPage implements OnInit {
     private NgMenu: MenuController,
     private NgFb: FormBuilder, //  "NgFb" me proporciona una función propia de angular para agrupar información traida desde algun formulario del HTML
     private NgAlert: AlertController // "NgAlert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas
-  ) {
-    this.saveDataUser()
-  }
+  ) { }
 
   //  Función de angular, su contenido es lo primero que se ejecuta al entrar a esta vista
-  ngOnInit() {
-
+  ngOnInit() {    
+    this.confirmUser()
     // Esta función es la que realiza el llamado al servicio, este ejecuta la consulta al servidor
     this.service.Listar_Proyectores_Service().subscribe(resp => {
       this.proyectores = resp;
@@ -74,10 +72,21 @@ export class ProyectorPage implements OnInit {
     });
   }
 
-  private saveDataUser () {
-
+  private confirmUser = () => {
+    this.valideAccess.checkToken().subscribe(resp => {
+      if (resp.confirm == true) {
+        this.identificacion = this.valideAccess.setDataUser().identificacion
+        this.usuario = this.valideAccess.setDataUser().usuario.split(' ')[0]
+        this.rol = this.valideAccess.setDataUser().tipo_usuario
+      }
+    }, error => {
+      if (error) {
+        localStorage.clear()
+        this.NgMenu.enable(false)
+        setTimeout(() => this.NgRouter.navigate(['login']), 500);
+      }
+    })
   }
-
   // Función que cancela la posibilidad de elegir fines de semana en el calendario desplegable
   public cancelarFinDeSemana = (dateString: string) => {
     const date = new Date(dateString);
@@ -132,7 +141,7 @@ export class ProyectorPage implements OnInit {
       this.respuesta = resp;
       //  Aqui tambien se envia el mensaje en caso de que la reserva sea valida o no
       if (resp === undefined) return this.showAlert('No se encuentra conectado al servidor');
-      if (this.respuesta.confirm) return this.showAlert( `Ha reservado el proyector en ${this.fecha.split('T', 1)[0]}` );
+      if (this.respuesta.confirm) return this.showAlert(`Ha reservado el proyector en ${this.fecha.split('T', 1)[0]}`);
       if (!this.respuesta.confirm) return this.showAlert(`Ya reservaron este proyector aqui, lo sentimos 😥`);
       else return this.showAlert('No se reconoce la respuesta del servidor');
     });

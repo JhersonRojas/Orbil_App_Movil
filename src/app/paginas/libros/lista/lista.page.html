@@ -21,7 +21,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div #anuncio> <h3 style="padding: 2rem;"> No tenemos libros de esta categoria por ahora, lo sentimos.</h3></div>
+  <ion-item *ngIf='noBooks == true'> No hay libros de esta categoria, lo sentimos 😥</ion-item>
   
     <!-- Este modulo lisata los diferentes libros de la categoria elegida en el modulo de categorias -->
   <div class="container">

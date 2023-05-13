@@ -58,17 +58,32 @@ export class ComputadorPage implements OnInit {
     private NgAlert: AlertController, // "alert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas
     private NgMenu: MenuController,
     private NgRouter: Router,
-  ) {
-    this.saveDataUser()
-  }
+  ) { }
 
   // Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista
   ngOnInit() {
+    this.confirmUser()
     // "form" añade los datos en el momento que alguien diligencie el formulario en la vista
     this.form = this.NgFb.group({ fecha: ['', Validators.required] });
   }
 
-  private saveDataUser = () => {
+  private confirmUser = () => {
+    this.valideAccess.checkToken().subscribe(resp => {
+      if (resp.confirm == true ) {
+        this.identificacion = this.valideAccess.setDataUser().identificacion
+        this.usuario = this.valideAccess.setDataUser().usuario.split(' ')[0]
+        this.rol = this.valideAccess.setDataUser().tipo_usuario
+        
+        this.rol == 'Administrador' || this.rol == 'Administrativo' || this.rol == 'Instructor' ? 
+          this.permiso_de_rango = true : this.permiso_de_rango = false
+      }
+    }, error => {
+      if (error) {
+        localStorage.clear()
+        this.NgMenu.enable(false)
+        setTimeout(() => this.NgRouter.navigate(['login']), 500);
+      }
+    })
   }
 
   // Esta función cancela la posibilidad de elegir fines de semana en el calendario desplegable

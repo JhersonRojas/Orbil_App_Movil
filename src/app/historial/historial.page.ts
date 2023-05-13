@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AlertController, LoadingController, MenuController } from '@ionic/angular';
 import { CheckTokenService } from '../middlewares/check-token.service';
 import { HistorialService } from '../services/historial.service';
-import { DatoElemento } from '../interface/interface';
+import { DatoElemento, DatoMovimiento } from '../interface/interface';
 
 @Component({
   selector: 'app-historial',
@@ -13,8 +13,7 @@ import { DatoElemento } from '../interface/interface';
 
 export class HistorialPage implements OnInit {
 
-  respuesta: any;
-  elementos: DatoElemento[] = [];
+  elementos: DatoMovimiento[] = [];
   identificacion: string;
   token: string;
   mensaje_final: any;
@@ -27,18 +26,32 @@ export class HistorialPage implements OnInit {
     private NgLoading: LoadingController,
     private NgMenu: MenuController,
     private NgAlert: AlertController // "alert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas
-  ) {
-    this.saveDataUser();
-  }
+  ) { }
 
   ngOnInit() {
+    this.confirmUser()
     this.showLoading()
     setTimeout(() => {
       this.list_History();
     }, 1000);
   }
 
-  async showLoading() {
+  private confirmUser = () => {
+    this.valideAccess.checkToken().subscribe(resp => {
+      if (resp.confirm == true) {
+        this.identificacion = this.valideAccess.setDataUser().identificacion
+        this.token = this.valideAccess.setDataUser().token
+      }
+    }, error => {
+      if (error) {
+        localStorage.clear()
+        this.NgMenu.enable(false)
+        setTimeout(() => this.NgRouter.navigate(['login']), 500);
+      }
+    })
+  }
+
+  private showLoading = async () => {
     const loading = await this.NgLoading.create({
       message: 'Cargando...',
       duration: 800,
@@ -46,26 +59,20 @@ export class HistorialPage implements OnInit {
     loading.present();
   }
 
-  private saveDataUser = () => {
-  };
-
   async list_History() {
     try {
-      this.service
-        .History_Service(this.token, this.identificacion)
-        .subscribe((resp) => {
-          this.respuesta = resp;
-          this.elementos = resp.datos;
-          if (this.elementos.length == 0) this.noFile = true
-        });
+      this.service.History_Service(this.token, this.identificacion).subscribe((resp) => {
+        this.elementos = resp.datos;
+        if (this.elementos.length == 0) this.noFile = true
+      });
     } catch (error) {
       console.log('error :>> ', error);
     }
   }
 
   // Esta función es la que me permite enviar un mensaje emergente al realizarse una reserva
-  public mostrarAlerta = async () => {
-    const alert = await this.NgAlert.create({ message: this.mensaje_final });
+  public mostrarAlerta = async (msj: string) => {
+    const alert = await this.NgAlert.create({ message: msj });
     await alert.present();
   };
 
@@ -88,30 +95,20 @@ export class HistorialPage implements OnInit {
     if (confirm.role == 'confirm') return this.cancelReserve(id_reserva);
   };
 
-  async cancelReserve(id_reserva: any) {
-    try {
-      this.service.cancelReserve(this.token, id_reserva).subscribe((resp) => {
+  cancelReserve = (id_reserva: any) => {
+    this.service.cancelReserve(this.token, id_reserva).subscribe((resp) => {
 
-        if (!resp) {
-          this.mensaje_final = 'Tal parece, ocurrio un error al cancelar su reserva'
-          return this.mostrarAlerta()
-        }
+      if (!resp) return this.mostrarAlerta('Tal parece, ocurrio un error al cancelar su reserva')
+      if (resp.confirm == false) return this.mostrarAlerta('No ha podido cancelar su reserva, lo sentimos')
 
-        if (resp.confirm == false) { 
-          this.mensaje_final = 'No ha podido cancelar su reserva, lo sentimos'
-          return this.mostrarAlerta()
-        }
+      if (resp.confirm == true) {
+        this.mostrarAlerta('A cancelado su reserva')
 
-        if (resp.confirm == true) {
-          this.mensaje_final = 'A cancelado su reserva'
-          this.mostrarAlerta()
+        setTimeout(() => {
+          location.reload()
+        }, 1500);
+      }
 
-          setTimeout(() => {
-            window.location.reload()
-          }, 1500);
-        } 
-      
-      });
-    } catch (error) { }
+    });
   }
 }

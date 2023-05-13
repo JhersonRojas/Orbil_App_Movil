@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, MenuController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
 import { librosService } from 'src/app/services/libros.service';
 import { DatoElemento } from 'src/app/interface/interface';
 import { CheckTokenService } from 'src/app/middlewares/check-token.service';
@@ -14,8 +14,6 @@ import { CheckTokenService } from 'src/app/middlewares/check-token.service';
 // Esta clase contiene las distintas funciones y variables del modulo de la lista de los libros 
 export class ListaPage implements OnInit {
 
-  @ViewChild('anuncio', { static: true }) anuncio!: ElementRef
-
   header_libros: {} = {
     subHeader: 'Elige la categoria de los libros',
   };
@@ -27,84 +25,48 @@ export class ListaPage implements OnInit {
   categorias: any
 
   // Aqui se almacena el mensaje del Api Rest dependiendode su respuesta 
-  respuesta: any;
   aviso: any;
+  noBooks: boolean = false;
 
-  usuario: any;
-  rol: any;
+  // se guardan los datos del usuario para hacer las reservas
+  token: string;
   identificacion: any;
   datos_usuario: any;
-  token: string;
+  usuario: any;
+  rol: any;
 
   // El constructor obtiene los parametros importados de diferentes componentes 
   constructor(
     private service: librosService, // "service" obtiene los servicios proporcionados desde proyectores service
     private valideAccess: CheckTokenService,
-    private NgMenu: MenuController,
-    private NgRouter: Router,
     private NgActiveRouter: ActivatedRoute, // "NgRouter", función de angular que me permite redirigir al usuario a otra ruta por medio de una orden 
+    private NgRouter: Router,
+    private NgMenu: MenuController,
     private NgAlert: AlertController, // "NgAlert", directiva de angular que muestra un mensaje emergente
-  ) {
-    this.saveDataUser()
-  }
+  ) { }
 
   // función de angular, su contenido es lo primero que se ejecuta al entrar a esta vista 
   ngOnInit() {
-    // Esta sección llama los datos del Api Rest tomando en cuenta la categoria elegida 
+    this.confirmUser()
     let idc = this.NgActiveRouter.snapshot.paramMap.get('idc');
-    this.anuncio.nativeElement.setAttribute('style', 'display: none')
     this.listarCategorias();
     this.listar_libros(idc);
   }
 
-  private saveDataUser = () => {
-  }
-
-  handleRefresh(event: any) {
-    let idc = this.NgActiveRouter.snapshot.paramMap.get('idc');
-    setTimeout(() => {
-      this.listar_libros(idc);
-      event.target.complete();
-    }, 2000);
-  };
-
-  private listar_libros = (idc: any) => {
-    this.service.Listar_Libros_Service(idc).subscribe(resp => {
-      this.respuesta = resp
-      this.libros = this.respuesta.datos;
-      this.searchLibros = this.libros;
-
-      if (resp.confirm) return this.titulo_cat = this.libros[0].Categoria.Nombre_Categoria
-
-      this.aviso = "false"
-      this.titulo_cat = "😒"
-    });
-  }
-
-  private listarCategorias = () => {
-    this.service.Listar_Categorias_Service().subscribe(resp => {
-      this.categorias = (resp.datos)
-    });
-  }
-
-  public filtrarLibros = (event: any) => {
-    let idc = (event.detail.value);
-    this.service.Listar_Libros_Service(idc).subscribe(resp => {
-      this.respuesta = resp
-      this.libros = this.respuesta.datos;
-      this.searchLibros = this.libros;
-
-      // Esta condicional valida si se obtuvieron datos de la categoria elegida
-      if (!resp.confirm) {
-        this.titulo_cat = "😒"
-        this.anuncio.nativeElement.setAttribute('style', 'display: static')
+  private confirmUser = () => {
+    this.valideAccess.checkToken().subscribe(resp => {
+      if (resp.confirm == true) {
+        this.identificacion = this.valideAccess.setDataUser().identificacion
+        this.usuario = this.valideAccess.setDataUser().usuario.split(' ')[0]
+        this.rol = this.valideAccess.setDataUser().tipo_usuario
       }
-
-      if (resp.confirm) {
-        this.titulo_cat = this.libros[0].Categoria.Nombre_Categoria;
-        this.anuncio.nativeElement.setAttribute('style', 'display: none')
+    }, error => {
+      if (error) {
+        localStorage.clear()
+        this.NgMenu.enable(false)
+        setTimeout(() => this.NgRouter.navigate(['login']), 500);
       }
-    });
+    })
   }
 
   // Esta función se encarga de filtrar los datos para dar como respuesta una coincidencia de la información obtenida 
@@ -131,4 +93,51 @@ export class ListaPage implements OnInit {
     const utcDay = date.getUTCDay();
     return utcDay !== 0 && utcDay !== 6;
   };
+
+  handleRefresh(event: any) {
+    let idc = this.NgActiveRouter.snapshot.paramMap.get('idc');
+    setTimeout(() => {
+      this.listar_libros(idc);
+      event.target.complete();
+    }, 2000);
+  };
+
+  private listar_libros = (idc: any) => {
+    this.service.Listar_Libros_Service(idc).subscribe(resp => {
+      this.libros = resp.datos;
+      this.searchLibros = this.libros;
+
+      if (resp.confirm) return this.titulo_cat = this.libros[0].Categoria.Nombre_Categoria
+
+      this.aviso = "false"
+      this.titulo_cat = "😒"
+    });
+  }
+
+  private listarCategorias = () => {
+    this.service.Listar_Categorias_Service().subscribe(resp => {
+      this.categorias = (resp.datos)
+    });
+  }
+
+  public filtrarLibros = (event: any) => {
+    let idc = (event.detail.value);
+    this.service.Listar_Libros_Service(idc).subscribe(resp => {
+      
+      this.libros = resp.datos;
+      this.searchLibros = this.libros;
+
+      // Esta condicional valida si se obtuvieron datos de la categoria elegida
+      if (!resp.confirm) {
+        this.noBooks = true
+        this.titulo_cat = "😒"
+      }
+
+      if (resp.confirm) {
+        this.noBooks = false
+        this.titulo_cat = this.libros[0].Categoria.Nombre_Categoria;
+      }
+    });
+  }
+
 }
