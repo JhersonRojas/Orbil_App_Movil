@@ -1,9 +1,9 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { ToastController, MenuController, LoadingController } from '@ionic/angular';
 import { LoginService } from 'src/app/services/login.service';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { CheckTokenService } from '../middlewares/check-token.service';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ToastController, MenuController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -16,26 +16,21 @@ export class LoginPage implements OnInit {
   // Seleccionamos el elemento con el nombre que le pusimos con el #
   @ViewChild('passwordEyeRegister', { read: ElementRef }) passwordEye: ElementRef;
 
+  // Variable para cambiar dinamicamente el tipo de Input que por defecto sera 'password'
   passwordTypeInput: any = 'password';
-    // Variable para cambiar dinamicamente el tipo de Input que por defecto sera 'password'
 
-  // <-- "form" variable que guarda los datos recibidos de "NgFb" desde el HTML -->
+  // "form" variable que guarda los datos recibidos de "NgFb" desde el HTML
   public form: FormGroup;
 
-  // datos recibidos del Api (solo una formalidad)
-  private identificacion: string;
-  private nombre: string;
-  private tipo_usuario: string;
-
-  // <-- Al enviarse los datos se recibe una respuesta, esta respuesta la almacenan estas variables -->
+  // Al enviarse los datos se recibe una respuesta, esta respuesta la almacenan estas variables
   private token: string;
 
-  // <-- El constructor obtiene los parametros importados de diferentes componentes -->
+  // El constructor obtiene los parametros importados de diferentes componentes
   constructor(
     private valideAccess: CheckTokenService,
     private service: LoginService, /* "service" obtiene los datos proporcionados desde services/login.service */
-    private NgFb: FormBuilder, /* "NgFb", Componente de angular para agrupar información traida desde algun formulario del HTML */
     private NgRouter: Router, /* "NgRouter", Componente angular que me permite redirigir al usuario a otra ruta por medio de una orden */
+    private NgFb: FormBuilder, /* "NgFb", Componente de angular para agrupar información traida desde algun formulario del HTML */
     private NgMenu: MenuController, /* "NgMenu" me permite controlar el manejo del menú desplegable, como mostrarlo o no */
     private NgToast: ToastController, /* "NgToast", componente de angular que permite presentar ventanas emergentes con información en la vista*/
     private NgLoading: LoadingController,
@@ -43,10 +38,10 @@ export class LoginPage implements OnInit {
     this.NgMenu.enable(false);
   }
 
-  // <-- Función de angular que se ejecuta al iniciarse esta pagina -->
+  // Función de angular que se ejecuta al iniciarse esta pagina
   ngOnInit() {
     this.confirmUser();
-    this.form = this.NgFb.group({  // <--"NgFb.group()" añade los datos en el momento que alguien diligencie el formulario en la vista -->
+    this.form = this.NgFb.group({  // <--"NgFb.group()" añade los datos en el momento que alguien diligencie el formulario en la vista
       user: ['', Validators.required],
       pass: ['', Validators.required]
     });
@@ -61,7 +56,7 @@ export class LoginPage implements OnInit {
     }
   }
 
-  // <-- Mensaje en caso de querer acceder -->
+  // Mensaje en caso de querer acceder
   public msjToast = async (msj: string) => {
     const toast = await this.NgToast.create({
       message: msj,
@@ -82,46 +77,32 @@ export class LoginPage implements OnInit {
 
     setTimeout(() => {
       this.NgMenu.enable(true)
-      this.NgRouter.navigate(["/home"], { queryParams: { cargo: localStorage.getItem('tipo_usuario')}})
+      this.NgRouter.navigate(["/home"], { queryParams: { cargo: localStorage.getItem('tipo_usuario') } })
     }, 900);
   }
 
-  // <-- Función que envia los datos del formulario al servidor para su validación -->
+  // Función que envia los datos del formulario al servidor para su validación
   public ValidacionDeDatos = () => {
     this.service.Login_Service(this.form.value).subscribe(resp => {
+      if (resp.confirm === false) return this.msjToast('Usuario o Contraseña incorrecto')
+      else {
+        this.token = (resp.token)
 
-      if (resp.confirm === false) {
-        return this.msjToast('Usuario o Contraseña incorrecto')
-      }
-
-      if (resp.confirm === true) {
-
-        this.token = (resp.token);
-
-        // almacenando los datos de la respuesta localmente
-        resp.user.Pk_Identificacion_SIREP ?
-          localStorage.setItem('identificacion', resp.user.Pk_Identificacion_SIREP) :
-          this.identificacion = undefined
-
-        resp.user.Nombre_SIREP ?
-          localStorage.setItem('usuario', resp.user.Nombre_SIREP) :
-          this.nombre = undefined
-
-        resp.user.Tipo_Usuario_SIREP ?
-          localStorage.setItem('tipo_usuario', resp.user.Tipo_Usuario_SIREP) :
-          this.tipo_usuario = undefined
-
-        this.tipo_usuario = localStorage.getItem('tipo_usuario')
-
-        localStorage.setItem('token', this.token)
-        this.showLoading()
+        if (resp.user.Pk_Identificacion_SIREP == undefined) return this.msjToast("No se recibio toda la información del servidor")
+        else {
+          localStorage.setItem('identificacion', resp.user.Pk_Identificacion_SIREP)
+          localStorage.setItem('usuario', resp.user.Nombre_SIREP)
+          localStorage.setItem('tipo_usuario', resp.user.Tipo_Usuario_SIREP)
+          localStorage.setItem('token', this.token)
+          this.showLoading()
+        }
       }
     }, error => {
       if (error) return this.msjToast('No se encuentra conectado al servidor')
     })
   }
 
-  // Esta función verifica si el tipo de campo es texto lo cambia a password y viceversa, además verificara el icono si es 'eye-off' lo cambiara a 'eye' y viceversa
+  // Metodo para cambiar la visibilidad del campo password
   togglePasswordMode() {
     //cambiar tipo input
     this.passwordTypeInput = this.passwordTypeInput === 'text' ? 'password' : 'text';
@@ -135,7 +116,6 @@ export class LoginPage implements OnInit {
     setTimeout(() => {
       nativeEl.setSelectionRange(inputSelection, inputSelection);
     }, 1);
-
   }
 
 }

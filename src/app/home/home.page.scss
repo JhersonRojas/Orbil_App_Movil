@@ -5,17 +5,16 @@
 
 $naranja: #ff7f00;
 
-ion-toolbar {
-  position: relative;
-
-  .boton-menu {
-    float: left;
-    position: absolute;
-    width: 18%;
-    top: 50%;
-    left: 7%;
-    transform: translate(-50%, -50%);
-  }
+.sidebar-button {
+  position: absolute;
+  position: fixed;
+  background-color: #39a900;
+  box-shadow: 2px 2px 10px #87837f;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  top: 2%;
+  right: 5%;
 }
 
 ion-content {
@@ -41,117 +40,83 @@ ion-content {
         height: auto;
       }
     }
-
-    @keyframes slide_animation {
-      0% {
-        margin-left: 0%;
-      }
-      25% {
-        margin-left: 0%;
-      }
-
-      25% {
-        margin-left: -100%;
-      }
-      50% {
-        margin-left: -100%;
-      }
-
-      50% {
-        margin-left: -200%;
-      }
-      75% {
-        margin-left: -200%;
-      }
-
-      75% {
-        margin-left: -300%;
-      }
-      100% {
-        margin-left: -300%;
-      }
-    }
   }
 
-  .titulo {
+  .bienvenida-titulo {
     text-align: center;
     font-family: orbil_Berlin;
   }
 
-  .bienvenida {
-    * {
-      padding-bottom: 0;
-      margin: 0;
-    }
+  .bienvenida-mensaje {
+    padding: 0 1.3rem 0 1.3rem;
     text-align: justify;
-    padding: 1.3rem;
-    padding-top: 0.1rem;
-    padding-bottom: 0;
   }
 
-  .buttons {
-    * {
-      margin: 0;
-      padding: 0;
-    }
-
-    width: 98vw;
-    height: auto;
-    margin-left: 1vw;
-    margin-right: 1vw;
-    margin-bottom: 5%;
+  .modulos-content {
     display: flex;
     flex-wrap: wrap;
+    width: 98vw;
+    height: auto;
+    margin: auto 1vw 5% 1vw;
 
     ion-card {
-      position: relative;
-      text-align: center;
-      box-shadow: 3px 3px 13px #87837f;
-      font-family: orbil_Berlin;
-      font-size: 1rem;
-      width: 44vw;
+      width: 46vw;
       padding: 1%;
-      margin: auto;
-      margin-top: 7%;
-
+      text-align: center;
+      margin: 7% auto auto auto;
+      font-size: 1rem;
+      font-family: orbil_Berlin;
+      box-shadow: 3px 3px 13px #87837f;
+      
       ion-card-header {
-        height: 100px;
+        height: 100%;
+        display: grid;
 
         ion-img {
-          width: 50%;
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
+          width: 60%;
+          margin: auto;
         }
 
-        .libro {
-          width: 40%;
-        }
       }
 
       ion-card-content {
         background-color: #39a900 !important;
         color: aliceblue !important;
         text-align: center;
-        padding-top: 5%;
-        padding-bottom: 6%;
+        padding: .5rem;
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
-        margin: 1%;
       }
     }
   }
 }
 
-.call-menu {
-  position: absolute;
-  position: fixed;
-  background-color: #39a900;
-  box-shadow: 2px 2px 10px #87837f;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  top: 2%;
-  right: 5%;
+@keyframes slide_animation {
+  0% {
+    margin-left: 0%;
+  }
+  25% {
+    margin-left: 0%;
+  }
+
+  25% {
+    margin-left: -100%;
+  }
+  50% {
+    margin-left: -100%;
+  }
+
+  50% {
+    margin-left: -200%;
+  }
+  75% {
+    margin-left: -200%;
+  }
+
+  75% {
+    margin-left: -300%;
+  }
+  100% {
+    margin-left: -300%;
+  }
 }

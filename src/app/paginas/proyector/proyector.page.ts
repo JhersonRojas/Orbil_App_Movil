@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { DatoElemento } from 'src/app/interface/interface';
 import { AlertController, MenuController } from '@ionic/angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProyectorService } from '../../services/proyector.service';
 import { CheckTokenService } from 'src/app/middlewares/check-token.service';
-import { DatoElemento } from 'src/app/interface/interface';
 
 @Component({
   selector: 'app-proyector',
@@ -12,8 +12,9 @@ import { DatoElemento } from 'src/app/interface/interface';
   styleUrls: ['./proyector.page.scss'],
 })
 
-// Clase para el modulos de proyectores
 export class ProyectorPage implements OnInit {
+
+  // Variables para los encabezados de los Select
   header_proyector = {
     subHeader: 'Elige un proyector a reservar',
   };
@@ -22,6 +23,7 @@ export class ProyectorPage implements OnInit {
     subHeader: 'Elige una jornada a reservar',
   };
 
+  token: any;
   usuario: string;
   identificacion: string;
   rol: string;
@@ -37,20 +39,19 @@ export class ProyectorPage implements OnInit {
   secreto: any;
 
   // Aqui se alamacena individualmente los datos que son insertados en el formulario, esto desde la variable "form"
-  todo: any; // Esta variable agrupa los datos para enviarlos
+  dataForm: any; // Esta variable agrupa los datos para enviarlos
   serial: any; // Esta variable toma el serial del proyector elegido del HTML
   fecha: any; // Esta variable toma la fecha elegida desde el formulario del HTML
   jornada: any; // Esta variable toma la jornada elegida desde el formulario del HTML
   sitio: any; // Esta variable toma el sitio diligenciado en el formulario del HTML
-  token: any;
 
   // El constructor obtiene los parametros importados de diferentes componentes
   constructor(
-    private service: ProyectorService, //  "service" obtiene los servicios proporcionados desde proyectores service
     private valideAccess: CheckTokenService,
-    private NgRouter: Router,
-    private NgMenu: MenuController,
+    private service: ProyectorService, //  "service" obtiene los servicios proporcionados desde proyectores service
+    private NgRouter: Router, // Modulo para redirigir de ruta
     private NgFb: FormBuilder, //  "NgFb" me proporciona una función propia de angular para agrupar información traida desde algun formulario del HTML
+    private NgMenu: MenuController,
     private NgAlert: AlertController // "NgAlert" es una componente de angular que me permite presentar ventanas emergentes con información en las vistas
   ) { }
 
@@ -72,6 +73,7 @@ export class ProyectorPage implements OnInit {
     });
   }
 
+  // Metodo para validar la sesión del usuario
   private confirmUser = () => {
     this.valideAccess.checkToken().subscribe(resp => {
       if (resp.confirm == true) {
@@ -128,7 +130,7 @@ export class ProyectorPage implements OnInit {
     this.serial = this.form.value.serial;
     this.sitio = this.form.value.sitio;
 
-    this.todo = {
+    this.dataForm = {
       usuario: this.identificacion,
       jornada: this.form.value.jornada,
       fecha: this.fecha,
@@ -137,7 +139,7 @@ export class ProyectorPage implements OnInit {
     };
 
     // Este segmento recopila los datos de la reserva y los envia, tambien recive la respuesta del Api Rest
-    this.service.Reservar_Proyector_Service(this.todo).subscribe(resp => {
+    this.service.Reservar_Proyector_Service(this.dataForm).subscribe(resp => {
       this.respuesta = resp;
       //  Aqui tambien se envia el mensaje en caso de que la reserva sea valida o no
       if (resp === undefined) return this.mostrarAlerta('No se encuentra conectado al servidor');

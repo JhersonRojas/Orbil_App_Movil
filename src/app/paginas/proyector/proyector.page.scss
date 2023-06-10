@@ -10,7 +10,7 @@ $azul: #3880ff;
 ion-toolbar {
   --background: #39a900;
 
-  .items {
+  .items-toolbar {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 
@@ -30,13 +30,19 @@ ion-toolbar {
   }
 }
 
-.container {
+ion-datetime {
+  color: gray !important;
+  width: 95vw !important;
+  max-height: 90vh !important;
+}
+
+ion-content {
   display: grid;
-  place-content: center;
 
   ion-card {
     width: 90vw;
     height: 88vh;
+    margin: 2vh auto 1vh auto;
     box-shadow: 2px 2px 15px #87837f;
     @media screen and (max-height: 680px) {
       height: auto;
@@ -62,13 +68,13 @@ ion-toolbar {
       margin: 0;
       padding: 0;
 
-      .proyector {
+      .proyector-img {
         width: 45%;
         margin-top: 5%;
         margin-bottom: 5%;
       }
 
-      .calendar {
+      .calendar-modal {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
@@ -86,11 +92,8 @@ ion-toolbar {
         }
       }
 
-      .select {
-        margin-top: 10%;
-        margin-bottom: 10%;
-        margin-left: 0;
-        margin-right: 0;
+      .nombre-usuario {
+        margin: 1rem auto 1rem auto;
       }
 
       ion-button {

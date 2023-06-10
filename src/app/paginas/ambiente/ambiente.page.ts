@@ -1,9 +1,9 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AlertController, MenuController } from '@ionic/angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AmbienteService } from '../../services/ambiente.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CheckTokenService } from 'src/app/middlewares/check-token.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ambiente',
@@ -35,7 +35,7 @@ export class AmbientePage implements OnInit {
   jornada: any; // Esta variable toma la jornada elegida desde el formulario del HTML
   fecha: any; // Esta variable toma la fecha elegida desde el formulario del HTML
   fecha_fin: any;
-  token: string;
+  token: string; // Encabezado para la petición
 
   // El constructor obtiene los parametros importados de diferentes componentes
   constructor(
@@ -57,6 +57,7 @@ export class AmbientePage implements OnInit {
     });
   }
 
+  // Metodo para validar la sesión del usuario
   private confirmUser = () => {
     this.valideAccess.checkToken().subscribe(resp => {
       if (resp.confirm == true ) {

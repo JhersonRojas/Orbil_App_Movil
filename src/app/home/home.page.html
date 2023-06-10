@@ -1,5 +1,5 @@
 <ion-content>
-  <!-- Imagenes que cambian -->
+  <!-- Slide de imagenes -->
   <div class="slider-container">
     <div class="slides">
       <ion-img src="../../assets/other/DSC_4615.JPG"></ion-img>
@@ -10,21 +10,22 @@
   </div>
 
   <!-- Titulo con el nombre del usuario -->
-  <div class="titulo">
+  <div class="bienvenida-titulo">
     <p>Hola {{usuario}} bienvenido a Orbil</p>
   </div>
 
   <!-- Texto de bienvenida -->
-  <div class="bienvenida">
+  <div class="bienvenida-mensaje">
     <p>
-      En este aplicativo contara con la capacidad de reservar algunos de los
-      diferentes elementos que se encuentran en el ambiente de biblioteca por el
-      momento.
+      En este aplicativo contara con la capacidad de reservar algunos de los diferentes 
+      elementos que se encuentran en el ambiente de biblioteca por el momento.
     </p>
   </div>
 
   <!-- Botones para pasar a los modulos de los elementos -->
-  <div class="buttons">
+  <div class="modulos-content">
+
+    <!-- Redirección al modulo de portatiles -->
     <ion-card mode="ios" [routerLink]="['/computador']">
       <ion-card-header>
         <ion-img class="portatil" src="../assets/pictures/computer.png"></ion-img>
@@ -32,7 +33,8 @@
       <ion-card-content> Portatiles </ion-card-content>
     </ion-card>
 
-    <ion-card mode="ios" [routerLink]="['/lista/2']">
+    <!-- Redirección al modulo de libros -->
+    <ion-card mode="ios" [routerLink]="['/lista/3']">
       <ion-card-header>
         <ion-img class="libro" src="../assets/pictures/book.png"></ion-img>
       </ion-card-header>
@@ -56,7 +58,7 @@
     </ion-card>
   </div>
 
-  <div class="call-menu">
+  <div class="sidebar-button">
     <ion-menu-button menu="main-menu" color="light"></ion-menu-button>
   </div>
 </ion-content>

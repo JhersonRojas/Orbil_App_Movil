@@ -1,6 +1,7 @@
-<ion-header> <!-- Encabezado del App en ambiente -->
+<!-- Encabezado del App en ambiente -->
+<ion-header>
   <ion-toolbar>
-    <div class="items">
+    <div class="items-toolbar">
       <ion-back-button class="boton-menu" mode="md" color="light" defaultHref="/home"></ion-back-button>
       <ion-img class="nombre" src="../assets/pictures/OrbilText.svg"></ion-img>
       <ion-menu-button menu="main-menu" color="light" class="menu"></ion-menu-button>
@@ -10,24 +11,24 @@
 
 <ion-content>
 
+  <!-- Mensaje en caso de no haber resevas para mostrar -->
   <ion-item *ngIf='noFile == true'> No tiene reservas vigentes</ion-item>
-  <div class="container">
-    <ion-list *ngFor="let elem of elementos" class="info" lines="inset">
-      <ion-item id={{elem.Estado_Mv}}>
-        <ion-thumbnail slot="start">
-          <img src={{elem.Elemento.Imagen}} loading="lazy">
-        </ion-thumbnail>
-        <ion-label>
-          <h1> {{elem.Elemento.Tipo_Elemento}}</h1>
-          <h2 class={{elem.Estado_Mv}}>{{elem.Estado_Mv}}</h2>
-          <p> Nombre:&nbsp;{{elem.Elemento.Nombre_Elemento}} </p>
-          <ion-button *ngIf='elem.Estado_Mv == "Solicitud"' color="danger"
-            (click)="cancelReserveAlert(elem.Pk_Movimiento)">
-            Cancelar reserva
-          </ion-button>
-        </ion-label>
-      </ion-item>
-    </ion-list>
-  </div>
+
+  <!-- Listado de reservas del usuario -->
+  <ion-list *ngFor="let elem of elementos" class="info" lines="inset">
+    <ion-item id={{elem.Estado_Mv}}>
+      <ion-thumbnail slot="start">
+        <img src={{elem.Elemento.Imagen}} loading="lazy">
+      </ion-thumbnail>
+      <ion-label>
+        <h1> {{elem.Elemento.Tipo_Elemento}}</h1>
+        <h2 class={{elem.Estado_Mv}}>{{elem.Estado_Mv}}</h2>
+        <p> Nombre:&nbsp;{{elem.Elemento.Nombre_Elemento}} </p>
+        <ion-button *ngIf='elem.Estado_Mv == "Solicitud"' color="danger" (click)="cancelReserveAlert(elem.Pk_Movimiento)">
+          Cancelar reserva
+        </ion-button>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 
 </ion-content>

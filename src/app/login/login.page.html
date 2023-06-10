@@ -1,39 +1,40 @@
 <ion-content [fullscreen]="true">
-    <!-- Items -->
-    <div class="items"> 
-      
-      <!-- Logo --> 
-      <div class="logo">  
-        <img src="../../assets/pictures/logo_app.svg">
-      </div>
-      
-      <!--Formulario para el login-->
-      <form [formGroup]="form" (ngSubmit)="ValidacionDeDatos()">             
-        <div class="inputs">
-          <ion-item class="input1" mode="md" lines="none"> 
-            <ion-input type="number" [clearInput]="true" formControlName="user" name="user" placeholder="Usuario"></ion-input>
-          </ion-item>  
-            
-            <!-- Entrada de texto para contraseña -->
-          <ion-item class="input2" mode="md" lines="none"> 
-            <ion-input #passwordEyeRegister [type]="passwordTypeInput" [clearInput]="true" formControlName="pass" name="pass" placeholder="Contraseña" ></ion-input>
-            <span item-end  class="btn_eye_icon" (click)="togglePasswordMode()">
-              <ion-icon [name]="(passwordTypeInput === 'text')?'eye-off':'eye'" color="medium"></ion-icon>
-            </span>
-          </ion-item>
-        </div>
-          <!--Cualidades del boton -->
-        <ion-button type="submit" [disabled]="!form.valid" size="default" fill="solid"
-          strong="strong" color="orange" class="boton" shape="round"> Ingresar 
-        </ion-button>
-      </form>
+  <!-- Items-body -->
+  <div class="items">
 
-    <!-- Animación -->
-    <div class="ocean"> 
+    <!-- Logo del App -->
+    <div class="logo">
+      <img src="../../assets/pictures/logo_app.svg">
+    </div>
+
+    <!-- Formulario para el login -->
+    <form [formGroup]="form" (ngSubmit)="ValidacionDeDatos()">
+      <div class="inputs">
+        <ion-item class="input1" mode="md" lines="none">
+          <ion-input type="number" [clearInput]="true" formControlName="user" name="user" placeholder="Usuario"></ion-input>
+        </ion-item>
+
+        <!-- Entrada de texto para contraseña -->
+        <ion-item class="input2" mode="md" lines="none">
+          <ion-input #passwordEyeRegister [type]="passwordTypeInput" [clearInput]="true" formControlName="pass" name="pass" placeholder="Contraseña"></ion-input>
+          <span item-end class="btn_eye_icon" (click)="togglePasswordMode()">
+            <ion-icon [name]="(passwordTypeInput === 'text')?'eye-off':'eye'" color="medium"></ion-icon>
+          </span>
+        </ion-item>
+      </div>
+      <!-- Cualidades del boton -->
+      <ion-button type="submit" [disabled]="!form.valid" size="default" fill="solid" strong="strong" color="orange" class="boton" shape="round"> 
+        Ingresar
+      </ion-button>
+    </form>
+
+    <!-- Animación de olas moviendose -->
+    <div class="ocean">
       <div class="wave circulo a"></div>
       <div class="wave circulo b"></div>
       <div class="wave circulo c"></div>
-    </div> 
+    </div>
 
-  </div> <!-- Items -->
+  </div>
+  <!-- Items-body -->
 </ion-content>

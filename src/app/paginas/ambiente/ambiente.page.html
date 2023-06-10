@@ -1,6 +1,8 @@
-<ion-header> <!-- Encabezado del App en ambiente -->
+<!-- Encabezado del App en ambiente -->
+<ion-header> 
   <ion-toolbar>
-    <div class="items">
+    <!-- Items del toolbar -->
+    <div class="items-toolbar">
       <ion-back-button class="boton-menu" mode="md" color="light" defaultHref="/home"></ion-back-button>
       <ion-img class="nombre" src="../assets/pictures/OrbilText.svg"></ion-img>
       <ion-menu-button menu="main-menu" color="light" class="menu"></ion-menu-button>
@@ -18,41 +20,40 @@
 
     <!-- Contenido del card con el formulario e imagen -->
     <ion-card-content>
-      <ion-img class="ambiente" src="../assets/pictures/home.png"></ion-img>
+      <ion-img class="ambiente-img" src="../assets/pictures/home.png"></ion-img>
       <form [formGroup]="form" (ngSubmit)="confirmReserve()">
 
         <!-- Modal con el calendario de días a elegir -->
-        <div class="calendar">
+        <div class="calendar-modal">
           <h2> Elige una fecha: &nbsp;</h2>
           <ion-datetime-button datetime="datetime"></ion-datetime-button>
           <ion-modal [keepContentsMounted]="true">
             <ng-template>
               <ion-datetime id="datetime" formControlName="fecha" name="fecha" color="v-claro" presentation="date"
-                min="{{fecha_hoy | date: 'YYYY-MM-dd'}}" max="2024-12-30T23:59:59" display-format="YYYY-MM-dd"
-                [isDateEnabled]="cancelarFinDeSemana" [showDefaultButtons]="true"
-                style=" width: auto; color: rgb(136, 107, 107) !important; width: 90vw !important;">
+                min="{{fecha_hoy | date: 'YYYY-MM-dd'}}" max="2030-12-30T23:59:59" display-format="YYYY-MM-dd"
+                [isDateEnabled]="cancelarFinDeSemana" [showDefaultButtons]="true">
                 <span slot="title"> Elige la fecha a reservar </span></ion-datetime>
             </ng-template>
           </ion-modal>
         </div>
 
         <!-- Opciones de jornada a elegir por el usuario -->
-        <ion-item class="select" lines="none">
-          <ion-select formControlName="jornada" placeholder="Seleccione jornada" name="jornada"
-            [interfaceOptions]="select_header">
-            <ion-select-option value="Mañana"> Jornada mañana </ion-select-option>
+        <ion-item class="select-jornada" lines="none">
+          <ion-select formControlName="jornada" placeholder="Seleccione jornada" name="jornada" [interfaceOptions]="select_header">
+            <ion-select-option value="Mañana" > Jornada mañana </ion-select-option>
             <ion-select-option value="Tarde"> Jornada tarde </ion-select-option>
           </ion-select>
         </ion-item>
 
-        <h5 class="centrar"> A nombre de {{usuario}}</h5>
+        <h5 class="nombre-usuario"> A nombre de {{usuario}}</h5>
 
         <!-- Boton para enviar los datos del formulario -->
-        <ion-button shape="round" size="default" fill="solid" strong="strong" color="v-claro" (click)="confirmReserve()"
-          [disabled]="!form.valid"> Reservar
+        <ion-button shape="round" size="default" fill="solid" strong="strong" color="v-claro" (click)="confirmReserve()" [disabled]="!form.valid"> 
+          Reservar
         </ion-button>
       </form>
 
     </ion-card-content>
-  </ion-card> <!-- Fin del card -->
+  </ion-card>
+  <!-- Fin del ion-card -->
 </ion-content>

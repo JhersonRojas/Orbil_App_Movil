@@ -12,7 +12,7 @@ export interface User {
     Tipo_Usuario_SIREP: string;
 }
 
-//  Respuesta general del Api
+//  Respuesta estandar del servidor
 export interface Peticion_Interface {
     confirm: boolean;
     msj: string | null;
@@ -23,20 +23,21 @@ export interface Peticion_Interface {
 
 // Estructura de la respuesta de los elementos desde el Api Rest
 export interface DatoElemento extends DatoMovimiento {
-    Archivo_Aporte: null | string;
-    Autor: string;
-    Descripcion: null | string;
-    Estado_Elemento: string;
-    Fk_Categoria: number | null;
-    Imagen: null | string;
-    Nombre_Elemento: string;
     Pk_Elemento: string;
+    Nombre_Elemento: string;
+    Estado_Elemento: string;
+    Imagen: null | string;
+    Autor: string;
     Stock: number;
+    Descripcion: null | string;
+    Archivo_Aporte: null | string;
+    Fk_Categoria: number | null;
     Categoria: Categoria;
     Tipo_Elemento: TipoElemento;
 }
 
 export interface Categoria {
+    Pk_Categoria: number;
     Nombre_Categoria: string;
 }
 
@@ -49,24 +50,19 @@ export enum TipoElemento {
 
 // Respuesta del lado de los movimientos 
 export interface DatoMovimiento {
+    Pk_Movimiento: number;
+    Jornada_Reserva: string;
     Estado_Mv: string;
     Fecha_Inicio: string;
-    Fk_Usuario: number;
-    Jornada_Reserva: string;
-    Observacion: null;
+    Fecha_Fin: string;
     Otra_Fecha: string;
-    Pk_Movimiento: number;
+    Observacion: null;
+    Fk_Usuario: number;
     Usuario: Usuario;
-    Elemento: Elemento;
+    Elemento: DatoElemento;
 }
 
 export interface Usuario {
     Nombre: string;
     Pk_Identificacion: number;
-}
-
-export interface Elemento {
-    Imagen: string;
-    Nombre_Elemento: string;
-    Tipo_Elemento: string;
 }

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController, MenuController } from '@ionic/angular';
-import { CheckTokenService } from '../middlewares/check-token.service';
-import { HistorialService } from '../services/historial.service';
+import { Component, OnInit } from '@angular/core';
 import { DatoMovimiento } from '../interface/interface';
+import { HistorialService } from '../services/historial.service';
+import { CheckTokenService } from '../middlewares/check-token.service';
+import { AlertController, LoadingController, MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-historial',
@@ -13,11 +13,11 @@ import { DatoMovimiento } from '../interface/interface';
 
 export class HistorialPage implements OnInit {
 
-  elementos: DatoMovimiento[] = [];
-  identificacion: string;
   token: string;
+  identificacion: string;
   mensaje_final: any;
   noFile: boolean = false;
+  elementos: DatoMovimiento[] = [];
 
   constructor(
     private service: HistorialService,
@@ -31,11 +31,10 @@ export class HistorialPage implements OnInit {
   ngOnInit() {
     this.confirmUser()
     this.showLoading()
-    setTimeout(() => {
-      this.list_History();
-    }, 1000);
+    this.list_History();
   }
 
+  // Metodo para validar la sesión del usuario
   private confirmUser = () => {
     this.valideAccess.checkToken().subscribe(resp => {
       if (resp.confirm == true) {
@@ -51,23 +50,13 @@ export class HistorialPage implements OnInit {
     })
   }
 
+  // Componente de un loading que ve el usuario
   private showLoading = async () => {
     const loading = await this.NgLoading.create({
       message: 'Cargando...',
       duration: 800,
     });
     loading.present();
-  }
-
-  async list_History() {
-    try {
-      this.service.History_Service(this.token, this.identificacion).subscribe((resp) => {
-        this.elementos = resp.datos;
-        if (this.elementos.length == 0) this.noFile = true
-      });
-    } catch (error) {
-      console.log('error :>> ', error);
-    }
   }
 
   // Esta función es la que me permite enviar un mensaje emergente al realizarse una reserva
@@ -95,15 +84,34 @@ export class HistorialPage implements OnInit {
     if (confirm.role == 'confirm') return this.cancelReserve(id_reserva);
   };
 
+  async list_History() {
+    try {
+      setTimeout(() => {
+        this.service.History_Service(this.token, this.identificacion).subscribe((resp) => {
+          this.elementos = resp.datos;
+          if (this.elementos.length == 0) this.noFile = true
+        }, error => {
+          if (error) return this.noFile = true
+        });
+      }, 1000);
+    } catch (error) {
+      console.log('error :>> ', error);
+    }
+  }
+
   cancelReserve = (id_reserva: any) => {
     this.service.cancelReserve(this.token, id_reserva).subscribe((resp) => {
-
       if (resp.confirm == false) return this.mostrarAlerta('No ha podido cancelar su reserva, lo sentimos')
-      if (resp.confirm == true) {
+      else {
         this.mostrarAlerta('A cancelado su reserva')
         setTimeout(() => {
-          location.reload()
-        }, 1500);
+          this.service.History_Service(this.token, this.identificacion).subscribe((resp) => {
+            this.elementos = resp.datos;
+            if (this.elementos.length == 0) this.noFile = true
+          }, error => {
+            if (error) return this.noFile = true
+          });
+        }, 1000);
       }
     }, error => {
       if (error) return this.mostrarAlerta("Lo sentimos, ha ocurrido un error de conexión")
