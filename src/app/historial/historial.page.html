@@ -23,7 +23,9 @@
       <ion-label>
         <h1> {{elem.Elemento.Tipo_Elemento}}</h1>
         <h2 class={{elem.Estado_Mv}}>{{elem.Estado_Mv}}</h2>
-        <p> Nombre:&nbsp;{{elem.Elemento.Nombre_Elemento}} </p>
+        <p><b> Nombre:</b>{{elem.Elemento.Nombre_Elemento}} </p>
+        <p *ngIf='elem.Elemento.Tipo_Elemento == "Libros"'><b> Serial:</b>{{elem.Elemento.Pk_Elemento}} </p>
+        <p *ngIf='elem.Elemento.Tipo_Elemento == "Proyector"'><b> Serial:</b>{{elem.Elemento.Pk_Elemento}} </p>
         <p *ngIf='elem.Serial_Elementos'>Serial de algunos computadores reservados: <br> {{elem.Serial_Elementos}}</p>
         <ion-button *ngIf='elem.Estado_Mv == "Solicitud"' color="danger" (click)="cancelReserveAlert(elem.Pk_Movimiento)">
           Cancelar reserva
