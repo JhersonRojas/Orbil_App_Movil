@@ -17,6 +17,7 @@ export interface Peticion_Interface {
     confirm: boolean;
     msj: string | null;
     cantidad: number;
+    residuos: [];
     disponibles: number;
     datos: DatoElemento[];
 }
@@ -57,6 +58,7 @@ export interface DatoMovimiento {
     Fecha_Fin: string;
     Otra_Fecha: string;
     Observacion: null;
+    Serial_Elementos: []
     Fk_Usuario: number;
     Usuario: Usuario;
     Elemento: DatoElemento;

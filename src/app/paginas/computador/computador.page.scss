@@ -32,11 +32,11 @@ ion-toolbar {
 
 ion-content {
   display: grid;
-  place-content: center;
 
   ion-card {
     width: 90vw;
     height: 88vh;
+    margin: 2vh auto 1vh auto;
     box-shadow: 2px 2px 15px #87837f;
     @media screen and (max-height: 500px) {
       height: auto;

@@ -89,6 +89,8 @@ export class HistorialPage implements OnInit {
       setTimeout(() => {
         this.service.History_Service(this.token, this.identificacion).subscribe((resp) => {
           this.elementos = resp.datos;
+          console.log(resp);
+          
           if (this.elementos.length == 0) this.noFile = true
         }, error => {
           if (error) return this.noFile = true

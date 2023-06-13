@@ -24,9 +24,9 @@ export class ComputadoresService {
   }
 
   // Función que envia los datos para la reserva de un computador al Api Rest
-  Reservar_Computador_Service(data: string) {
+  Reservar_Computador_Service(data: {}) {
     let headers = new HttpHeaders({ "token": this.token });
-    return this.http.post(this.url + '/movimientos/reserva/computador', data, { headers })
+    return this.http.post<Peticion_Interface>(this.url + '/movimientos/reserva/computador', data, { headers })
   }
 
 }

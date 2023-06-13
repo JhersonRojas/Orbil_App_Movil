@@ -1,9 +1,9 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
-import { AlertController, MenuController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { AlertController, MenuController } from '@ionic/angular';
 import { CheckTokenService } from './middlewares/check-token.service';
+import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
