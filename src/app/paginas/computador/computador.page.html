@@ -34,11 +34,9 @@
           <ion-modal [keepContentsMounted]="true">
             <ng-template>
               <!-- DatePicker con restricciones donde se tomara la fecha de la reserva -->
-              <ion-datetime id="datetime" formControlName="fecha" name="fecha" color="v-claro" presentation="date"
-                (ionChange)="filtradoPorDia($event)" min="{{fecha_hoy | date: 'YYYY-MM-dd'}}" max="2026-12-30T23:59:59"
-                display-format="YYYY-MM-dd" [isDateEnabled]="cancelarFinDeSemana" [showDefaultButtons]="true"
-                doneText="Aceptar" cancelText="Cancelar"
-                style=" width: auto; color: rgb(136, 107, 107) !important; width: 90vw !important;">
+              <ion-datetime #datetime id="datetime" formControlName="fecha" name="fecha" color="v-claro" presentation="date"
+                min="{{fecha_hoy | date: 'YYYY-MM-dd'}}" max="2026-12-30T23:59:59" display-format="YYYY-MM-dd" locale="es-ES"
+                (ionChange)="filtradoPorDia($event); datetime.confirm(true);" [isDateEnabled]="cancelarFinDeSemana">
                 <span slot="title"> Elige la fecha a reservar </span>
               </ion-datetime>
             </ng-template>

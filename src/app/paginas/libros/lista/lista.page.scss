@@ -1,6 +1,5 @@
-
 ion-toolbar {
-  --background: #39A900;
+  --background: #39a900;
   color: aliceblue;
 
   ion-searchbar {
@@ -9,8 +8,8 @@ ion-toolbar {
   }
 
   .items {
-  display: grid;
-  grid-template-columns: 0.5fr 2fr 0.5fr;
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 0.5fr;
 
     .titulo {
       margin: auto;
@@ -27,18 +26,13 @@ ion-toolbar {
   grid-template-columns: 1fr 1fr;
 }
 
-.container {
-  padding: 1em;
+ion-card {
+  margin: 1rem;
+  box-shadow: 2px 2px 5px gray;
 
-  ion-card {
-    box-shadow: 2px 2px 5px gray;
-
-    ion-card-header {
-      ion-card-title {
-        font-size: 1.2rem;
-      }
+  ion-card-header {
+    ion-card-title {
+      font-size: 1.2rem;
     }
-
   }
-
 }

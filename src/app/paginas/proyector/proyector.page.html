@@ -25,11 +25,11 @@
           <ion-datetime-button datetime="datetime"></ion-datetime-button>
           <ion-modal [keepContentsMounted]="true">
             <ng-template>
-              <ion-datetime id="datetime" formControlName="fecha" name="fecha" color="v-claro" presentation="date"
-                min="{{fecha_hoy | date: 'YYYY-MM-dd'}}" max="2024-12-30T23:59:59" display-format="YYYY-MM-dd"
-                [isDateEnabled]="cancelarFinDeSemana" [showDefaultButtons]="true"
-                value="{{fecha_hoy | date: 'YYYY-MM-dd'}}" >
-                <span slot="title"> Elige la fecha a reservar </span></ion-datetime>
+              <ion-datetime #datetime id="datetime" formControlName="fecha" name="fecha" color="v-claro" presentation="date"
+                min="{{fecha_hoy | date: 'YYYY-MM-dd'}}" max="2026-12-30T23:59:59" display-format="YYYY-MM-dd" locale="es-ES"
+                (ionChange)="datetime.confirm(true);" [isDateEnabled]="cancelarFinDeSemana">
+                <span slot="title"> Elige la fecha a reservar </span>
+              </ion-datetime>
             </ng-template>
           </ion-modal>
         </div>
@@ -48,7 +48,8 @@
 
         <!-- Jornada en la que sera reservado -->
         <ion-item lines="none">
-          <ion-select formControlName="jornada" placeholder="Seleccione jornada" name="jornada" [interfaceOptions]="header_jornada">
+          <ion-select formControlName="jornada" placeholder="Seleccione jornada" name="jornada"
+            [interfaceOptions]="header_jornada">
             <ion-select-option value="Mañana"> Jornada mañana </ion-select-option>
             <ion-select-option value="Tarde"> Jornada tarde </ion-select-option>
             <ion-select-option value="Completo"> Jornada Completa </ion-select-option>
@@ -64,7 +65,8 @@
       <h5 class="nombre-usuario"> A nombre de {{usuario}}</h5>
 
       <!-- Boton para realizar la reserva -->
-      <ion-button shape="round" size="default" fill="solid" strong="strong" color="v-claro" (click)="confirmReserve()" [disabled]="!form.valid">
+      <ion-button shape="round" size="default" fill="solid" strong="strong" color="v-claro" (click)="confirmReserve()"
+        [disabled]="!form.valid">
         Reservar
       </ion-button>
     </ion-card-content>

@@ -30,6 +30,12 @@ ion-toolbar {
   }
 }
 
+ion-datetime {
+  color: gray !important;
+  width: 95vw !important;
+  max-height: 90vh !important;
+}
+
 ion-content {
   display: grid;
 
@@ -50,7 +56,7 @@ ion-content {
       color: white !important;
       @media screen and (max-width: 355px) {
         h1 {
-          font-size: 1rem;
+          font-size: 0.7rem;
         }
       }
     }

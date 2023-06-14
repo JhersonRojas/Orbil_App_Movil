@@ -10,10 +10,10 @@
 
 <ion-content>
 
-  <div class="container">
     <ion-card>
       <ion-card-header>
         <ion-card-subtitle><ion-icon name="person-outline" class="icono"></ion-icon> {{Autor}} </ion-card-subtitle>
+        <ion-card-subtitle>Serial: {{serial}} </ion-card-subtitle>
         <ion-card-title>{{Nombre}}</ion-card-title>
       </ion-card-header>
 
@@ -26,11 +26,11 @@
             <ion-datetime-button datetime="datetime"></ion-datetime-button>
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
-                <ion-datetime id="datetime" formControlName="fecha" name="fecha" color="v-claro" presentation="date"
-                  min="{{fechaHoy | date: 'YYYY-MM-dd'}}" max="2024-12-30T23:59:59" display-format="YYYY-MM-dd"
-                  [isDateEnabled]="cancelarFinDeSemana" [showDefaultButtons]="true"
-                  style=" width: auto; color: rgb(136, 107, 107) !important; width: 90vw !important;">
-                  <span slot="title"> Elige la fecha a reservar </span></ion-datetime>
+                <ion-datetime #datetime id="datetime" formControlName="fecha" name="fecha" color="v-claro" presentation="date"
+                min="{{fechaHoy | date: 'YYYY-MM-dd'}}" max="2026-12-30T23:59:59" display-format="YYYY-MM-dd" locale="es-ES"
+                (ionChange)="datetime.confirm(true);" [isDateEnabled]="cancelarFinDeSemana">
+                <span slot="title"> Elige la fecha a reservar </span>
+                </ion-datetime>
               </ng-template>
             </ion-modal>
           </div>
@@ -47,6 +47,5 @@
         </div>
       </ion-card-content>
     </ion-card>
-  </div>
 
 </ion-content>

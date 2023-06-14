@@ -41,8 +41,8 @@ export class ComputadorPage implements OnInit {
 
   // Aqui se alamacena individualmente los datos que son insertados en el formulario, esto desde la variable 'form'
   cantidad: number
-  fecha: any
   nombre: any
+  fecha: string
   fecha_fin: any
   token: string
 
@@ -91,12 +91,11 @@ export class ComputadorPage implements OnInit {
 
   // Esta función llama la cantidad e informacion de los computadores disponibles actualmente
   public filtradoPorDia = (event: any) => {
-    let fecha = event.detail.value
-    fecha = fecha.split('T', 1)[0]
-    this.service.Disponibles_Computador_Service(fecha).subscribe((resp) => {
-      this.computadores_muestra = resp.datos
+    this.fecha = (event.detail.value).split('T', 1)[0]
+    this.service.Disponibles_Computador_Service(this.fecha).subscribe((resp) => {
       if (!resp.confirm) return (this.computadores_cantidad = 'No es valido!')
       if (resp.confirm) {
+        this.computadores_muestra = resp.datos
         this.computadores_permiso = false
         return (this.computadores_cantidad = resp.cantidad)
       }
@@ -150,7 +149,7 @@ export class ComputadorPage implements OnInit {
     }
 
     if (this.rol == 'Aprendiz' && this.selectedComputer.length > 1 || this.rol == 'Visitante' && this.selectedComputer.length > 1) {
-      return this.mostrarAlerta('Permiso edenegado', `Lo sentimos, siendo ${this.rol} no puede reservar mas de 1 computador`)
+      return this.mostrarAlerta('Permiso denegado', `Lo sentimos, siendo ${this.rol} no puede reservar mas de 1 computador`)
     }
 
     // Fecha a reservar de los computadores
@@ -166,11 +165,12 @@ export class ComputadorPage implements OnInit {
 
     // Llamado al servicio para realziar la petición y hacer la reserva
     this.service.Reservar_Computador_Service(sendData).subscribe((response) => {
-      
-      if (this.confirm == false) {
+      this.filtradoPorDia({ detail: { value: this.fecha } })
+      if (response.confirm == false) {
         this.mensaje = (response.msj)
         return this.mostrarAlerta('No se realizo la reserva', this.mensaje)
       } else {
+        console.log(response);
         this.mensaje = !response.residuos ?
           `Se han reservado ${(response.cantidad)} computadores` :
           `Se han reservado ${(response.cantidad)} computadores, pero estos elementos ya estaban reservados: ${(response.residuos).toLocaleString()}, por lo tanto seran descartados`
@@ -178,7 +178,7 @@ export class ComputadorPage implements OnInit {
         this.selectedComputerText = '0 💻'
         this.computadores_permiso = true
         // Mensaje al cliente despendendiendo de la respuesta del servidor 
-        return this.mostrarAlerta('Se ha reaizado la reserva', this.mensaje)
+        return this.mostrarAlerta('Se ha realizado la reserva', this.mensaje)
       }
     }, error => {
       if (error) return this.mostrarAlerta('Error de conexión', 'Lo sentimos, ha ocurrido un error de conexión, asegurese de estar en la red')

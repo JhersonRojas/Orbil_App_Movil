@@ -8,8 +8,9 @@
 
 ### Configuración para admición del Servidor
 
+```java
   <manifest-android
-  android:screenOrientation="portrait" 
+  android:screenOrientation="portrait"
   android:networkSecurityConfig="@xml/netwok_security_config">
 
   <?xml version="1.0" encoding="utf-8" ?>
@@ -20,6 +21,7 @@
       </trust-anchors>
     </base-config>
   </network-security-config>
+```
 
 ### Respuesta estandar el ApiRest
 

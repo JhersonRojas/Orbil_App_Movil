@@ -1,5 +1,5 @@
 {
-  "name": "orbil",
+  "name": "Orbil",
   "version": "2.0.5",
   "author": "Orbil",
   "homepage": "https://ionicframework.com/",
@@ -25,7 +25,7 @@
     "@capacitor/haptics": "4.0.1",
     "@capacitor/keyboard": "4.0.1",
     "@capacitor/status-bar": "4.0.1",
-    "@ionic/angular": "^6.7.5",
+    "@ionic/angular": "^6.1.9",
     "ionicons": "^6.0.3",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
@@ -41,7 +41,7 @@
     "@angular/compiler": "^14.0.0",
     "@angular/compiler-cli": "^14.0.0",
     "@angular/language-service": "^14.0.0",
-    "@capacitor/cli": "^4.8.0",
+    "@capacitor/cli": "4.2.0",
     "@ionic/angular-toolkit": "^6.0.0",
     "@ionic/lab": "3.2.15",
     "@types/jasmine": "~3.6.0",
@@ -61,7 +61,7 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
-    "protractor": "^3.3.0",
+    "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "typescript": "~4.7.3"
   },

@@ -25,14 +25,20 @@ ion-toolbar {
   }
 }
 
-.container {
+ion-datetime {
+  color: gray !important;
+  width: 95vw !important;
+  max-height: 90vh !important;
+}
+
+ion-content {
   display: grid;
-  place-content: center;
 
   ion-card {
     overflow: auto;
     width: 90vw;
     height: 88vh;
+    margin: 2vh auto 1vh auto;
     box-shadow: 2px 2px 15px #87837f;
     @media screen and (max-height: 500px) {
       height: auto;
@@ -52,8 +58,6 @@ ion-toolbar {
           font-size: 1rem;
         }
       }
-
-      
     }
 
     ion-card-content {

@@ -21,20 +21,28 @@ ion-toolbar {
   }
 }
 
-ion-label {
-  .Solicitud {
-    color: blue;
-  }
+ion-card {
+  ion-card-header {
+    display: flex;
 
-  .Prestado {
-    color: green;
-  }
+    .items-card-header {
+      padding-left: 0.5rem !important;
+    }
 
-  .Retornado {
-    color: gray;
-  }
+    .Solicitud {
+      color: blue !important;
+    }
 
-  .Cancelado {
-    color: red;
+    .Prestado {
+      color: green;
+    }
+
+    .Retornado {
+      color: gray;
+    }
+
+    .Cancelado {
+      color: red;
+    }
   }
 }
