@@ -13,7 +13,6 @@ import { CheckTokenService } from 'src/app/middlewares/check-token.service';
 })
 
 export class ProyectorPage implements OnInit {
-
   // Variables para los encabezados de los Select
   header_proyector = {
     subHeader: 'Elige un proyector a reservar',
@@ -36,7 +35,6 @@ export class ProyectorPage implements OnInit {
 
   //  "respuesta", regresa la respuesta del servidor
   respuesta: any;
-  secreto: any;
 
   // Aqui se alamacena individualmente los datos que son insertados en el formulario, esto desde la variable "form"
   dataForm: any; // Esta variable agrupa los datos para enviarlos
@@ -56,10 +54,10 @@ export class ProyectorPage implements OnInit {
   ) { }
 
   //  Función de angular, su contenido es lo primero que se ejecuta al entrar a esta vista
-  ngOnInit() {    
-    this.confirmUser()
+  ngOnInit() {
+    this.confirmUser();
     // Esta función es la que realiza el llamado al servicio, este ejecuta la consulta al servidor
-    this.service.Listar_Proyectores_Service().subscribe(resp => {
+    this.service.Listar_Proyectores_Service().subscribe((resp) => {
       this.proyectores = resp;
       this.proyector = resp.datos;
     });
@@ -75,20 +73,24 @@ export class ProyectorPage implements OnInit {
 
   // Metodo para validar la sesión del usuario
   private confirmUser = () => {
-    this.valideAccess.checkToken().subscribe(resp => {
-      if (resp.confirm == true) {
-        this.identificacion = this.valideAccess.setDataUser().identificacion
-        this.usuario = this.valideAccess.setDataUser().usuario.split(' ')[0]
-        this.rol = this.valideAccess.setDataUser().tipo_usuario
+    this.valideAccess.checkToken().subscribe(
+      (resp) => {
+        if (resp.confirm == true) {
+          this.identificacion = this.valideAccess.setDataUser().identificacion;
+          this.usuario = this.valideAccess.setDataUser().usuario.split(' ')[0];
+          this.rol = this.valideAccess.setDataUser().tipo_usuario;
+        }
+      },
+      (error) => {
+        if (error) {
+          localStorage.clear();
+          this.NgMenu.enable(false);
+          setTimeout(() => this.NgRouter.navigate(['login']), 500);
+        }
       }
-    }, error => {
-      if (error) {
-        localStorage.clear()
-        this.NgMenu.enable(false)
-        setTimeout(() => this.NgRouter.navigate(['login']), 500);
-      }
-    })
-  }
+    );
+  };
+
   // Función que cancela la posibilidad de elegir fines de semana en el calendario desplegable
   public cancelarFinDeSemana = (dateString: string) => {
     const date = new Date(dateString);
@@ -139,15 +141,18 @@ export class ProyectorPage implements OnInit {
     };
 
     // Este segmento recopila los datos de la reserva y los envia, tambien recive la respuesta del Api Rest
-    this.service.Reservar_Proyector_Service(this.dataForm).subscribe(resp => {
-      this.respuesta = resp;
-      //  Aqui tambien se envia el mensaje en caso de que la reserva sea valida o no
-      if (resp === undefined) return this.mostrarAlerta('No se encuentra conectado al servidor');
-      if (this.respuesta.confirm) return this.mostrarAlerta(`Ha reservado el proyector en ${this.fecha.split('T', 1)[0]}`);
-      if (!this.respuesta.confirm) return this.mostrarAlerta(`Ya reservaron este proyector aqui, lo sentimos 😥`);
-      else return this.mostrarAlerta('No se reconoce la respuesta del servidor');
-    }, error => {
-      if (error) return this.mostrarAlerta("Lo sentimos, ha ocurrido un error de conexión")
-    });
+    this.service.Reservar_Proyector_Service(this.dataForm).subscribe(
+      (resp) => {
+        this.respuesta = resp;
+        //  Aqui tambien se envia el mensaje en caso de que la reserva sea valida o no
+        if (resp === undefined) return this.mostrarAlerta('No se encuentra conectado al servidor');
+        if (this.respuesta.confirm) return this.mostrarAlerta(`Ha reservado el proyector en ${this.fecha.split('T', 1)[0]}`);
+        if (!this.respuesta.confirm) return this.mostrarAlerta(`Ya reservaron este proyector aqui, lo sentimos 😥`);
+        else return this.mostrarAlerta('No se reconoce la respuesta del servidor');
+      },
+      (error) => {
+        if (error) return this.mostrarAlerta('Lo sentimos, ha ocurrido un error de conexión');
+      }
+    );
   };
 }

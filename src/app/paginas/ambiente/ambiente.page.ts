@@ -49,7 +49,7 @@ export class AmbientePage implements OnInit {
 
   // Esta función es de angular, su contenido es lo primero que se ejecuta al entrar a esta vista
   ngOnInit() {
-    this.confirmUser()
+    this.confirmUser();
     // "form" añade los datos en el momento que alguien diligencie el formulario en la vista
     this.form = this.NgFb.group({
       fecha: ['', Validators.required],
@@ -59,23 +59,26 @@ export class AmbientePage implements OnInit {
 
   // Metodo para validar la sesión del usuario
   private confirmUser = () => {
-    this.valideAccess.checkToken().subscribe(resp => {
-      if (resp.confirm == true ) {
-        this.identificacion = this.valideAccess.setDataUser().identificacion
-        this.usuario = this.valideAccess.setDataUser().usuario.split(' ')[0]
-        this.rol = this.valideAccess.setDataUser().tipo_usuario
-        
-        this.rol == 'Administrador' || this.rol == 'Administrativo' || this.rol == 'Instructor' ? 
-          this.permiso_de_rango = true : this.permiso_de_rango = false
+    this.valideAccess.checkToken().subscribe(
+      (resp) => {
+        if (resp.confirm == true) {
+          this.identificacion = this.valideAccess.setDataUser().identificacion;
+          this.usuario = this.valideAccess.setDataUser().usuario.split(' ')[0];
+          this.rol = this.valideAccess.setDataUser().tipo_usuario;
+
+          if (this.rol == 'Administrador' || this.rol == 'Administrativo' || this.rol == 'Instructor') this.permiso_de_rango = true;
+          else this.permiso_de_rango = false;
+        }
+      },
+      (error) => {
+        if (error) {
+          localStorage.clear();
+          this.NgMenu.enable(false);
+          setTimeout(() => this.NgRouter.navigate(['login']), 500);
+        }
       }
-    }, error => {
-      if (error) {
-        localStorage.clear()
-        this.NgMenu.enable(false)
-        setTimeout(() => this.NgRouter.navigate(['login']), 500);
-      }
-    })
-  }
+    );
+  };
 
   // Esta función cancela la posibilidad de elegir fines de semana en el calendario desplegable
   public cancelarFinDeSemana = (dateString: string) => {
@@ -88,7 +91,7 @@ export class AmbientePage implements OnInit {
   private showAlert = async (msj: string) => {
     const alert = await this.NgAlert.create({ message: msj });
     await alert.present();
-  }
+  };
 
   // Es la primera verificación para confirmar la reserva del usuario
   public confirmReserve = async () => {
@@ -108,7 +111,7 @@ export class AmbientePage implements OnInit {
     await alert.present();
     const confirm = await alert.onDidDismiss();
     if (confirm.role == 'confirm') return this.reserveAmbiente();
-  }
+  };
 
   // Estos son los datos que se envian a las variables antes mencionadas
   public reserveAmbiente = () => {
@@ -124,16 +127,16 @@ export class AmbientePage implements OnInit {
       fecha: this.fecha_fin[0],
     };
 
-    this.service.Reservar_Ambiente_Service(this.todo).subscribe((resp) => {
-      this.respuesta = resp;
-      if (this.respuesta.confirm)
-        return this.showAlert(`Ha reservado el ambiente en \n ${this.fecha_fin[0]}, horario ${this.jornada} 🤩`);
-      if (!this.respuesta.confirm)
-        return this.showAlert('Ya existe una reserva aqui, lo sentimos 😥');
-      else
-        return this.showAlert('Ocurrio un error en el pedido, lo sentimos 😒');
-    }, error => {
-      if (error) return this.showAlert("Lo sentimos, ha ocurrido un error de conexión")
-    });
-  }
+    this.service.Reservar_Ambiente_Service(this.todo).subscribe(
+      (resp) => {
+        this.respuesta = resp;
+        if (this.respuesta.confirm) return this.showAlert(`Ha reservado el ambiente en \n ${this.fecha_fin[0]}, horario ${this.jornada} 🤩`);
+        if (!this.respuesta.confirm) return this.showAlert('Ya existe una reserva aqui, lo sentimos 😥');
+        else return this.showAlert('Ocurrio un error en el pedido, lo sentimos 😒');
+      },
+      (error) => {
+        if (error) return this.showAlert('Lo sentimos, ha ocurrido un error de conexión');
+      }
+    );
+  };
 }
