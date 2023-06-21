@@ -176,7 +176,6 @@ export class ComputadorPage implements OnInit {
           this.mensaje = response.msj;
           return this.mostrarAlerta('No se realizo la reserva', this.mensaje);
         } else {
-          console.log(response);
           this.mensaje = !response.residuos ? `Se han reservado ${response.cantidad} computadores` :
             `Se han reservado ${response.cantidad} computadores, pero estos elementos ya estaban reservados: ${response.residuos.toLocaleString()}, por lo tanto seran descartados`;
           this.selectedComputer = [];

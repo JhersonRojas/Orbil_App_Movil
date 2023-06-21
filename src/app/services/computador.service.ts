@@ -20,7 +20,7 @@ export class ComputadoresService {
 
   Disponibles_Computador_Service(fecha_filtro: string) {
     let headers = new HttpHeaders({ "token": this.token });
-    return this.http.post<Peticion_Interface>(this.url + '/computadores/filtrados', { fecha_filtro }, { headers });
+    return this.http.post<Peticion_Interface>(this.url + '/computadores', { fecha_filtro }, { headers });
   }
 
   // Función que envia los datos para la reserva de un computador al Api Rest
