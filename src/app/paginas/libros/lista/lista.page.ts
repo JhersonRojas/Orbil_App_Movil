@@ -119,7 +119,7 @@ export class ListaPage implements OnInit {
 
   private listarCategorias = () => {
     this.service.Listar_Categorias_Service().subscribe((resp) => {
-      this.categorias = resp.datos.slice(2, resp.datos.length);
+      this.categorias = resp.datos;
     });
   };
 
